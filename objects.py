@@ -102,14 +102,14 @@ class Passenger(object):
         
 class Train(object):
     """Moves passengers from station to station."""
-    def __init__(self, line,origin, destination):
+    def __init__(self, line,origin, destination,velocity):
         """ARGUMENTS
         line - line name/number
         origin - previous station
         destination - next station        
         """
-        self.line = str(line)
-        #trains are empty at the start
+        self.line = str(line)        
+        self.v = velocity
         self.passengers = set()
         self.origin = origin
         self.destination=destination
@@ -133,12 +133,13 @@ class Train(object):
                 transfer.add(pas)        
         self.passengers -= offload + transfer
         
+        #passengers that are at their destination will be garbage collected.
         return transfer
     
 class Line(object):
     """TODO
     Currently a dummy
-    Should be a set of instructions that manipulates a trains directional vectors"""
+    Should be a set of instructions that manipulates a trains d2s"""
     def __init__(self):
         pass
 ##maps = nx.Graph(city="New NYC")

@@ -24,7 +24,7 @@ statlist = set()
 for s in STATIONS:
     statlist.add(objects.KillerStation(*s))
 #    
-timesteps = 14400
+timesteps = 144
 for _ in itertools.repeat(None,timesteps):
     [station.update(destinations=statlist) for station in statlist]
 
