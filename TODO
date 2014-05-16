@@ -1,0 +1,15 @@
+List of things to do:
+
+Parse the NYC subway map coordinates
+    convert to cartesian
+
+Figure out the description of lines as a network
+
+Train movement
+    plan:   Train knows distance, begin and end Station objects. If we ever 
+            need to calculate its coordinates, we can write a function for that.
+
+Passenger elimination:
+    plan:   Train will carry passengers and only put them on a station if they
+            have a transfer. Otherwise, he'll let them off the train to be 
+            garbage collected.
