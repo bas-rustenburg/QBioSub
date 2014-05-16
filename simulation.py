@@ -17,7 +17,7 @@ random.seed(1989)
 print random.randint(0,250)
 
 
-STATIONS = [tuple(['a', 0, 1, 0, 24]), tuple(['b', 1, 2, 0, 24]), tuple(['c', 2, 1, 0, 24]), tuple(['d', 1, 0, 0, 24])]
+STATIONS = [tuple(['a', 0, 10, 0, 24]), tuple(['b', 10, 20, 0, 24]), tuple(['c', 20, 10, 0, 24]), tuple(['d', 10, 0, 0, 24])]
 
 statlist = set()
 
@@ -29,5 +29,5 @@ for _ in itertools.repeat(None,timesteps):
     [station.update(destinations=statlist) for station in statlist]
 
 
-#x = objects.Train("F", [np.float64(0.0),np.float64(1.0)])  
+x = objects.Train("F", random.sample(statlist,1)[0],random.sample(statlist,1)[0], 1.0,verbose=True )  
 
