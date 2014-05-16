@@ -183,7 +183,7 @@ class Line(object):
             raise Exception, "Direction is forward (1), or reverse (-1)."
             
         index = self.route.index(station)
-        return self.routeroute[direction + index ]
+        return self.route[direction + index ]
         
         
 ##maps = nx.Graph(city="New NYC")
