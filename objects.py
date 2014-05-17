@@ -52,16 +52,6 @@ class BasicStation(Station):
             newpassengers.add(Passenger(self,random.sample(destinations, 1)[0]))
         return newpassengers
 
-#    TODO Consider code for removal
-#    def kill(self):
-#        """kill those that have reached their destination."""
-#        kills=set()
-#        for pas in self.passengers:
-#            if pas.location == pas.destination:
-#                kills.add(pas)
-#        return kills
-
-
 
 class KillerStation(BasicStation):
     """Kills random people
@@ -79,12 +69,11 @@ class KillerStation(BasicStation):
 class Passenger(object):
     """Wants to go from A to B"""
     total=0
-    def __init__(self, origin, destination, verbose=True):
+    def __init__(self, origin, destination, verbose=False):
         self.origin = origin
         self.location = origin
         self.destination = destination
-        self.transfer = set()
-        self.line = str()
+        self.transfer = set()        
         self.verbose = verbose
         Passenger.total +=1
         return
@@ -96,10 +85,11 @@ class Passenger(object):
         return
 
     def __del__(self):
+        Passenger.total -= 1
         if self.verbose:
             print "Please don't kill me, I have a family!"
             print "I'm being killed at %s."%self.location.name
-        Passenger.total -= 1
+        
         return
 
 
@@ -129,9 +119,6 @@ class Train(object):
         #Determine the next station.
         self.next_station, self.direction =line.resolve(self.direction, self.current_station)
         #Calculate distance between current and next station.
-        print "DEBUG"
-        print self.current_station
-        print self.next_station
         
         self.d2s = self.distance_to_stop(self.current_station,self.next_station)
         #Distance traveled since last station.
@@ -159,7 +146,9 @@ class Train(object):
             if self.verbose > 0: print "Train %s: Reached destination '%s'"%(self.name, self.current_station.name)
             self.next_station, self.direction = self.line.resolve(self.direction, self.current_station)
             if self.verbose > 1: print "Train %s: Next destination is '%s'"%(self.name, self.next_station.name)
+            print "This is where I should start offloading passengers: %d/%d"%(len(self.passengers),Passenger.total)
             self.load_unload(self.current_station)
+            print "After offloading: %d/%d"%(len(self.passengers),Passenger.total)
             self.d2s = self.distance_to_stop(self.current_station,self.next_station)
             self.traveled = np.float64()
             
@@ -179,13 +168,13 @@ class Train(object):
         self.passengers -= offload | transfer
         
         #passengers that are at their destination will be garbage collected.
-        for pas in station.passengers:
-            if pas.line == self.line:
-                try:
-                    while not len(self.passengers) == self.capacity:
-                        self.passengers.add(station.passengers.pop())
-                except KeyError:
-                    pass
+        try:
+            while True:
+                if len(self.passengers) == self.capacity:
+                    break
+                self.passengers.add(station.passengers.pop())
+        except KeyError:
+            pass
 
         station.passengers |= transfer 
         return
@@ -204,7 +193,6 @@ class Line(object):
         """Based on the direction that you are traveling, return next or previous."""
         if not direction in [1,-1]:
             raise Exception, "Direction is forward (1), or reverse (-1)."
-        print self.route
         index = self.route.index(station)
         try:
             self.route[direction + index ]

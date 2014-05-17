@@ -10,4 +10,5 @@ Different capitalization of line names
 Different connectivities displayed per station (Rockefeller Center: B,D,F,M & B,D,F,M,7)
 Typos:  Sr instead of St to abbreviate street.
 
+
 In order to speed up simulation, we calculate the optimal path between all stations in advance.
