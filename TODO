@@ -31,6 +31,9 @@ Passenger elimination:
 Time step size, velocity and spawn rates:
     How to integrate these in a coherent fashion.
 
+Day/Night cycles:
+    Add day night cycle
+    Different spawn rates at different times, and different stations
 
 Passenger priority:
     Should passengers be in a list, so the one's waiting the longest get to board the train first?

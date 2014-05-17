@@ -27,7 +27,7 @@ class Station(object):
 
     def update(self,destinations=set()):
         #Spawn new passengers.
-        self.passengers = self.passengers | self.spawn(destinations ^ set([self]) )
+        self.passengers = self.passengers | self.spawn(set(destinations) ^ set([self]) )
         #TODO: This is optional, will only happen on KillerStation.
         self.passengers = self.passengers - self.kill()
 
@@ -137,7 +137,9 @@ class Train(object):
         """Iterate 1 timestep"""
         at_station = False
         self.traveled += self.v #TODO make velocity independent of timestep?
-        if self.verbose > 1: print "Train %s: Traveled %.3f meters."%(self.name, self.v)        
+        if self.verbose > 2: 
+            print "Train %s: Traveled %.3f meters."%(self.name, self.v)        
+            print "Train %s: Is carrying %d passenger(s)"%(self.name, len(self.passengers))
         if self.traveled >= self.d2s:
             at_station = True
             
@@ -146,9 +148,7 @@ class Train(object):
             if self.verbose > 0: print "Train %s: Reached destination '%s'"%(self.name, self.current_station.name)
             self.next_station, self.direction = self.line.resolve(self.direction, self.current_station)
             if self.verbose > 1: print "Train %s: Next destination is '%s'"%(self.name, self.next_station.name)
-            print "This is where I should start offloading passengers: %d/%d"%(len(self.passengers),Passenger.total)
             self.load_unload(self.current_station)
-            print "After offloading: %d/%d"%(len(self.passengers),Passenger.total)
             self.d2s = self.distance_to_stop(self.current_station,self.next_station)
             self.traveled = np.float64()
             
@@ -160,23 +160,34 @@ class Train(object):
         #Passengers that are getting off.
         offload = set()
         transfer = set()
+        off_count = int()
+        on_count = int()
+        transfer_count = int()
         for pas in self.passengers:
             if pas.destination == station:
                 offload.add(pas)
+                off_count +=1
             elif station in pas.transfer:
                 transfer.add(pas)
+                transfer_count +=1
         self.passengers -= offload | transfer
-        
-        #passengers that are at their destination will be garbage collected.
+                        
         try:
             while True:
                 if len(self.passengers) == self.capacity:
                     break
                 self.passengers.add(station.passengers.pop())
+                on_count += 1
         except KeyError:
             pass
 
-        station.passengers |= transfer 
+        if self.verbose >1:
+            print "Train %s: Passengers getting off at station '%s': %d"%(self.name, self.current_station, off_count)
+            print "Train %s: Passengers making transfer at station '%s': %d"%(self.name, self.current_station, transfer_count)        
+            print "Train %s: Passengers getting on at station '%s': %d"%(self.name, self.current_station, on_count) 
+        station.passengers |= transfer
+     
+        #passengers that are at their destination will be garbage collected.
         return
 
 
