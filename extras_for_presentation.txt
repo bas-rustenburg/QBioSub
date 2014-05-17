@@ -1,0 +1,13 @@
+Things we ran into while setting up the model:
+
+
+Database (in)sanity
+
+Same name, different station. 103 st. 6,7, BC
+Different names for same station "Times Square -42nd street and 42nd Street"
+"Union Square and 14th Street - Union Square"
+Different capitalization of line names
+Different connectivities displayed per station (Rockefeller Center: B,D,F,M & B,D,F,M,7)
+Typos:  Sr instead of St to abbreviate street.
+
+In order to speed up simulation, we calculate the optimal path between all stations in advance.

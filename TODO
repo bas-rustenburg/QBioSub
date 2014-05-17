@@ -4,12 +4,39 @@ Parse the NYC subway map coordinates
     convert to cartesian
 
 Figure out the description of lines as a network
+    Get the full connectivity described in the network. 
+    Before simulation, calculate all possible paths
+    Compare lengths, number of transfers and get rank #1 for each 
+    preferred algorithm.
 
 Train movement
-    plan:   Train knows distance, begin and end Station objects. If we ever 
+    TODO:   Train knows distance, begin and end Station objects. If we ever 
             need to calculate its coordinates, we can write a function for that.
+    TODO:   calculate the distances between stations up front and switch
+            Train function to look up rather than calculate distance
+            evaluate which is faster. 
+    TODO:   What do trains do when they are waiting at a station.
+
+Line iteration:
+    Index error if line reaches last stop. Need to catch this and reverse direction
+    of train in question.
+    See how to deal with circular line, forward only solution [A, B, C , A] ; different line : [A, C ,B, A]
+                                        better solution: If it gets index error at end, rather than change directions, return first element
 
 Passenger elimination:
     plan:   Train will carry passengers and only put them on a station if they
             have a transfer. Otherwise, he'll let them off the train to be 
             garbage collected.
+
+Time step size, velocity and spawn rates:
+    How to integrate these in a coherent fashion.
+
+
+Passenger priority:
+    Should passengers be in a list, so the one's waiting the longest get to board the train first?
+
+
+Visualization of a simulation:
+    Matplotlib integration, make a movie? 
+    Or run interactively if possible.
+        Perhaps a small system.

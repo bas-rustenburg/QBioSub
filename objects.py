@@ -10,28 +10,27 @@ import itertools
 import numpy as np
 
 class Station(object):
-    """Spawns passengers, eats passengers
+    """Station object
     """
     def __init__(self,name,x,y):
-        self.name = name 
+        self.name = name
         self.passengers = set()
         self.trains = set()
         self.xy = np.array([np.float64(x),np.float64(y)])
-        
+
     def spawn(self):
         """Generic stations don't spawn anything"""
         return set()
     def kill(self):
         """Not killing anything"""
         return set()
-        
+
     def update(self,destinations=set()):
-        #spawn the new.
-        self.passengers = self.passengers | self.spawn(destinations)
-        #Kill passengers that have reached destination.
-        #TODO make this a function that happens in trains by offloading them to nowhere.
+        #Spawn new passengers.
+        self.passengers = self.passengers | self.spawn(destinations ^ set([self]) )
+        #TODO: This is optional, will only happen on KillerStation.
         self.passengers = self.passengers - self.kill()
-        
+
 
 class BasicStation(Station):
     """Simple station
@@ -40,47 +39,47 @@ class BasicStation(Station):
     def __init__(self, name,x,y, minpas,maxpas):
         "Use parent __init__ function"
         super(BasicStation,self).__init__(name, x, y)
-        
         self.minpas = minpas
-        self.maxpas = maxpas        
-        
+        self.maxpas = maxpas
+        return
+
     def spawn(self,destinations):
         """Spawn passengers
-           TODO remove current station from the list?"""        
+           TODO remove current station from the list?"""
         num = random.randint(self.minpas,self.maxpas)
-        newpassengers = set()    
+        newpassengers = set()
         for _ in itertools.repeat(None,num):
-            newpassengers.add(Passenger(self,random.sample(destinations, 1)))
+            newpassengers.add(Passenger(self,random.sample(destinations, 1)[0]))
         return newpassengers
-        
-    def kill(self):
-        """kill those that have reached their destination."""
-        kills=set()
-        for pas in self.passengers:
-            if pas.location == pas.destination:
-                kills.add(pas)
-        return kills
-        
+
+#    TODO Consider code for removal
+#    def kill(self):
+#        """kill those that have reached their destination."""
+#        kills=set()
+#        for pas in self.passengers:
+#            if pas.location == pas.destination:
+#                kills.add(pas)
+#        return kills
+
+
+
 class KillerStation(BasicStation):
-    """Simple station
-       Kills random people
-       For testing purposes until passengers move
-       Code much faster if there are less passengers
+    """Kills random people
+       For testing purposes until passengers are able to move
+       Code runs much faster if there are less passengers
     """
-       
+
     def kill(self):
         """kill random passengers"""
         killcount=random.randint(0,len(self.passengers))
         kills= set(random.sample(self.passengers,killcount))
         return kills
 
-        zip()
-      
 
 class Passenger(object):
     """Wants to go from A to B"""
     total=0
-    def __init__(self, origin, destination, verbose=False):
+    def __init__(self, origin, destination, verbose=True):
         self.origin = origin
         self.location = origin
         self.destination = destination
@@ -88,104 +87,128 @@ class Passenger(object):
         self.line = str()
         self.verbose = verbose
         Passenger.total +=1
-#   
+        return
+
     def route(self):
         """Solve the route that the passenger will take"""
         self.route=list()
         self.line=str()
-        pass        
-    
+        return
+
     def __del__(self):
         if self.verbose:
             print "Please don't kill me, I have a family!"
             print "I'm being killed at %s."%self.location.name
         Passenger.total -= 1
-        
-        
+        return
+
+
 class Train(object):
     """Moves passengers from station to station."""
-    def __init__(self, line,origin, destination,velocity=np.float64(1.0), capacity=150,at_station=False, verbose=False):
+    def __init__(self, name, capacity, line, start, direction, velocity, verbose=0):
         """ARGUMENTS
-        line - line name/number
-        origin - previous station
-        destination - next station        
+        name - Identifier for this train, e.g. "F-1".
+        capacity - Max number of people on one train.
+        line - Line object, in charge of destinations
+        start - initial station
+        direction - forward (1) or reverse (-1) 
+        velocity - meters per time step
+        verbose - degree of verbosity (int, 0 = quiet, 1= info, 2 = debug)
         """
-        self.line = str(line)        
+        self.name = str(name)
+        self.capacity = int(capacity)
+        self.line = line
+        self.current_station = start
+        self.direction=direction
+        if not direction in [1, -1]:
+            raise Exception, "Direction is either forward (1) or reverse (-1)."
         self.v = np.float64(velocity)
-        self.passengers = set()
-        self.origin = origin
-        self.destination=destination
-        self.capacity = capacity
-        self.d2s = self.distance_to_stop(self.origin,self.destination)
-        self.traveled = np.float64()
-        self.at_station = at_station
         self.verbose = verbose
+        self.passengers = set()
+
+        #Determine the next station.
+        self.next_station, self.direction =line.resolve(self.direction, self.current_station)
+        #Calculate distance between current and next station.
+        print "DEBUG"
+        print self.current_station
+        print self.next_station
         
+        self.d2s = self.distance_to_stop(self.current_station,self.next_station)
+        #Distance traveled since last station.
+        self.traveled = np.float64()
+        
+        if self.verbose >1: print "Train %s: New train at location '%s'."%(self.name, self.current_station.name)
+        return
+
     def distance_to_stop(self,origin,destination):
-        """Get the distance to the next stop
-        TODO see if table lookup is faster than calculation"""
-        print destination
+        """Get the distance to the next stop"""
+        #TODO see if table lookup is faster than calculation
         dist = np.linalg.norm(destination.xy - origin.xy)
         return dist
-        
+                
     def update(self):
         """Iterate 1 timestep"""
-        self.traveled += self.v
+        at_station = False
+        self.traveled += self.v #TODO make velocity independent of timestep?
+        if self.verbose > 1: print "Train %s: Traveled %.3f meters."%(self.name, self.v)        
         if self.traveled >= self.d2s:
-            if self.verbose: print "Reached destination %s"%self.destination.name
-            self.at_station = True
-        
-        if self.at_station:
-            self.load_unload(self.destination)
-       
-    def next_station(self,current_station, line,direction=1):
-        """Resolve what the next station will be upon arrival."""
-        next_station = line.resolve(direction, self.current_station)
-        return next_station
+            at_station = True
             
+        if at_station:
+            self.current_station = self.next_station
+            if self.verbose > 0: print "Train %s: Reached destination '%s'"%(self.name, self.current_station.name)
+            self.next_station, self.direction = self.line.resolve(self.direction, self.current_station)
+            if self.verbose > 1: print "Train %s: Next destination is '%s'"%(self.name, self.next_station.name)
+            self.load_unload(self.current_station)
+            self.d2s = self.distance_to_stop(self.current_station,self.next_station)
+            self.traveled = np.float64()
+            
+        return   
+
     def load_unload(self, station):
         """Exchange passengers with station"""
-        #Passengers get off
+        
+        #Passengers that are getting off.
         offload = set()
         transfer = set()
-        for pas in self.passengers        :
+        for pas in self.passengers:
             if pas.destination == station:
                 offload.add(pas)
             elif station in pas.transfer:
-                transfer.add(pas)        
-        self.passengers -= offload + transfer
+                transfer.add(pas)
+        self.passengers -= offload | transfer
+        
         #passengers that are at their destination will be garbage collected.
         for pas in station.passengers:
             if pas.line == self.line:
                 try:
                     while not len(self.passengers) == self.capacity:
-                        self.passengers.add(station.passengers.pop())    
+                        self.passengers.add(station.passengers.pop())
                 except KeyError:
                     pass
-                
-        station.passengers.add(transfer)
+
+        station.passengers |= transfer 
         return
-        
-    
+
+
 class Line(object):
-    """TODO
-    Currently a dummy
-    Should be a set of instructions that manipulates a trains d2s"""
-    def __init__(self):
-        self.route = list()
+    """Set of instructions that provide a train with it's route"""
+    def __init__(self, name, route):
+        self.name = str(name)
+        self.route = route
         for x in self.route:
-            if not type(x) == Station:
+            if not issubclass(type(x), Station):
                 raise Exception, "Invalid line"
-                
+
     def resolve(self,direction, station):
         """Based on the direction that you are traveling, return next or previous."""
         if not direction in [1,-1]:
             raise Exception, "Direction is forward (1), or reverse (-1)."
-            
+        print self.route
         index = self.route.index(station)
-        return self.route[direction + index ]
-        
-        
-##maps = nx.Graph(city="New NYC")
-##
-##maps.add_node("sta")
+        try:
+            self.route[direction + index ]
+        except IndexError:
+            direction *= -1
+        finally:
+            return ([self.route[direction + index], direction])

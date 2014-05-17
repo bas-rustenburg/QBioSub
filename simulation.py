@@ -13,21 +13,26 @@ import itertools
 import numpy as np
 
 
-random.seed(1989)
+random.seed(1987)
 print random.randint(0,250)
 
 
-STATIONS = [tuple(['a', 0, 10, 0, 24]), tuple(['b', 10, 20, 0, 24]), tuple(['c', 20, 10, 0, 24]), tuple(['d', 10, 0, 0, 24])]
+STATIONS = [tuple(['a', 0, 10, 0, 4]), tuple(['b', 10, 20, 0, 4]), tuple(['c', 20, 10, 0, 4]), tuple(['d', 10, 0, 0, 4])]
 
 statlist = set()
 
 for s in STATIONS:
-    statlist.add(objects.KillerStation(*s))
+    statlist.add(objects.BasicStation(*s))
 #    
-timesteps = 144
+line = objects.Line('1',list(random.sample(statlist,4)))
+
+    
+train = objects.Train('1-1', 150, line, random.sample(statlist,1)[0], 1, 1.0, verbose=0)
+
+
+timesteps = 14400
 for _ in itertools.repeat(None,timesteps):
     [station.update(destinations=statlist) for station in statlist]
-
-
-x = objects.Train("F", random.sample(statlist,1)[0],random.sample(statlist,1)[0], 1.0,verbose=True )  
+    train.update()
+    print objects.Passenger.total
 
