@@ -17,11 +17,10 @@ Train movement
             evaluate which is faster. 
     TODO:   What do trains do when they are waiting at a station.
 
-Line iteration:
-    Index error if line reaches last stop. Need to catch this and reverse direction
-    of train in question.
+Lines:
     See how to deal with circular line, forward only solution [A, B, C , A] ; different line : [A, C ,B, A]
                                         better solution: If it gets index error at end, rather than change directions, return first element
+    Number of trains per line
 
 Passenger elimination:
     plan:   Train will carry passengers and only put them on a station if they

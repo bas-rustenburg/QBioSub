@@ -180,14 +180,15 @@ class Train(object):
                 on_count += 1
         except KeyError:
             pass
-
+        station.passengers |= transfer
+        
         if self.verbose >1:
             print "Train %s: Passengers getting off at station '%s': %d"%(self.name, self.current_station, off_count)
             print "Train %s: Passengers making transfer at station '%s': %d"%(self.name, self.current_station, transfer_count)        
             print "Train %s: Passengers getting on at station '%s': %d"%(self.name, self.current_station, on_count) 
-        station.passengers |= transfer
-     
-        #passengers that are at their destination will be garbage collected.
+        elif self.verbose >0:
+            print "Train %s: At station '%s' On/Off/Transfer: %d/%d/%d"%(self.name, self.current_station, on_count, off_count, transfer_count)
+        
         return
 
 

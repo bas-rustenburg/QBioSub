@@ -27,20 +27,20 @@ for s in STATIONS:
 line = objects.Line('1',statlist)
 
     
-train1 = objects.Train('1-1', 30, line, statlist[0], 1, 1.0, verbose=3)
-train2 = objects.Train('1-2', 30, line, statlist[1], 1, 1.0, verbose=3)
-train3 = objects.Train('1-3', 30, line, statlist[2], 1, 1.0, verbose=3)
-train4 = objects.Train('1-4', 30, line, statlist[3], 1, 1.0, verbose=3)
-train5 = objects.Train('1-1', 30, line, statlist[0], -1, 1.0, verbose=3)
-train6 = objects.Train('1-2', 30, line, statlist[1], -1, 1.0, verbose=3)
-train7 = objects.Train('1-3', 30, line, statlist[2], -1, 1.0, verbose=3)
-train8 = objects.Train('1-4', 30, line, statlist[3], -1, 1.0, verbose=3)
+train1 = objects.Train('1-1', 30, line, statlist[0], 1, 1.0, verbose=1)
+train2 = objects.Train('1-2', 30, line, statlist[1], 1, 1.0, verbose=1)
+train3 = objects.Train('1-3', 30, line, statlist[2], 1, 1.0, verbose=1)
+train4 = objects.Train('1-4', 30, line, statlist[3], 1, 1.0, verbose=1)
+train5 = objects.Train('1-1', 30, line, statlist[0], -1, 1.0, verbose=1)
+train6 = objects.Train('1-2', 30, line, statlist[1], -1, 1.0, verbose=1)
+train7 = objects.Train('1-3', 30, line, statlist[2], -1, 1.0, verbose=1)
+train8 = objects.Train('1-4', 30, line, statlist[3], -1, 1.0, verbose=1)
 
 trains = [train1,train2,train3,train4,train5,train6,train7,train8]
-timesteps = 3000
+timesteps = 300000
 for _ in itertools.repeat(None,timesteps):
     [station.update(destinations=statlist) for station in statlist]
     [train.update() for train in trains]
-    print "Total: %s"%objects.Passenger.total
+
     
 
