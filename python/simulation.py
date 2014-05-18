@@ -2,44 +2,26 @@
 """
 Created on Wed May 14 16:23:56 2014
 
-@author: B-Rus and Hy-C
+@author: Bas Rustenburg, Hyunwoo Choo
 """
 
 #import networkx as nx
 #import matplotlib
 import random
-import objects
 import itertools
-import numpy as np
+
+from systems import abcd
 
 
 random.seed(42)
-print random.randint(0,250)
+print [random.randint(0,255),random.randint(0,255),random.randint(0,255)]
 
 
-STATIONS = [tuple(['a', 0, 10, 0, 0]), tuple(['b', 10, 20, 0, 0]), tuple(['c', 20, 10, 0, 0]), tuple(['d', 10, 0, 0, 1])]
+stations,trains,lines = abcd()
 
-statlist = list()
-
-for s in STATIONS:
-    statlist.append(objects.BasicStation(*s))
-#    
-line = objects.Line('1',statlist)
-
-    
-train1 = objects.Train('1-1', 30, line, statlist[0], 1, 1.0, verbose=1)
-train2 = objects.Train('1-2', 30, line, statlist[1], 1, 1.0, verbose=1)
-train3 = objects.Train('1-3', 30, line, statlist[2], 1, 1.0, verbose=1)
-train4 = objects.Train('1-4', 30, line, statlist[3], 1, 1.0, verbose=1)
-train5 = objects.Train('1-1', 30, line, statlist[0], -1, 1.0, verbose=1)
-train6 = objects.Train('1-2', 30, line, statlist[1], -1, 1.0, verbose=1)
-train7 = objects.Train('1-3', 30, line, statlist[2], -1, 1.0, verbose=1)
-train8 = objects.Train('1-4', 30, line, statlist[3], -1, 1.0, verbose=1)
-
-trains = [train1,train2,train3,train4,train5,train6,train7,train8]
-timesteps = 300000
+timesteps = 0
 for _ in itertools.repeat(None,timesteps):
-    [station.update(destinations=statlist) for station in statlist]
+    [station.update(destinations=stations) for station in stations]
     [train.update() for train in trains]
 
     

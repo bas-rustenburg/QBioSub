@@ -2,12 +2,13 @@
 """
 Created on Tue May 13 18:13:26 2014
 
-@author: B-Rus, Hy-C
+@author: Bas Rustenburg, Hyunwoo Cho
 """
 
 import random
 import itertools
 import numpy as np
+import networkx as nx
 
 class Station(object):
     """Station object
@@ -183,11 +184,11 @@ class Train(object):
         station.passengers |= transfer
         
         if self.verbose >1:
-            print "Train %s: Passengers getting off at station '%s': %d"%(self.name, self.current_station, off_count)
-            print "Train %s: Passengers making transfer at station '%s': %d"%(self.name, self.current_station, transfer_count)        
-            print "Train %s: Passengers getting on at station '%s': %d"%(self.name, self.current_station, on_count) 
+            print "Train %s: Passengers getting off at station '%s': %d"%(self.name, self.current_station.name, off_count)
+            print "Train %s: Passengers making transfer at station '%s': %d"%(self.name, self.current_station.name, transfer_count)        
+            print "Train %s: Passengers getting on at station '%s': %d"%(self.name, self.current_station.name, on_count) 
         elif self.verbose >0:
-            print "Train %s: At station '%s' On/Off/Transfer: %d/%d/%d"%(self.name, self.current_station, on_count, off_count, transfer_count)
+            print "Train %s: At station '%s' On/Off/Transfer: %d/%d/%d"%(self.name, self.current_station.name, on_count, off_count, transfer_count)
         
         return
 
