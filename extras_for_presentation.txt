@@ -12,3 +12,11 @@ Typos:  Sr instead of St to abbreviate street.
 
 
 In order to speed up simulation, we calculate the optimal path between all stations in advance.
+
+explanation for wgs84 coordinate system
+works locally, especially in new york city!
+source for coordinate conversion
+website
+http://freegeographytools.com/2008/spreadsheet-tools-for-latlong-mgrs-and-utm-coordinate-conversions
+actual file
+http://www.mediafire.com/?h9m8myxwopxfu7l
