@@ -63,4 +63,6 @@ for (j in 1:nrow(locs)) {
   }
 }
 
+# 419 stations
 locs.coord = aggregate(cbind(Station_Latitude, Station_Longitude) ~ key, data=locs, function(a) mean(a))
+write.table(locs.coord, file="~/Desktop/QBioSub/listOfStationsConverted.txt", sep="\t", row.names=F, quote=F)
