@@ -2,7 +2,7 @@
 """
 Created on Mon May 19 14:59:47 2014
 
-@author: rustenburg
+@author: Bas Rustenburg, Hyunwoo Cho
 """
 
 import matplotlib.pyplot as plt
