@@ -194,6 +194,7 @@ class Train(object):
                 #TODO Dictionary lookup with trains Line to get list of passengers that ACTUALLY need to board
                 pas = station.passengers[0]
                 index=np.where(station.passengers==pas)
+                
                 station.passengers = np.delete(station.passengers,index)
                 np.append(self.passengers,pas)                
                 on_count += 1
@@ -242,10 +243,15 @@ class Line(object):
             
         #Find index of current station, to lookup where the next station is.
         index = np.where(self.route==station)[0][0]
+        indir = index + direction
         #Catching IndexError to flip direction if at end.        
         try:
-            self.route[direction + index ]
+            self.route[indir]
         except IndexError:
             direction *= -1
+            indir = index + direction
         finally:
-            return ([self.route[direction + index], direction])
+            #If we're at the beginning, flip
+            if indir == 0:
+                direction *= -1
+            return ([self.route[indir], direction])
