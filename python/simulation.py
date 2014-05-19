@@ -24,5 +24,5 @@ for _ in itertools.repeat(None,timesteps):
     [station.update(destinations=stations) for station in stations]
     [train.update() for train in trains]
 
-    
+
 

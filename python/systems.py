@@ -7,33 +7,20 @@ Created on Sat May 17 21:37:49 2014
 """
 import networkx as nx
 import objects
-
-
-from matplotlib import pylab
 import matplotlib.pyplot as plt
+#import pylab
 
 def save_graph(graph,file_name):
-    #initialze Figure
-    plt.figure(num=None, figsize=(20, 20), dpi=80)
-    plt.axis('off')
-    fig = plt.figure(1)
-    pos = nx.spring_layout(graph)
-    nx.draw_networkx_nodes(graph,pos)
-    nx.draw_networkx_edges(graph,pos)
-    nx.draw_networkx_labels(graph,pos)
-
-    cut = 1.00
-    xmax = cut * max(xx for xx, yy in pos.values())
-    ymax = cut * max(yy for xx, yy in pos.values())
-    plt.xlim(0, xmax)
-    plt.ylim(0, ymax)
-
-    plt.savefig(file_name,) #bbox_inches="tight"
-    pylab.close()
-    del fig
-
-
-
+    """Visually represent the subway network"""
+    positions = dict()
+    labels = dict()
+    for node in graph.nodes_iter():
+        positions[node] = node.xy
+        labels[node] = node.name
+    plt.figure()
+    nx.draw_networkx(graph,positions,labels=labels,node_size=200,node_color='chartreuse')
+    plt.savefig(file_name)
+    
 
 
 def pairwise(sequence):
@@ -60,16 +47,15 @@ def abcd():
     #
     for s in stations:
         subway.add_node(s)
-    
-      
+         
     lines = { '1': objects.Line('1',stations[0:4]),
               '2': objects.Line('2', [stations[4],stations[5],stations[2],stations[6]] )}
-    
-    
+        
     for l in lines.values():
         subway.add_edges_from(pairwise(l.route))
-    save_graph(subway,"my_graph.pdf")     
         
+    save_graph(subway,"subway.png")
+      
     train1 = objects.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
     train2 = objects.Train('1-2', 30, lines['1'], stations[1], 1, 1.0, verbose=0)
     train3 = objects.Train('1-3', 30, lines['1'], stations[2], 1, 1.0, verbose=0)
