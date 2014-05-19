@@ -8,7 +8,6 @@ Created on Tue May 13 18:13:26 2014
 import random
 import itertools
 import numpy as np
-import networkx as nx
 
 class Station(object):
     """Station object

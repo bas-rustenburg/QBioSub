@@ -7,21 +7,6 @@ Created on Sat May 17 21:37:49 2014
 """
 import networkx as nx
 import objects
-import matplotlib.pyplot as plt
-#import pylab
-
-def save_graph(graph,file_name):
-    """Visually represent the subway network"""
-    positions = dict()
-    labels = dict()
-    for node in graph.nodes_iter():
-        positions[node] = node.xy
-        labels[node] = node.name
-    plt.figure()
-    nx.draw_networkx(graph,positions,labels=labels,node_size=200,node_color='chartreuse')
-    plt.savefig(file_name)
-    
-
 
 def pairwise(sequence):
     "s -> (s0,s1), (s1,s2), (s2, s3), ..."
@@ -31,9 +16,7 @@ def pairwise(sequence):
         
     return pairs
 
-
-
-  
+ 
 
 def abcd():
     subway = nx.Graph()    
@@ -54,7 +37,6 @@ def abcd():
     for l in lines.values():
         subway.add_edges_from(pairwise(l.route))
         
-    save_graph(subway,"subway.png")
       
     train1 = objects.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
     train2 = objects.Train('1-2', 30, lines['1'], stations[1], 1, 1.0, verbose=0)
@@ -67,4 +49,4 @@ def abcd():
     
     trains = [train1,train2,train3,train4,train5,train6,train7,train8]
     
-    return stations,trains,lines
+    return subway,stations,trains,lines

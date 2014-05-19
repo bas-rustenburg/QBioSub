@@ -9,15 +9,16 @@ Created on Wed May 14 16:23:56 2014
 #import matplotlib
 import random
 import itertools
-
-from systems import abcd
-
+import visualization
+from systems import abcd as simulation
 
 random.seed(42)
 print [random.randint(0,255),random.randint(0,255),random.randint(0,255)]
 
 
-stations,trains,lines = abcd()
+subway,stations,trains,lines = simulation()
+
+visualization.subway_map(subway)
 
 timesteps = 0
 for _ in itertools.repeat(None,timesteps):
