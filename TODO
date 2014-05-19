@@ -39,6 +39,10 @@ Passenger priority:
 
 
 Visualization of a simulation:
-    Matplotlib integration, make a movie? 
-    Or run interactively if possible.
-        Perhaps a small system.
+    First steps taken, we can now actually visualize our coordinate system.
+    Future ideas:
+        Display location of trains, # of passengers in trains/at stations.
+        Perhaps we can put a barplot next to each station, or change its color.
+        Same for trains.
+    Could be interactive, or could just save a snapshot every few steps.
+
