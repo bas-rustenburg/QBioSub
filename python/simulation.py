@@ -18,9 +18,9 @@ print [random.randint(0,255),random.randint(0,255),random.randint(0,255)]
 
 subway,stations,trains,lines = simulation()
 
-visualization.subway_map(subway)
+#visualization.subway_map(subway)
 
-timesteps = 0
+timesteps = 140
 for _ in itertools.repeat(None,timesteps):
     [station.update(destinations=stations) for station in stations]
     [train.update() for train in trains]
