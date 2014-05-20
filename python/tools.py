@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 class Station(object):
     """
     Create a station.
-    
+
     Parameters
     ----------
     name : string
@@ -23,7 +23,7 @@ class Station(object):
         x-coordinate for this station.
     y : float
         y-coordinate for this station.
-    
+
     Attributes
     ----------
     name : string
@@ -32,8 +32,8 @@ class Station(object):
         Array of Passenger objects that are at current station
     xy : numpy.array([float,float])
         Pair of x,y coordinates to specify stations location.
-        
-            
+
+
     """
     def __init__(self,name,x,y):
         """
@@ -53,7 +53,7 @@ class Station(object):
     def spawn(self):
         """Generic stations don't spawn anything"""
         return np.array([])
-        
+
     def kill(self):
         """Not killing anything"""
         return np.array([])
@@ -68,7 +68,7 @@ class Station(object):
 class BasicStation(Station):
     """
     Create a simple station.
-    
+
     Parameters
     ----------
     name : string
@@ -81,8 +81,8 @@ class BasicStation(Station):
         Minimum number of passengers to spawn per timestep
     maxpas : int
         Maximum number of passengers to spawn per timestep
-        
-    
+
+
     Attributes
     ----------
     name : string
@@ -91,8 +91,8 @@ class BasicStation(Station):
         array of Passenger objects that are at current station
     xy : numpy.array([float,float])
         pair of x,y coordinates to specify stations location
-        
-            
+
+
     """
     def __init__(self, name,x,y, minpas,maxpas):
         "Use parent __init__ function"
@@ -109,7 +109,7 @@ class BasicStation(Station):
         for _ in itertools.repeat(None,num):
             newpassengers = np.append(newpassengers, Passenger(self,random.sample(destinations, 1)[0]))
         return newpassengers
-    
+
     def __repr__(self):
         """
         Representation of Station as a string
@@ -135,7 +135,7 @@ class LineStation(BasicStation):
     def __init__(self, name,x,y, minpas,maxpas,lines):
         "Use parent __init__ function"
         super(LineStation,self).__init__(name, x, y,minpas,maxpas)
-        #Lines is an array of strings. 
+        #Lines is an array of strings.
         #These strings NEED! to match the identifier for the Line objects.
         self.lines = np.array(lines)
         return
@@ -148,7 +148,7 @@ class Passenger(object):
         self.origin = origin
         self.location = origin
         self.destination = destination
-        self.transfer = np.array([])        
+        self.transfer = np.array([])
         self.verbose = verbose
         Passenger.total +=1
         return
@@ -164,7 +164,7 @@ class Passenger(object):
         if self.verbose:
             print "Please don't kill me, I have a family!"
             print "I'm being killed at %s."%self.location.name
-        
+
         return
 
 
@@ -176,7 +176,7 @@ class Train(object):
         capacity - Max number of people on one train.
         line - Line object, in charge of destinations
         start - initial station
-        direction - forward (1) or reverse (-1) 
+        direction - forward (1) or reverse (-1)
         velocity - meters per time step
         verbose - degree of verbosity (int, 0 = quiet, 1= info, 2 = debug)
         """
@@ -194,11 +194,11 @@ class Train(object):
         #Determine the next station.
         self.next_station, self.direction =line.resolve(self.direction, self.current_station)
         #Calculate distance between current and next station.
-        
+
         self.d2s = self.distance_to_stop(self.current_station,self.next_station)
         #Distance traveled since last station.
         self.traveled = np.float64()
-        
+
         if self.verbose >1: print "Train %s: New train at location '%s'."%(self.name, self.current_station.name)
         return
 
@@ -207,41 +207,41 @@ class Train(object):
         #TODO see if table lookup is faster than calculation
         dist = np.linalg.norm(destination.xy - origin.xy)
         return dist
-                
+
     def update(self):
         """Iterate 1 timestep"""
         at_station = False
         self.traveled += self.v #TODO make velocity independent of timestep?
-        if self.verbose > 2: 
-            print "Train %s: Traveled %.3f meters."%(self.name, self.v)        
+        if self.verbose > 2:
+            print "Train %s: Traveled %.3f meters."%(self.name, self.v)
             print "Train %s: Is carrying %d passenger(s)"%(self.name, len(self.passengers))
         if self.traveled >= self.d2s:
             at_station = True
-            
+
         if at_station:
             self.current_station = self.next_station
             self.next_station, self.direction = self.line.resolve(self.direction, self.current_station)
             self.load_unload(self.current_station)
             self.d2s = self.distance_to_stop(self.current_station,self.next_station)
             self.traveled = np.float64()
-            
+
             if self.verbose > 1: print "Train %s: Reached destination '%s'"%(self.name, self.current_station.name)
             if self.verbose > 1: print "Train %s: Next destination is '%s'"%(self.name, self.next_station.name)
-        return   
+        return
 
     def load_unload(self, station):
         """Exchange passengers with station"""
-        
+
         #Passengers that are getting off.
         offload = np.array([])
         transfer = np.array([])
         off_count = int()
         on_count = int()
         transfer_count = int()
-        
+
         #First, passengers need to get off to free up space on the train.
         for pas in self.passengers:
-            
+
             #Offload and disappear if this is their final destination.
             if pas.destination == station:
                 offload = np.append(offload,pas)
@@ -250,16 +250,16 @@ class Train(object):
             elif station in pas.transfer:
                 transfer = np.append(transfer,pas)
                 transfer_count +=1
-                
+
         #Passengers are removed from the train.
         self.passengers = np.setdiff1d(self.passengers,  np.union1d(offload, transfer))
-        
+
         #TODO: Once passengers can choose the right train, add stations transfer passengers here
 
         #Now, see which passengers are getting on
-        #TODO: Passengers need to figure out if they want to get on this train.                
+        #TODO: Passengers need to figure out if they want to get on this train.
         try:
-            
+
             #Keep running forever
             while True:
                 #We stop of the train is full
@@ -269,40 +269,40 @@ class Train(object):
                 #TODO Dictionary lookup with trains Line to get list of passengers that ACTUALLY need to board
                 pas = station.passengers[0]
                 index=np.where(station.passengers==pas)
-                
+
                 station.passengers = np.delete(station.passengers,index)
-                np.append(self.passengers,pas)                
+                np.append(self.passengers,pas)
                 on_count += 1
         except IndexError:
             #IndexError would mean there are no passengers left in the station, so we're done.
             pass
-        
+
         finally:
-            #TODO: Once passengers will only get on the right train , move this up 
+            #TODO: Once passengers will only get on the right train , move this up
             station.passengers = np.union1d(station.passengers, transfer)
-        
+
         if self.verbose >1:
             print "Train %s: Passengers getting off at station '%s': %d"%(self.name, self.current_station.name, off_count)
-            print "Train %s: Passengers making transfer at station '%s': %d"%(self.name, self.current_station.name, transfer_count)        
-            print "Train %s: Passengers getting on at station '%s': %d"%(self.name, self.current_station.name, on_count) 
+            print "Train %s: Passengers making transfer at station '%s': %d"%(self.name, self.current_station.name, transfer_count)
+            print "Train %s: Passengers getting on at station '%s': %d"%(self.name, self.current_station.name, on_count)
         elif self.verbose >0:
             print "Train %s: At station '%s' On/Off/Transfer: %d/%d/%d"%(self.name, self.current_station.name, on_count, off_count, transfer_count)
-        
+
         return
 
 
 class Line(object):
     """
     Set of instructions that provide a train with it's route
-    
+
     Parameters
     ----------
-    name : string, 
+    name : string,
         The name to represent this line.
     route : array_like,
-        Sequence that details which stations follow in which order.         
+        Sequence that details which stations follow in which order.
     """
-    
+
     def __init__(self, name, route):
         self.name = str(name)
         self.route = np.array(route)
@@ -315,11 +315,11 @@ class Line(object):
         """Based on the direction that you are traveling, return next or previous."""
         if not direction in [1,-1]:
             raise Exception, "Direction is forward (1), or reverse (-1)."
-            
+
         #Find index of current station, to lookup where the next station is.
         index = np.where(self.route==station)[0][0]
         indir = index + direction
-        #Catching IndexError to flip direction if at end.        
+        #Catching IndexError to flip direction if at end.
         try:
             self.route[indir]
         except IndexError:
@@ -330,8 +330,8 @@ class Line(object):
             if indir == 0:
                 direction *= -1
             return ([self.route[indir], direction])
-            
-            
+
+
 
 
 def pairwise(sequence):
@@ -346,7 +346,7 @@ def generate_all_routes(graph):
     """
     Generate all routes for a passenger to take through the subway that only pass a station once
     """
-    pathmatrix = dict()   
+    pathmatrix = dict()
     for outer in graph.nodes_iter():
         for inner in graph.nodes_iter():
                 pathmatrix[tuple([outer,inner])] = list(nx.all_simple_paths(graph,outer,inner))
@@ -371,8 +371,8 @@ def dist_transf(pathmatrix):
             lines.append(line)
         dmatrix[key]=zip(paths,lines,dists)
     #dmatrix contains station pairs as keys, points to possible paths, with lines taken along paths, and total distance of the path
-    #Example:    
-    #dmatrix[a,d] => ([[a,b,c,d],...], ['1','1','1'], 82.09) 
+    #Example:
+    #dmatrix[a,d] => ([[a,b,c,d],...], ['1','1','1'], 82.09)
     return dmatrix
 
 
@@ -388,9 +388,9 @@ def subway_map(graph,file_name=None):
         labels[node] = node.name
     plt.figure()
     nx.draw_networkx(graph,positions,labels=labels,node_size=200,node_color='chartreuse')
-    if file_name:    
+    if file_name:
         plt.savefig(file_name, dpi=300)
     else: plt.show()
 
-   
+
 
