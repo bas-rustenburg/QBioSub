@@ -9,6 +9,7 @@ import random
 import itertools
 import numpy as np
 import networkx as nx
+import matplotlib.pyplot as plt
 
 class Station(object):
     """
@@ -373,5 +374,23 @@ def dist_transf(pathmatrix):
     #Example:    
     #dmatrix[a,d] => ([[a,b,c,d],...], ['1','1','1'], 82.09) 
     return dmatrix
-    
+
+
+
+def subway_map(graph,file_name=None):
+    """Visually represent the subway network and save to file"""
+    # Turn interactive plotting off
+    plt.ioff()
+    positions = dict()
+    labels = dict()
+    for node in graph.nodes_iter():
+        positions[node] = node.xy
+        labels[node] = node.name
+    plt.figure()
+    nx.draw_networkx(graph,positions,labels=labels,node_size=200,node_color='chartreuse')
+    if file_name:    
+        plt.savefig(file_name, dpi=300)
+    else: plt.show()
+
+   
 

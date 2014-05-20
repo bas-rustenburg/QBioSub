@@ -10,7 +10,7 @@ Created on Wed May 14 16:23:56 2014
 import random
 import itertools
 import visualization
-import objects
+import tools
 
 from systems import abcd as simulation
 
@@ -28,7 +28,7 @@ timesteps = 140
 for _ in itertools.repeat(None,timesteps):
     [station.update(destinations=stations) for station in stations]
     [train.update() for train in trains]
-    pastotals.append(objects.Passenger.total)
+    pastotals.append(tools.Passenger.total)
 
 visualization.subway_map(subway)
 

@@ -8,7 +8,7 @@ Created on Sat May 17 21:37:49 2014
 import networkx as nx
 import numpy as np
 import objects
-from functions import pairwise
+from tools import pairwise
 
 
 def abcd():
