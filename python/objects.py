@@ -126,6 +126,18 @@ class KillerStation(BasicStation):
         kills= set(random.sample(self.passengers,killcount))
         return kills
 
+class LineStation(BasicStation):
+    """
+    Create station that knows which lines go through it
+    """
+    def __init__(self, name,x,y, minpas,maxpas,lines):
+        "Use parent __init__ function"
+        super(BasicStation,self).__init__(name, x, y,minpas,maxpas,lines)
+        #Lines is an array of strings. 
+        #These strings NEED! to match the identifier for the Line objects.
+        self.lines = np.array(lines)
+        return
+
 
 class Passenger(object):
     """Wants to go from A to B"""
