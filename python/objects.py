@@ -132,7 +132,7 @@ class LineStation(BasicStation):
     """
     def __init__(self, name,x,y, minpas,maxpas,lines):
         "Use parent __init__ function"
-        super(BasicStation,self).__init__(name, x, y,minpas,maxpas,lines)
+        super(LineStation,self).__init__(name, x, y,minpas,maxpas,lines)
         #Lines is an array of strings. 
         #These strings NEED! to match the identifier for the Line objects.
         self.lines = np.array(lines)

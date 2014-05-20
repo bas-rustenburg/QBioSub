@@ -37,9 +37,12 @@ def calculate_distances(pathmatrix):
         dists=list()
         for path in paths:
             dist = np.float64()
+            line = list()
             for stationa,stationb in pairwise(path):
                 dist += np.linalg.norm([stationa.xy,stationb.xy])
+                line.append(np.union1d(stationa.lines,stationb.lines))
             dists.append(dist)
-        dmatrix[key]=zip(paths,dists)        
+        dmatrix[key]=zip(paths,lines,dist)        
     return dmatrix
-        
+    
+

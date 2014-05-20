@@ -82,6 +82,7 @@ def labcdefg():
     stations = list()
 
     for S in STATIONS:
+        print S
         stations.append(objects.LineStation(*S))
     #
     for s in stations:
