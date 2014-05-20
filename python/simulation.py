@@ -9,7 +9,6 @@ Created on Wed May 14 16:23:56 2014
 #import matplotlib
 import random
 import itertools
-import visualization
 import tools
 
 from systems import abcd as simulation
@@ -30,7 +29,7 @@ for _ in itertools.repeat(None,timesteps):
     [train.update() for train in trains]
     pastotals.append(tools.Passenger.total)
 
-visualization.subway_map(subway)
+tools.subway_map(subway)
 
 
 

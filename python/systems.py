@@ -102,7 +102,7 @@ def labcdefg():
     train4 = objects.Train('1-4', 30, lines['1'], stations[3], 1, 1.0, verbose=1)
 
 
-    trains = [train1,train2,train3,train4,train5,train6,train7,train8]
+    trains = [train1,train2,train3,train4]
     
     
 
@@ -149,7 +149,8 @@ def nyc():
 
     STATIONS = []
     with open('../listOfStationsConverted.txt') as f:
-        no_using_header = f.readline()
+        #skip header
+        f.readline()
         rows = (line.strip().split("\t") for line in f)
         for row in rows:
             STATIONS.append(tuple([row[0], (int(row[5]) if (row[3][-2] == 'X') else int(row[5]) - 100000), (int(row[4]) if (row[3][-1] == 'L') else int(row[4]) - 100000), 0, 1]))
@@ -196,7 +197,7 @@ def nycdict():
 
     STATIONS = []
     with open('../listOfStationsConverted.txt') as f:
-        no_using_header = f.readline()
+        f.readline()
         rows = (line.strip().split("\t") for line in f)
         for row in rows:
             STATIONS.append(tuple([row[0], (int(row[5]) if (row[3][-2] == 'X') else int(row[5]) - 100000), (int(row[4]) if (row[3][-1] == 'L') else int(row[4]) - 100000), 0, 1]))
