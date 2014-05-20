@@ -13,6 +13,4 @@ tools.subway_map(subway,"labcdefghi.png")
 pathmatrix = tools.generate_all_routes(subway)
 distmatrix = tools.dist_transf(pathmatrix)
 
-for x in distmatrix.iteritems():
-    print "PAIR"
-    print x
+print distmatrix[(stations[0],stations[4])]
