@@ -10,10 +10,41 @@ import itertools
 import numpy as np
 
 class Station(object):
-    """Station object
+    """
+    Create a station.
+    
+    Parameters
+    ----------
+    name : string
+        Identifier for this station.
+    x : float
+        x-coordinate for this station.
+    y : float
+        y-coordinate for this station.
+    
+    Attributes
+    ----------
+    name : string
+        Identifier for this station.
+    passengers : numpy.array
+        Array of Passenger objects that are at current station
+    xy : numpy.array([float,float])
+        Pair of x,y coordinates to specify stations location.
+        
+            
     """
     def __init__(self,name,x,y):
-        self.name = name
+        """
+        Parameters
+        ----------
+        name : string
+            Identifier for this station.
+        x : float
+            x-coordinate for this station.
+        y : float
+            y-coordinate for this station.
+        """
+        self.name = str(name)
         self.passengers = np.array([])
         self.xy = np.array([np.float64(x),np.float64(y)])
 
@@ -33,8 +64,33 @@ class Station(object):
 
 
 class BasicStation(Station):
-    """Simple station
-       Kills passengers if they have reached their destination
+    """
+    Create a simple station.
+    
+    Parameters
+    ----------
+    name : string
+        Identifier for this station.
+    x : float
+        x-coordinate for this station.
+    y : float
+        y-coordinate for this station.
+    minpas : int
+        Minimum number of passengers to spawn per timestep
+    maxpas : int
+        Maximum number of passengers to spawn per timestep
+        
+    
+    Attributes
+    ----------
+    name : string
+        identifier for this station
+    passengers : numpy.array
+        array of Passenger objects that are at current station
+    xy : numpy.array([float,float])
+        pair of x,y coordinates to specify stations location
+        
+            
     """
     def __init__(self, name,x,y, minpas,maxpas):
         "Use parent __init__ function"
@@ -51,7 +107,12 @@ class BasicStation(Station):
         for _ in itertools.repeat(None,num):
             newpassengers = np.append(newpassengers, Passenger(self,random.sample(destinations, 1)[0]))
         return newpassengers
-
+    
+    def __repr__(self):
+        """
+        Representation of Station as a string
+        """
+        return "St'%s'"%self.name
 
 class KillerStation(BasicStation):
     """Kills random people

@@ -18,19 +18,19 @@ random.seed(42)
 print [random.randint(0,255),random.randint(0,255),random.randint(0,255)]
 
 
-subway,stations,trains,lines = simulation()
+subway,lines,stations,trains = simulation()
 
 #visualization.subway_map(subway)
 
 pastotals = list()
 
-timesteps = 14000
+timesteps = 140
 for _ in itertools.repeat(None,timesteps):
     [station.update(destinations=stations) for station in stations]
     [train.update() for train in trains]
     pastotals.append(objects.Passenger.total)
 
-print sum(pastotals)/len(pastotals)
+visualization.subway_map(subway)
 
 
 

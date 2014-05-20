@@ -6,15 +6,9 @@ Created on Sat May 17 21:37:49 2014
 
 """
 import networkx as nx
+import numpy as np
 import objects
-
-def pairwise(sequence):
-    "s -> (s0,s1), (s1,s2), (s2, s3), ..."
-    pairs=list()
-    for i in range(len(sequence)-1):
-        pairs.append(tuple([sequence[i],sequence[i+1]]))
-
-    return pairs
+from functions import pairwise
 
 
 def abcd():
@@ -34,13 +28,15 @@ def abcd():
             }
 
     for l in lines.values():
-        subway.add_edges_from(pairwise(l.route))
+        for pair in pairwise(l.route):
+            dist = np.linalg.norm([pair[0].xy,pair[1].xy])
+            subway.add_edge(*pair, distance=dist)
 
     train1 = objects.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
     train2 = objects.Train('1-2', 30, lines['1'], stations[1], -1, 1.0, verbose=0)
     trains = [train1,train2]
 
-    return subway,stations,trains,lines
+    return subway,lines,stations,trains
 
 
 def abcdefg():
@@ -60,7 +56,9 @@ def abcdefg():
               '2': objects.Line('2', [stations[4],stations[5],stations[2],stations[6]] )}
 
     for l in lines.values():
-        subway.add_edges_from(pairwise(l.route))
+        for pair in pairwise(l.route):
+            dist = np.linalg.norm([pair[0].xy,pair[1].xy])
+            subway.add_edge(*pair, distance=dist)
 
 
     train1 = objects.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
@@ -73,5 +71,7 @@ def abcdefg():
     train8 = objects.Train('1-4', 30, lines['1'], stations[3], -1, 1.0, verbose=0)
 
     trains = [train1,train2,train3,train4,train5,train6,train7,train8]
+    
+    
 
-    return subway,stations,trains,lines
+    return subway,lines,stations,trains
