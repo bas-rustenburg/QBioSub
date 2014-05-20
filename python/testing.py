@@ -8,9 +8,11 @@ Created on Mon May 19 19:48:40 2014
 import systems,tools
 
 subway,lines,stations,trains = systems.labcdefghi()
-tools.subway_map(subway,"labcdefghi.png")
+tools.subway_map(subway)
 
 pathmatrix = tools.generate_all_routes(subway)
 distmatrix = tools.dist_transf(pathmatrix)
 
-print distmatrix[(stations[0],stations[4])]
+
+for x in distmatrix[(stations[0],stations[4])]:
+    print x[0], [list(y) for y in x[1] ] 
