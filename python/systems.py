@@ -185,3 +185,28 @@ def nyc():
     
 
     return subway,lines,stations,trains
+
+def nycdict():
+    """
+    MOCK example of how to specify stations as a dict
+    Something is still wrong in station definition
+    """
+    #TODO not a full simulation system
+    subway = nx.Graph()
+
+    STATIONS = []
+    with open('../listOfStationsConverted.txt') as f:
+        no_using_header = f.readline()
+        rows = (line.strip().split("\t") for line in f)
+        for row in rows:
+            STATIONS.append(tuple([row[0], (int(row[5]) if (row[3][-2] == 'X') else int(row[5]) - 100000), (int(row[4]) if (row[3][-1] == 'L') else int(row[4]) - 100000), 0, 1]))
+
+    stations = dict()
+
+    for S in STATIONS:
+        #S[0] should be the name
+        stations[S[0]]=objects.LineStation(*S)
+    #
+    for s in stations.itervalues():
+        subway.add_node(s)
+        
