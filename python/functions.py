@@ -27,22 +27,27 @@ def generate_all_routes(graph):
                 pathmatrix[tuple([outer,inner])] = list(nx.all_simple_paths(graph,outer,inner))
     return pathmatrix
 
-def calculate_distances(pathmatrix):
+def dist_transf(pathmatrix):
     """
-    calculate the distances belonging to a set of paths
+    calculate the distances belonging to a set of paths and the line along the route
     """
     pmx = pathmatrix
     dmatrix = dict()
     for key,paths in pmx.iteritems():
         dists=list()
+        lines=list()
         for path in paths:
             dist = np.float64()
             line = list()
             for stationa,stationb in pairwise(path):
                 dist += np.linalg.norm([stationa.xy,stationb.xy])
-                line.append(np.union1d(stationa.lines,stationb.lines))
+                line.append(np.intersect1d(stationa.lines,stationb.lines))
             dists.append(dist)
-        dmatrix[key]=zip(paths,lines,dist)        
+            lines.append(line)
+        dmatrix[key]=zip(paths,lines,dists)
+    #dmatrix contains station pairs as keys, points to possible paths, with lines taken along paths, and total distance of the path
+    #Example:    
+    #dmatrix[a,d] => ([[a,b,c,d],...], ['1','1','1'], 82.09) 
     return dmatrix
     
 
