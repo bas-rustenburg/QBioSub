@@ -358,12 +358,12 @@ def generate_dist_line(pathmatrix):
     
     Returns
     -------
-    dmatrix : dict,
-    Dmatrix contains station pairs as keys, points to possible paths, with lines taken along paths, and total distance of the path
+    distmatrix : dict,
+    distmatrix contains station pairs as keys, points to possible paths, with lines taken along paths, and total distance of the path
     Example:
-    dmatrix[a,d]  :  ([[a,b,c,d],...], ['1','1','1'], 82.09)
+    distmatrix[a,d]  :  ([[a,b,c,d],...], ['1','1','1'], 82.09)
     """
-    dmatrix = dict()
+    distmatrix = dict()
     for key,paths in pathmatrix.iteritems():
         dists=list()
         lines=list()
@@ -375,22 +375,23 @@ def generate_dist_line(pathmatrix):
                 line.append(stationa.lines & stationb.lines)
             dists.append(dist)
             lines.append(line)
-        dmatrix[key]=zip(paths,lines,dists)
+        distmatrix[key]=zip(paths,lines,dists)
     #
-    return dmatrix
+    return distmatrix
 
 x = list()
 
 
-def generate_transfers(dmatrix,lines):
+def generate_transfers(distmatrix,lines):
     """
-    Generate optimal choice of line to take
+    Generate optimal choice of line to take per path
+    Calculate amount of transfers for that line
     """
-    tmatrix = dict()
+    transmatrix = dict()
     #Per station pairs i,j.
-    for key,paths in dmatrix.iteritems():
+    for key,paths in distmatrix.iteritems():
         #A given path between station i,j
-        newpaths=list()
+        bestpaths=list()
         for path in paths:
             stations=path[0]
             #figure out the best path one could take            
@@ -417,11 +418,23 @@ def generate_transfers(dmatrix,lines):
             dist = path[2]
             #station is combined with lines that one could take there
             #the last station is removed from the list since no train is taken
-            print len(stations),len(bestpath)
-            newpaths.append((zip(stations,bestpath,directions),dist,ntransf))
-        tmatrix[key] = newpaths
-    return tmatrix
+            #between every station we will have
+            #  list of paths
+            #      #every path
+            #        list of stations in path 
+            #        list of lines optimal for that path
+            #        list of directions of line for that path
+            #        total distance
+            #        total transfers
+            bestpaths.append((zip(stations,bestpath,directions),dist,ntransf))
+        transmatrix[key] = bestpaths
+    return transmatrix
 
+def decide_on_path(transmatrix,algoritm=["trans","dist","stops"]):
+    """
+    Choose the best path depending on criterium.
+    """
+    pass
 
 
 #Some lists to throw at the consistent_resolver
@@ -531,7 +544,7 @@ def count_transfers(linlist,directions):
             if linlist[i]  != linlist[i+1]:
                 transfers += 1
             #if a passenger changes direction on the same line
-            #he also needs to transfer. Odd situation though.    
+            #he also needs to transfer. Odd situation though.     
             elif directions[i] != directions[i+1]:
                 transfers +=1
             else:
