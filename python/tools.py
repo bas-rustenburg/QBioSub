@@ -135,9 +135,9 @@ class LineStation(BasicStation):
     def __init__(self, name,x,y, minpas,maxpas,lines):
         "Use parent __init__ function"
         super(LineStation,self).__init__(name, x, y,minpas,maxpas)
-        #Lines is an array of strings.
+        #Lines is a set of strings.
         #These strings NEED! to match the identifier for the Line objects.
-        self.lines = np.array(lines)
+        self.lines = set(lines)
         return
 
 
@@ -338,7 +338,7 @@ def pairwise(sequence):
     "s -> (s0,s1), (s1,s2), (s2, s3), ..."
     pairs=list()
     for i in range(len(sequence)-1):
-        pairs.append(tuple([sequence[i],sequence[i+1]]))
+        pairs.append([sequence[i],sequence[i+1]])
 
     return pairs
 
@@ -352,13 +352,19 @@ def generate_all_routes(graph):
                 pathmatrix[tuple([outer,inner])] = list(nx.all_simple_paths(graph,outer,inner))
     return pathmatrix
 
-def dist_transf(pathmatrix):
+def generate_dist_line(pathmatrix):
     """
     calculate the distances belonging to a set of paths and the line along the route
+    
+    Returns
+    -------
+    dmatrix : dict,
+    Dmatrix contains station pairs as keys, points to possible paths, with lines taken along paths, and total distance of the path
+    Example:
+    dmatrix[a,d]  :  ([[a,b,c,d],...], ['1','1','1'], 82.09)
     """
-    pmx = pathmatrix
     dmatrix = dict()
-    for key,paths in pmx.iteritems():
+    for key,paths in pathmatrix.iteritems():
         dists=list()
         lines=list()
         for path in paths:
@@ -366,17 +372,123 @@ def dist_transf(pathmatrix):
             line = list()
             for stationa,stationb in pairwise(path):
                 dist += np.linalg.norm([stationa.xy,stationb.xy])
-                line.append(np.intersect1d(stationa.lines,stationb.lines))
+                line.append(stationa.lines & stationb.lines)
             dists.append(dist)
             lines.append(line)
         dmatrix[key]=zip(paths,lines,dists)
-    #dmatrix contains station pairs as keys, points to possible paths, with lines taken along paths, and total distance of the path
-    #Example:
-    #dmatrix[a,d] => ([[a,b,c,d],...], ['1','1','1'], 82.09)
+    #
     return dmatrix
 
 
 
+def solve_transfers(dmatrix,lines):
+    tmatrix = dict()
+    #Per station pairs i,j.
+    for key,paths in dmatrix.iteritems():
+        #A given path between station i,j
+        newpaths=list()
+        for path in paths:
+            stations=path[0]            
+            newpath = consistent_resolver(path[1])
+            dist = path[2]
+            newpaths.append((stations,newpath,dist))
+        tmatrix[key] = newpaths
+    return tmatrix
+
+def transfer_resolver(opt_per_stat):    
+    opt_per_stat = list(opt_per_stat)
+    opt_copy = list(opt_per_stat)
+    #for every element in the list of lines
+    for i in range(len(opt_per_stat)):
+        try:
+            insect = opt_copy[i] & opt_copy[i+1]
+            if insect:
+                opt_copy[i]= insect
+            else:
+                pass            
+        except IndexError:
+            othersect = opt_copy[i] & opt_copy[i-1]
+            if othersect:
+                opt_copy[i] = othersect               
+            break
+    
+    if opt_copy == opt_per_stat:
+#        print "solution found %s" % opt_copy        
+        return opt_copy
+    else:
+#        print "no solution yet"
+#        print "%s x\n%s"%(opt_copy, opt_per_stat)
+        return transfer_resolver(opt_copy)
+
+#Some lists to throw at the consistent_resolver
+xlist = [{1,2}, {1,2}, {2}, {2}, {3}]
+vlist = xlist[::-1]
+ylist = [{1,4,3},{2,4,3},{1,2,3},{2},{3},{3,2}]
+zlist = ylist[::-1]
+alist = [{1,2,5}, {1,2}, {1,2,4} ]
+blist = alist[::-1]
+
+def consistent_resolver(opt_per_stat):
+    """
+    Arguments
+    ---------
+    opt_per_stat - list of sets
+        Set with possible lines that connect stations
+        
+    Makes sure that the path resolved is consistent in both directions
+    This reduces transfers
+    """
+    forward = list(opt_per_stat)
+    reverse = list(forward[::-1])
+    
+    ans_for = transfer_resolver(forward)
+    ans_rev = transfer_resolver(reverse)
+    rev_ans_for = transfer_resolver(ans_for[::-1])    
+    rev_ans_rev = transfer_resolver(ans_rev[::-1])
+     
+    if ans_for == ans_rev[::-1]:
+        # "results are same in reverse"        
+        if ans_for == rev_ans_for[::-1]:
+            #"results are consistent"
+            return ans_for
+        elif rev_ans_for[::-1] == rev_ans_rev:
+            # "consistent after reversing twice"
+            return rev_ans_rev
+        else:
+            # "Cant make consistent, assume equally good solutions exist"
+            return rev_ans_rev
+            
+    else:
+        # "not the same in reverse"
+        if rev_ans_for[::-1] == ans_for:
+            # "results are consistent"
+            return rev_ans_for[::-1]
+        elif rev_ans_for[::-1] == rev_ans_rev:
+            # "consistent after reversing twice"
+            return rev_ans_rev
+        else:
+           # "Cant make consistent, assume equally good solutions exist"
+           return rev_ans_rev
+           
+def count_transfers(linlist):
+    """
+    Arguments
+    ---------
+    linlist - list of sets
+        list with set of lines to follow in order
+    """
+    transfers = int()
+    try:
+        for i,line in enumerate(linlist):
+            if linlist[i]  != linlist[i+1]:
+                transfers += 1
+            else:
+                continue
+                
+    except IndexError:
+        pass
+    return transfers
+    
 def subway_map(graph,file_name=None):
     """Visually represent the subway network and save to file"""
     # Turn interactive plotting off
@@ -391,6 +503,5 @@ def subway_map(graph,file_name=None):
     if file_name:
         plt.savefig(file_name, dpi=300)
     else: plt.show()
-
 
 

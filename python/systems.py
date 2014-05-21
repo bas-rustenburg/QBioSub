@@ -7,7 +7,7 @@ Created on Sat May 17 21:37:49 2014
 """
 import networkx as nx
 import numpy as np
-import objects
+import tools
 from tools import pairwise
 
 
@@ -19,12 +19,12 @@ def abcd():
     stations = list()
 
     for S in STATIONS:
-        stations.append(objects.BasicStation(*S))
+        stations.append(tools.BasicStation(*S))
 
     for s in stations:
         subway.add_node(s)
 
-    lines = { '1': objects.Line('1',stations[0:4]),
+    lines = { '1': tools.Line('1',stations[0:4]),
             }
 
     for l in lines.values():
@@ -32,8 +32,8 @@ def abcd():
             dist = np.linalg.norm([pair[0].xy,pair[1].xy])
             subway.add_edge(*pair, distance=dist)
 
-    train1 = objects.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
-    train2 = objects.Train('1-2', 30, lines['1'], stations[1], -1, 1.0, verbose=0)
+    train1 = tools.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
+    train2 = tools.Train('1-2', 30, lines['1'], stations[1], -1, 1.0, verbose=0)
     trains = [train1,train2]
 
     return subway,lines,stations,trains
@@ -47,13 +47,13 @@ def abcdefg():
     stations = list()
 
     for S in STATIONS:
-        stations.append(objects.BasicStation(*S))
+        stations.append(tools.BasicStation(*S))
     #
     for s in stations:
         subway.add_node(s)
 
-    lines = { '1': objects.Line('1',stations[0:4]),
-              '2': objects.Line('2', [stations[4],stations[5],stations[2],stations[6]] )}
+    lines = { '1': tools.Line('1',stations[0:4]),
+              '2': tools.Line('2', [stations[4],stations[5],stations[2],stations[6]] )}
 
     for l in lines.values():
         for pair in pairwise(l.route):
@@ -61,14 +61,14 @@ def abcdefg():
             subway.add_edge(*pair, distance=dist)
 
 
-    train1 = objects.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
-    train2 = objects.Train('1-2', 30, lines['1'], stations[1], 1, 1.0, verbose=0)
-    train3 = objects.Train('1-3', 30, lines['1'], stations[2], 1, 1.0, verbose=0)
-    train4 = objects.Train('1-4', 30, lines['1'], stations[3], 1, 1.0, verbose=1)
-    train5 = objects.Train('1-1', 30, lines['1'], stations[0], -1, 1.0, verbose=0)
-    train6 = objects.Train('1-2', 30, lines['1'], stations[1], -1, 1.0, verbose=0)
-    train7 = objects.Train('1-3', 30, lines['1'], stations[2], -1, 1.0, verbose=0)
-    train8 = objects.Train('1-4', 30, lines['1'], stations[3], -1, 1.0, verbose=0)
+    train1 = tools.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
+    train2 = tools.Train('1-2', 30, lines['1'], stations[1], 1, 1.0, verbose=0)
+    train3 = tools.Train('1-3', 30, lines['1'], stations[2], 1, 1.0, verbose=0)
+    train4 = tools.Train('1-4', 30, lines['1'], stations[3], 1, 1.0, verbose=1)
+    train5 = tools.Train('1-1', 30, lines['1'], stations[0], -1, 1.0, verbose=0)
+    train6 = tools.Train('1-2', 30, lines['1'], stations[1], -1, 1.0, verbose=0)
+    train7 = tools.Train('1-3', 30, lines['1'], stations[2], -1, 1.0, verbose=0)
+    train8 = tools.Train('1-4', 30, lines['1'], stations[3], -1, 1.0, verbose=0)
 
     trains = [train1,train2,train3,train4,train5,train6,train7,train8]
 
@@ -82,13 +82,13 @@ def labcdefg():
     stations = list()
 
     for S in STATIONS:
-        stations.append(objects.LineStation(*S))
+        stations.append(tools.LineStation(*S))
 
     for s in stations:
         subway.add_node(s)
 
-    lines = { '1': objects.Line('1',stations[0:4]),
-              '2': objects.Line('2', [stations[4],stations[5],stations[2],stations[6]] )}
+    lines = { '1': tools.Line('1',stations[0:4]),
+              '2': tools.Line('2', [stations[4],stations[5],stations[2],stations[6]] )}
 
     for l in lines.values():
         for pair in pairwise(l.route):
@@ -96,10 +96,10 @@ def labcdefg():
             subway.add_edge(*pair, distance=dist)
 
 
-    train1 = objects.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
-    train2 = objects.Train('1-2', 30, lines['1'], stations[1], 1, 1.0, verbose=0)
-    train3 = objects.Train('1-3', 30, lines['1'], stations[2], 1, 1.0, verbose=0)
-    train4 = objects.Train('1-4', 30, lines['1'], stations[3], 1, 1.0, verbose=1)
+    train1 = tools.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
+    train2 = tools.Train('1-2', 30, lines['1'], stations[1], 1, 1.0, verbose=0)
+    train3 = tools.Train('1-3', 30, lines['1'], stations[2], 1, 1.0, verbose=0)
+    train4 = tools.Train('1-4', 30, lines['1'], stations[3], 1, 1.0, verbose=1)
 
 
     trains = [train1,train2,train3,train4]
@@ -124,15 +124,15 @@ def labcdefghi():
     stations = list()
 
     for S in STATIONS:
-        stations.append(objects.LineStation(*S))
-
+        stations.append(tools.LineStation(*S))
+    
     for s in stations:
         subway.add_node(s)
 
-    lines = { '1': objects.Line('1',stations[0:4]),
-              '2': objects.Line('2', [stations[4],stations[5],stations[2],stations[6]]),
-              '3': objects.Line('3', [stations[5],stations[8], stations[1],stations[7],stations[6]]),
-              '4': objects.Line('4', [stations[0], stations[2], stations[4]])
+    lines = { '1': tools.Line('1',stations[0:4]),
+              '2': tools.Line('2', [stations[4],stations[5],stations[2],stations[6]]),
+              '3': tools.Line('3', [stations[5],stations[8], stations[1],stations[7],stations[6]]),
+              '4': tools.Line('4', [stations[0], stations[2], stations[4]])
               }
 
     for l in lines.values():
@@ -141,10 +141,10 @@ def labcdefghi():
             subway.add_edge(*pair, distance=dist)
 
 
-    train1 = objects.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
-    train2 = objects.Train('1-2', 30, lines['1'], stations[1], 1, 1.0, verbose=0)
-    train3 = objects.Train('1-3', 30, lines['1'], stations[2], 1, 1.0, verbose=0)
-    train4 = objects.Train('1-4', 30, lines['1'], stations[3], 1, 1.0, verbose=1)
+    train1 = tools.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
+    train2 = tools.Train('1-2', 30, lines['1'], stations[1], 1, 1.0, verbose=0)
+    train3 = tools.Train('1-3', 30, lines['1'], stations[2], 1, 1.0, verbose=0)
+    train4 = tools.Train('1-4', 30, lines['1'], stations[3], 1, 1.0, verbose=1)
 
 
     trains = [train1,train2,train3,train4]
@@ -167,13 +167,13 @@ def nyc():
     stations = list()
 
     for S in STATIONS:
-        stations.append(objects.LineStation(*S))
+        stations.append(tools.LineStation(*S))
     #
     for s in stations:
         subway.add_node(s)
 
-    lines = { '1': objects.Line('1',stations[0:4]),
-              '2': objects.Line('2', [stations[4],stations[5],stations[2],stations[6]] )}
+    lines = { '1': tools.Line('1',stations[0:4]),
+              '2': tools.Line('2', [stations[4],stations[5],stations[2],stations[6]] )}
 
     for l in lines.values():
         for pair in pairwise(l.route):
@@ -181,14 +181,14 @@ def nyc():
             subway.add_edge(*pair, distance=dist)
 
 
-    train1 = objects.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
-    train2 = objects.Train('1-2', 30, lines['1'], stations[1], 1, 1.0, verbose=0)
-    train3 = objects.Train('1-3', 30, lines['1'], stations[2], 1, 1.0, verbose=0)
-    train4 = objects.Train('1-4', 30, lines['1'], stations[3], 1, 1.0, verbose=1)
-    train5 = objects.Train('1-1', 30, lines['1'], stations[0], -1, 1.0, verbose=0)
-    train6 = objects.Train('1-2', 30, lines['1'], stations[1], -1, 1.0, verbose=0)
-    train7 = objects.Train('1-3', 30, lines['1'], stations[2], -1, 1.0, verbose=0)
-    train8 = objects.Train('1-4', 30, lines['1'], stations[3], -1, 1.0, verbose=0)
+    train1 = tools.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
+    train2 = tools.Train('1-2', 30, lines['1'], stations[1], 1, 1.0, verbose=0)
+    train3 = tools.Train('1-3', 30, lines['1'], stations[2], 1, 1.0, verbose=0)
+    train4 = tools.Train('1-4', 30, lines['1'], stations[3], 1, 1.0, verbose=1)
+    train5 = tools.Train('1-1', 30, lines['1'], stations[0], -1, 1.0, verbose=0)
+    train6 = tools.Train('1-2', 30, lines['1'], stations[1], -1, 1.0, verbose=0)
+    train7 = tools.Train('1-3', 30, lines['1'], stations[2], -1, 1.0, verbose=0)
+    train8 = tools.Train('1-4', 30, lines['1'], stations[3], -1, 1.0, verbose=0)
 
     trains = [train1,train2,train3,train4,train5,train6,train7,train8]
 
@@ -215,7 +215,7 @@ def nycdict():
 
     for S in STATIONS:
         #S[0] should be the name
-        stations[S[0]]=objects.LineStation(*S)
+        stations[S[0]]=tools.LineStation(*S)
     #
     for s in stations.itervalues():
         subway.add_node(s)
