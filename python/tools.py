@@ -11,6 +11,23 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 
+
+#Global variable for debugging pathway solutions.
+#Will capture any inconsistent paths for manual inspection when running consistent_resolver
+weirdpaths=list()
+
+#Some lists to throw at the consistent_resolver for debugging
+xlist = [{1,2}, {1,2}, {2}, {2}, {3}]
+vlist = xlist[::-1]
+ylist = [{1,4,3},{2,4,3},{1,2,3},{2},{3},{3,2}]
+zlist = ylist[::-1]
+alist = [{1,2,5}, {1,2}, {1,2,4} ]
+blist = alist[::-1]
+
+
+#CLASSES#####################################################################
+
+
 class Station(object):
     """
     Create a station.
@@ -334,6 +351,9 @@ class Line(object):
 
 
 
+#FUNCTIONS####################################################################
+
+
 def pairwise(sequence):
     "s -> (s0,s1), (s1,s2), (s2, s3), ..."
     pairs=list()
@@ -396,7 +416,6 @@ def generate_transfers(distmatrix,lines):
             stations=path[0]
             #figure out the best path one could take            
             bestpath = sets_to_lists(consistent_resolver(path[1]))
-            print len(stations),len(bestpath)
             directions = list()
             #every station pairs, figure out direction you're traveling
             for connections,pair in enumerate(pairwise(stations)):
@@ -424,27 +443,71 @@ def generate_transfers(distmatrix,lines):
             #        list of stations in path 
             #        list of lines optimal for that path
             #        list of directions of line for that path
-            #        total distance
             #        total transfers
-            bestpaths.append((zip(stations,bestpath,directions),dist,ntransf))
+            #        total stops
+            #        total distance
+            bestpaths.append((zip(stations,bestpath,directions), tuple([ntransf,len(bestpath),dist])))
         transmatrix[key] = bestpaths
     return transmatrix
 
-def decide_on_path(transmatrix,algoritm=["trans","dist","stops"]):
+def decide_on_path(transmatrix,order=["transfers","stops","distance"]):
     """
     Choose the best path depending on criterium.
     """
-    pass
+    bestmatrix = dict()
+    
+    if not len(order) ==3:
+        raise Exception, "Invalid length order %d. Must be 3,"%len(order)
+    norder = [None,None,None]
+    for i,x in enumerate(order):
+        if x == "transfers":
+            norder[i] = 0
+        elif x == "stops":
+            norder[i] = 1
+        elif x == "distance":
+            norder[i] = 2
+        else:
+            raise Exception,"Invalid element in order: %s.\nMust be transfers,stops,or distance."%x
+    
+    
+    #Per station pairs i,j.
+    for key,paths in transmatrix.iteritems():        
+        #A given path between station i,j
+        bestmatrix[key]=sort_paired_triplet_by(paths,norder,1)[0]    
+    return bestmatrix
 
+def sort_paired_triplet_by(unsortedlist,order,where):
+    """
+    Sort a list of triplets that is paired with something else
+    
+    Arguments
+    ---------
+    unsortedlist - list of two dimensions, with one element of length 3
+    order - list of length 3
+        order by which to sort [0,1,2] sorts by element 0, then 1, then 2.
+    where - int 0,1
+        Is the triplet the first, or second element in the pairs.
+        
+    Examples
+    -------
+    >>>myunsortedlist=[[["abc"],[1,2,3]],[["bcd"],[1,3,4]],[["bac"],[2,1,4]],[["xxa"],[5,5,1]]]
+    
+    >>>print tools.sort_paired_triplet_by(myunsortedlist,[2,1,0],1)
+    
+    [[['xxa'], [5, 5, 1]], [['abc'], [1, 2, 3]], [['bac'], [2, 1, 4]], [['bcd'], [1, 3, 4]]]
+    """
+    x1,x2,x3=order   
+    sortedlist= sorted(unsortedlist,key=lambda x: [x[where][x1],x[where][x2],x[where][x3]] )
+    return sortedlist
 
-#Some lists to throw at the consistent_resolver
-xlist = [{1,2}, {1,2}, {2}, {2}, {3}]
-vlist = xlist[::-1]
-ylist = [{1,4,3},{2,4,3},{1,2,3},{2},{3},{3,2}]
-zlist = ylist[::-1]
-alist = [{1,2,5}, {1,2}, {1,2,4} ]
-blist = alist[::-1]
-
+def sort_triplet_by(unsortedlist,order):
+    """
+    Sort a list of triplets
+    """
+    x1,x2,x3=order   
+    sortedlist= sorted(unsortedlist,key=lambda x: [x[x1],x[x2],x[x3]] )
+    return sortedlist
+    
 def sets_to_lists(los):
     """
     list of sets to list of lists
@@ -454,7 +517,7 @@ def sets_to_lists(los):
         lol.append(list(s))
     return lol
 
-def consistent_resolver(opt_per_stat):
+def consistent_resolver(opt_per_stat,capture=True):
     """
     Arguments
     ---------
@@ -483,6 +546,7 @@ def consistent_resolver(opt_per_stat):
             return rev_ans_rev
         else:
             # "Cant make consistent, assume equally good solutions exist"
+            if capture: weirdpaths.append(rev_ans_rev)
             return rev_ans_rev
             
     else:
@@ -495,7 +559,8 @@ def consistent_resolver(opt_per_stat):
             return rev_ans_rev
         else:
            # "Cant make consistent, assume equally good solutions exist"
-           return rev_ans_rev
+            if capture: weirdpaths.append(rev_ans_rev)
+            return rev_ans_rev
 
 def transfer_resolver(opt_per_stat):
     """
@@ -518,20 +583,18 @@ def transfer_resolver(opt_per_stat):
             break
     
     if opt_copy == opt_per_stat:
-#        print "solution found %s" % opt_copy        
         return opt_copy
     else:
-#        print "no solution yet"
-#        print "%s x\n%s"%(opt_copy, opt_per_stat)
         return transfer_resolver(opt_copy)
 
 def count_transfers(linlist,directions):
     """
     Arguments
     ---------
-    linlist - list of sets
-        list with set of lines to follow in order
-    
+    linlist - list of lists
+        list with list of lines to follow in order
+    directions - list of lists
+        direction along the particular line
     Returns
     -------
     transfers - int
