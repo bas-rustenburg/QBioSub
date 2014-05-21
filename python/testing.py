@@ -12,4 +12,3 @@ subway,lines,stations,trains = systems.labcdefghi()
 pathmatrix = tools.generate_routes(subway)
 distmatrix = tools.generate_dist_line(pathmatrix)
 transmatrix = tools.generate_transfers(distmatrix,lines)
-

@@ -379,6 +379,7 @@ def generate_dist_line(pathmatrix):
     #
     return dmatrix
 
+x = list()
 
 
 def generate_transfers(dmatrix,lines):
@@ -391,10 +392,33 @@ def generate_transfers(dmatrix,lines):
         #A given path between station i,j
         newpaths=list()
         for path in paths:
-            stations=path[0]            
-            newpath = consistent_resolver(path[1])
+            stations=path[0]
+            #figure out the best path one could take            
+            bestpath = sets_to_lists(consistent_resolver(path[1]))
+            print len(stations),len(bestpath)
+            directions = list()
+            #every station pairs, figure out direction you're traveling
+            for connections,pair in enumerate(pairwise(stations)):
+                
+                direction = list()
+                #check it for every line in the list of options
+                for con in bestpath[connections]:
+                    ordera = np.where(lines[con].route==pair[1])
+                    orderb = np.where(lines[con].route==pair[0])
+                if ordera > orderb:
+                    direction.append(1)
+                elif ordera < orderb:
+                    direction.append(-1)
+                else:
+                    raise Exception, "Something weird with the directions."
+                directions.append(direction)
+            
+            ntransf = count_transfers(bestpath,directions)
             dist = path[2]
-            newpaths.append((stations,newpath,dist))
+            #station is combined with lines that one could take there
+            #the last station is removed from the list since no train is taken
+            print len(stations),len(bestpath)
+            newpaths.append((zip(stations,bestpath,directions),dist,ntransf))
         tmatrix[key] = newpaths
     return tmatrix
 
@@ -407,6 +431,15 @@ ylist = [{1,4,3},{2,4,3},{1,2,3},{2},{3},{3,2}]
 zlist = ylist[::-1]
 alist = [{1,2,5}, {1,2}, {1,2,4} ]
 blist = alist[::-1]
+
+def sets_to_lists(los):
+    """
+    list of sets to list of lists
+    """
+    lol = list()
+    for s in los:
+        lol.append(list(s))
+    return lol
 
 def consistent_resolver(opt_per_stat):
     """
@@ -479,7 +512,7 @@ def transfer_resolver(opt_per_stat):
 #        print "%s x\n%s"%(opt_copy, opt_per_stat)
         return transfer_resolver(opt_copy)
 
-def count_transfers(linlist):
+def count_transfers(linlist,directions):
     """
     Arguments
     ---------
@@ -493,9 +526,14 @@ def count_transfers(linlist):
     """
     transfers = int()
     try:
-        for i,line in enumerate(linlist):
+        for i,ld in enumerate(zip(linlist,directions)):
+            #if a passenger changes lines, that is a transfer
             if linlist[i]  != linlist[i+1]:
                 transfers += 1
+            #if a passenger changes direction on the same line
+            #he also needs to transfer. Odd situation though.    
+            elif directions[i] != directions[i+1]:
+                transfers +=1
             else:
                 continue
                 
