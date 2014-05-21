@@ -342,7 +342,7 @@ def pairwise(sequence):
 
     return pairs
 
-def generate_all_routes(graph):
+def generate_routes(graph):
     """
     Generate all routes for a passenger to take through the subway that only pass a station once
     """
@@ -381,7 +381,10 @@ def generate_dist_line(pathmatrix):
 
 
 
-def solve_transfers(dmatrix,lines):
+def generate_transfers(dmatrix,lines):
+    """
+    Generate optimal choice of line to take
+    """
     tmatrix = dict()
     #Per station pairs i,j.
     for key,paths in dmatrix.iteritems():
@@ -395,30 +398,7 @@ def solve_transfers(dmatrix,lines):
         tmatrix[key] = newpaths
     return tmatrix
 
-def transfer_resolver(opt_per_stat):    
-    opt_per_stat = list(opt_per_stat)
-    opt_copy = list(opt_per_stat)
-    #for every element in the list of lines
-    for i in range(len(opt_per_stat)):
-        try:
-            insect = opt_copy[i] & opt_copy[i+1]
-            if insect:
-                opt_copy[i]= insect
-            else:
-                pass            
-        except IndexError:
-            othersect = opt_copy[i] & opt_copy[i-1]
-            if othersect:
-                opt_copy[i] = othersect               
-            break
-    
-    if opt_copy == opt_per_stat:
-#        print "solution found %s" % opt_copy        
-        return opt_copy
-    else:
-#        print "no solution yet"
-#        print "%s x\n%s"%(opt_copy, opt_per_stat)
-        return transfer_resolver(opt_copy)
+
 
 #Some lists to throw at the consistent_resolver
 xlist = [{1,2}, {1,2}, {2}, {2}, {3}]
@@ -436,7 +416,8 @@ def consistent_resolver(opt_per_stat):
         Set with possible lines that connect stations
         
     Makes sure that the path resolved is consistent in both directions
-    This reduces transfers
+    This reduces transfers in total, since it also checks from back to 
+    front for better options.
     """
     forward = list(opt_per_stat)
     reverse = list(forward[::-1])
@@ -469,13 +450,46 @@ def consistent_resolver(opt_per_stat):
         else:
            # "Cant make consistent, assume equally good solutions exist"
            return rev_ans_rev
-           
+
+def transfer_resolver(opt_per_stat):
+    """
+    Find optimal list of transfers in one direction
+    """
+    opt_per_stat = list(opt_per_stat)
+    opt_copy = list(opt_per_stat)
+    #for every element in the list of lines
+    for i in range(len(opt_per_stat)):
+        try:
+            insect = opt_copy[i] & opt_copy[i+1]
+            if insect:
+                opt_copy[i]= insect
+            else:
+                pass            
+        except IndexError:
+            othersect = opt_copy[i] & opt_copy[i-1]
+            if othersect:
+                opt_copy[i] = othersect               
+            break
+    
+    if opt_copy == opt_per_stat:
+#        print "solution found %s" % opt_copy        
+        return opt_copy
+    else:
+#        print "no solution yet"
+#        print "%s x\n%s"%(opt_copy, opt_per_stat)
+        return transfer_resolver(opt_copy)
+
 def count_transfers(linlist):
     """
     Arguments
     ---------
     linlist - list of sets
         list with set of lines to follow in order
+    
+    Returns
+    -------
+    transfers - int
+        The number of transfers in this set
     """
     transfers = int()
     try:

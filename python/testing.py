@@ -9,7 +9,7 @@ import systems,tools
 
 subway,lines,stations,trains = systems.labcdefghi()
     
-pathmatrix = tools.generate_all_routes(subway)
+pathmatrix = tools.generate_routes(subway)
 distmatrix = tools.generate_dist_line(pathmatrix)
-transmatrix = tools.solve_transfers(distmatrix,lines)
+transmatrix = tools.generate_transfers(distmatrix,lines)
 
