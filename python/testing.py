@@ -13,4 +13,4 @@ pathmatrix = tools.generate_routes(subway)
 distmatrix = tools.generate_dist_line(pathmatrix)
 transmatrix = tools.generate_transfers(distmatrix,lines)
 bestmatrix = tools.decide_on_path(transmatrix,order=["transfers","stops","distance"])
-print bestmatrix[stations[0],stations[4]]
+print bestmatrix[stations[4],stations[2]]

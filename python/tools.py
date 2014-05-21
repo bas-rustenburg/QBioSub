@@ -425,12 +425,12 @@ def generate_transfers(distmatrix,lines):
                 for con in bestpath[connections]:
                     ordera = np.where(lines[con].route==pair[1])
                     orderb = np.where(lines[con].route==pair[0])
-                if ordera > orderb:
-                    direction.append(1)
-                elif ordera < orderb:
-                    direction.append(-1)
-                else:
-                    raise Exception, "Something weird with the directions."
+                    if ordera > orderb:
+                        direction.append(1)
+                    elif ordera < orderb:
+                        direction.append(-1)
+                    else:
+                        raise Exception, "Something weird with the directions."
                 directions.append(direction)
             
             ntransf = count_transfers(bestpath,directions)
