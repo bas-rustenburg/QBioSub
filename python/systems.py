@@ -157,14 +157,30 @@ def labcdefghi():
 
 def nyc():
     subway = nx.Graph()
-
     STATIONS = []
     with open('../listOfStationsConverted.txt') as f:
         #skip header
         f.readline()
         rows = (line.strip().split("\t") for line in f)
         for row in rows:
-            STATIONS.append(tuple([row[0], (int(row[5]) if (row[3][-2] == 'X') else int(row[5]) - 100000), (int(row[4]) if (row[3][-1] == 'L') else int(row[4]) - 100000), 0, 1]))
+            STATIONS.append(tuple([
+            row[0],
+            (int(row[5]) if (row[3][-2] == 'X') else int(row[5]) - 100000),
+            (int(row[4]) if (row[3][-1] == 'L') else int(row[4]) - 100000),
+            0,
+            1,
+            list(row[0].split(";")[-1])
+            ]))
+
+    lines_information = {'1': [], '2': [], '3': [], '4': [], '5': [], '6': [],
+                         '7': [], 'A': [], 'B': [], 'C': [], 'D': [], 'E': [],
+                         'F': [], 'G': [], 'H': [], 'J': [], 'L': [], 'M': [],
+                         'N': [], 'Q': [], 'R': [], 'S': [], 's': [], 'Z': []}
+
+#    with open('../listOfLines.txt') as f:
+#        rows = (line.strip().split("\t") for line in f)
+#        for row in rows:
+#            lines_information
 
     stations = dict()
 
@@ -193,7 +209,6 @@ def nyc():
     train8 = tools.Train('1-4', 30, lines['1'], stations[3], -1, 1.0, verbose=0)
 
     trains = [train1,train2,train3,train4,train5,train6,train7,train8]
-
 
 
     return subway,lines,stations,trains
