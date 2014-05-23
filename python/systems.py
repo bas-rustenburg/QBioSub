@@ -140,14 +140,14 @@ def labcdefghi():
             subway.add_edge(*pair, distance=dist)
 
 
-    train11 = tools.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=1)
-    train12 = tools.Train('1-2', 30, lines['1'], stations[3], -1, 1.0, verbose=1)
-    train21 = tools.Train('2-1', 30, lines['2'], stations[4], 1, 1.0, verbose=1)
-    train22 = tools.Train('2-2', 30, lines['2'], stations[6], -1, 1.0, verbose=1)
-    train31 = tools.Train('3-1', 30, lines['3'], stations[5], 1, 1.0, verbose=1)
-    train32 = tools.Train('3-2', 30, lines['3'], stations[6], -1, 1.0, verbose=1)
-    train41 = tools.Train('4-1', 30, lines['4'], stations[0], 1, 1.0, verbose=1)
-    train42 = tools.Train('4-2', 30, lines['4'], stations[4], -1, 1.0, verbose=1)
+    train11 = tools.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
+    train12 = tools.Train('1-2', 30, lines['1'], stations[3], -1, 1.0, verbose=0)
+    train21 = tools.Train('2-1', 30, lines['2'], stations[4], 1, 1.0, verbose=0)
+    train22 = tools.Train('2-2', 30, lines['2'], stations[6], -1, 1.0, verbose=0)
+    train31 = tools.Train('3-1', 30, lines['3'], stations[5], 1, 1.0, verbose=0)
+    train32 = tools.Train('3-2', 30, lines['3'], stations[6], -1, 1.0, verbose=0)
+    train41 = tools.Train('4-1', 30, lines['4'], stations[0], 1, 1.0, verbose=0)
+    train42 = tools.Train('4-2', 30, lines['4'], stations[4], -1, 1.0, verbose=0)
 
     trains = [train11,train12,train21,train22,train31, train32,train41,train42]
 
@@ -174,8 +174,8 @@ def nyc():
     for s in stations.itervalues():
         subway.add_node(s)
 
-    lines = { '1': tools.Line('1', [stations['Van Cortlandt Park-242nd St-1'], stations[], stations[]]),
-              '2': tools.Line('2', [stations[4],stations[5],stations[2],stations[6]] )}
+#    lines = { '1': tools.Line('1', [stations['Van Cortlandt Park-242nd St-1'], stations[], stations[]]), 
+#              '2': tools.Line('2', [stations[4],stations[5],stations[2],stations[6]] )}
 
     for l in lines.values():
         for pair in pairwise(l.route):
