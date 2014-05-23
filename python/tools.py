@@ -76,11 +76,13 @@ class Station(object):
         return np.array([])
 
     def update(self,destinations=set(),instructions=dict()):
+        for p in self.passengers:
+            p.update()
         #Spawn new passengers.
         self.passengers = np.union1d(self.passengers, np.array(self.spawn(set(destinations) ^ set([self]), instructions)))
         #TODO: This is optional, will only happen on KillerStation.
         self.passengers = np.setdiff1d(self.passengers,self.kill(), assume_unique=True)
-
+        
 
 class BasicStation(Station):
     """
@@ -161,18 +163,26 @@ class LineStation(BasicStation):
 class Passenger(object):
     """Wants to go from A to B"""
     total=0
+    lifetimes=list()
     def __init__(self, origin, destination,instructions, verbose=0):
         self.origin = origin
         self.location = origin
         self.destination = destination
         self.transfers = np.array(instructions[self.origin,self.destination])
         self.verbose = verbose
+        self.lifetime = 0
         Passenger.total +=1
         return
-
+    
+    def update(self,location=None):
+        if location:
+            self.location = location
+        self.lifetime +=1
+        
     def __del__(self):
         try:
             Passenger.total -= 1
+            Passenger.lifetimes.append(self.lifetime)
         except:
             pass            
         if self.verbose >0:
@@ -241,6 +251,8 @@ class Train(object):
 
             if self.verbose > 1: print "Train %s: Reached destination '%s'"%(self.name, self.current_station.name)
             if self.verbose > 1: print "Train %s: Next destination is '%s'"%(self.name, self.next_station.name)
+            for p in self.passengers:
+                p.update()
         return
 
     def load_unload(self, station):
@@ -255,13 +267,13 @@ class Train(object):
 
         #First, passengers need to get off to free up space on the train.
         for pas in self.passengers:
-
+            pas.location = station
             #Offload and disappear if this is their final destination.
-            if pas.destination == station:
+            if pas.destination == pas.location:
                 offload = np.append(offload,pas)
                 off_count +=1
             #If a passenger needs a transfer here, add them to the transfer list.
-            elif station == pas.transfers[0][0]:
+            elif pas.location == pas.transfers[0][0]:
                 transfer = np.append(transfer,pas)
                 #Take this transfer out of passenger list of transfers
                 pas.transfers = pas.transfers[1:]
@@ -291,21 +303,19 @@ class Train(object):
             if pstation != station or self.line.name not in pline:
                 #If this is not the right station, line or direction, dont get on
                 continue
-#            print pstation,station
-#            print self.line.name,pline
+            
             #check what direction the passenger needs to go
             pline_index= pline.index(self.line.name)
-#            print pline_index
             if pdirection[pline_index] != self.direction:
                 #if the direction dont match, dont get on.
                 continue
 
             #Everything checks out. Begin the boarding process.
-
             index=np.where(station.passengers==pas)
             station.passengers = np.delete(station.passengers,index)
             self.passengers = np.append(self.passengers,pas)
-
+            if pas.location != pas.origin:
+                print "Passenger succesfully transfered"
             #Please mind the closing doors.
             on_count += 1
 

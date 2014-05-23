@@ -23,7 +23,7 @@ instructions=tools.travel_instructions(subway,lines)
 
 pastotals = list()
 
-timesteps = 14000
+timesteps = 1400
 for _ in itertools.repeat(None,timesteps):
     [station.update(destinations=stations,instructions=instructions) for station in stations]
     [train.update() for train in trains]
@@ -32,11 +32,24 @@ for _ in itertools.repeat(None,timesteps):
     except AttributeError:
         pastotals.append(0)
 
+
 import matplotlib.pyplot as plt
 
-plt.figure()
-plt.plot(pastotals)
+#Get rid of passengers
+for t in trains:
+    del(t.passengers)
 
+for s in stations:
+    del(s.passengers)
+
+plt.figure()
+plt.xlabel("Timesteps")
+plt.ylabel("Passengers")
+plt.plot(pastotals)
+plt.figure()
+plt.xlabel("Passengers")
+plt.ylabel("Lifetime (timesteps)")
+plt.plot(tools.Passenger.lifetimes)
 
 
 
