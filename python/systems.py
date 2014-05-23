@@ -120,7 +120,6 @@ def labcdefghi():
     subway = nx.Graph()
 
     STATIONS = [tuple(['a', 0, 10, 0, 1, ['1','4']]), tuple(['b', 10, 10, 0, 1, ['1','3']]), tuple(['c', 20, 10, 0, 1, ['1','2','4']]), tuple(['d', 30, 10, 0, 1, ['1']]),tuple(['e', 20, 30, 0, 1, ['2','4']]), tuple(['f', 20, 20, 0, 1, ['2','3']]), tuple(['g', 20, 0, 0, 1, ['2','3']]),tuple(['h', 10, 0, 0, 1, ['3']]),tuple(['i', 10, 20, 0, 1, ['3']])]
-
     stations = list()
 
     for S in STATIONS:
@@ -141,13 +140,16 @@ def labcdefghi():
             subway.add_edge(*pair, distance=dist)
 
 
-    train1 = tools.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
-    train2 = tools.Train('1-2', 30, lines['1'], stations[1], 1, 1.0, verbose=0)
-    train3 = tools.Train('1-3', 30, lines['1'], stations[2], 1, 1.0, verbose=0)
-    train4 = tools.Train('1-4', 30, lines['1'], stations[3], 1, 1.0, verbose=1)
+    train11 = tools.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=1)
+    train12 = tools.Train('1-2', 30, lines['1'], stations[3], -1, 1.0, verbose=1)
+    train21 = tools.Train('2-1', 30, lines['2'], stations[4], 1, 1.0, verbose=1)
+    train22 = tools.Train('2-2', 30, lines['2'], stations[6], -1, 1.0, verbose=1)
+    train31 = tools.Train('3-1', 30, lines['3'], stations[5], 1, 1.0, verbose=1)
+    train32 = tools.Train('3-2', 30, lines['3'], stations[6], -1, 1.0, verbose=1)
+    train41 = tools.Train('4-1', 30, lines['4'], stations[0], 1, 1.0, verbose=1)
+    train42 = tools.Train('4-2', 30, lines['4'], stations[4], -1, 1.0, verbose=1)
 
-
-    trains = [train1,train2,train3,train4]
+    trains = [train11,train12,train21,train22,train31, train32,train41,train42]
 
 
 

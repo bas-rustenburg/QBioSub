@@ -11,25 +11,32 @@ import random
 import itertools
 import tools
 
-from systems import abcd as simulation
+from systems import labcdefghi as simulation
 
 random.seed(42)
 print [random.randint(0,255),random.randint(0,255),random.randint(0,255)]
 
 
 subway,lines,stations,trains = simulation()
-
+instructions=tools.travel_instructions(subway,lines)
 #visualization.subway_map(subway)
 
 pastotals = list()
 
-timesteps = 140
+timesteps = 14000
 for _ in itertools.repeat(None,timesteps):
-    [station.update(destinations=stations) for station in stations]
+    [station.update(destinations=stations,instructions=instructions) for station in stations]
     [train.update() for train in trains]
-    pastotals.append(tools.Passenger.total)
+    try:
+        pastotals.append(tools.Passenger.total)
+    except AttributeError:
+        pastotals.append(0)
 
-tools.subway_map(subway)
+import matplotlib.pyplot as plt
+
+plt.figure()
+plt.plot(pastotals)
+
 
 
 

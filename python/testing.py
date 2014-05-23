@@ -9,8 +9,5 @@ import systems,tools
 
 subway,lines,stations,trains = systems.labcdefghi()
 tools.subway_map(subway)    
-pathmatrix = tools.generate_routes(subway)
-distmatrix = tools.generate_dist_line(pathmatrix)
-transmatrix = tools.generate_transfers(distmatrix,lines)
-bestmatrix = tools.decide_on_path(transmatrix,order=["transfers","stops","distance"])
-print bestmatrix[stations[4],stations[2]]
+instructions = tools.travel_instructions(subway,lines,order=["transfers","stops","distance"])
+
