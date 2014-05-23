@@ -76,11 +76,13 @@ class Station(object):
         return np.array([])
 
     def update(self,destinations=set(),instructions=dict()):
+        for p in self.passengers:
+            p.update()
         #Spawn new passengers.
         self.passengers = np.union1d(self.passengers, np.array(self.spawn(set(destinations) ^ set([self]), instructions)))
         #TODO: This is optional, will only happen on KillerStation.
         self.passengers = np.setdiff1d(self.passengers,self.kill(), assume_unique=True)
-
+        
 
 class BasicStation(Station):
     """
@@ -161,18 +163,24 @@ class LineStation(BasicStation):
 class Passenger(object):
     """Wants to go from A to B"""
     total=0
+    lifetimes=list()
     def __init__(self, origin, destination,instructions, verbose=0):
         self.origin = origin
         self.location = origin
         self.destination = destination
         self.transfers = np.array(instructions[self.origin,self.destination])
         self.verbose = verbose
+        self.lifetime = 0
         Passenger.total +=1
         return
-
+    
+    def update(self):
+        self.lifetime +=1
+        
     def __del__(self):
         try:
             Passenger.total -= 1
+            Passenger.lifetimes.append(self.lifetime)
         except:
             pass            
         if self.verbose >0:
@@ -241,6 +249,8 @@ class Train(object):
 
             if self.verbose > 1: print "Train %s: Reached destination '%s'"%(self.name, self.current_station.name)
             if self.verbose > 1: print "Train %s: Next destination is '%s'"%(self.name, self.next_station.name)
+            for p in self.passengers:
+                p.update()
         return
 
     def load_unload(self, station):
