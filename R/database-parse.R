@@ -12,22 +12,24 @@ for (j in 6:16) {
 # sorts the lines and returns a collapsed vector
 locs$connected = apply(locs[, 6:16], 1, function(a) paste(sort(na.omit(gsub("\\s", "", a))), collapse=""))
 # correcting MTA's irregularitires
-# 4th Av-9th St
-locs$connected[552:553] = "FGR" # previously "F"
+# 36th St (Brooklyn)
+locs$connected[71:73] = "DNR" # previously "NR"
 # Parkside Av, Neck Rd
 locs$connected[c(98, 108, 1198)] = "Q" # previously "BQ"
 # Franklin Av - Cs
 locs$connected[c(265, 1348)] = "Cs" # previously "As" or "ACs"
-# Liberty Av
-locs$connected[397:400] = "C" # previously "AC"
 # 168th St - Washington Heights
 locs$connected[c(285, 1279:1281)] = "1AC" # previously "AC"
 # Broadway Junction-East New York
 locs$connected[396] = "ACJLZ" # previously "ACJL"
+# Liberty Av
+locs$connected[397:400] = "C" # previously "AC"
 # 47-50th Sts Rockefeller Center
 locs$connected[522] = "BDFM" # previously "7BDFM"
 # Smith-9th St
 locs$connected[551] = "FG" # previously "FGR"
+# 4th Av-9th St
+locs$connected[552:553] = "FGR" # previously "F"
 # 7th Av, Prospect Park-15 St, Fort Hamilton Parkway, Church Av
 locs$connected[c(554:570, 1433:1439)] = "FG" # previously "F"
 # Long Island City-Court Square

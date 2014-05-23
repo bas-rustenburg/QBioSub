@@ -166,15 +166,15 @@ def nyc():
         for row in rows:
             STATIONS.append(tuple([row[0], (int(row[5]) if (row[3][-2] == 'X') else int(row[5]) - 100000), (int(row[4]) if (row[3][-1] == 'L') else int(row[4]) - 100000), 0, 1]))
 
-    stations = list()
+    stations = dict()
 
     for S in STATIONS:
-        stations.append(tools.LineStation(*S))
+        stations[S[0]] = tools.LineStation(*S)
     #
-    for s in stations:
+    for s in stations.itervalues():
         subway.add_node(s)
 
-    lines = { '1': tools.Line('1',stations[0:4]),
+    lines = { '1': tools.Line('1', [stations['Van Cortlandt Park-242nd St-1'], stations[], stations[]]),
               '2': tools.Line('2', [stations[4],stations[5],stations[2],stations[6]] )}
 
     for l in lines.values():
