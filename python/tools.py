@@ -174,7 +174,9 @@ class Passenger(object):
         Passenger.total +=1
         return
     
-    def update(self):
+    def update(self,location=None):
+        if location:
+            self.location = location
         self.lifetime +=1
         
     def __del__(self):
@@ -265,13 +267,13 @@ class Train(object):
 
         #First, passengers need to get off to free up space on the train.
         for pas in self.passengers:
-
+            pas.location = station
             #Offload and disappear if this is their final destination.
-            if pas.destination == station:
+            if pas.destination == pas.location:
                 offload = np.append(offload,pas)
                 off_count +=1
             #If a passenger needs a transfer here, add them to the transfer list.
-            elif station == pas.transfers[0][0]:
+            elif pas.location == pas.transfers[0][0]:
                 transfer = np.append(transfer,pas)
                 #Take this transfer out of passenger list of transfers
                 pas.transfers = pas.transfers[1:]
@@ -301,21 +303,19 @@ class Train(object):
             if pstation != station or self.line.name not in pline:
                 #If this is not the right station, line or direction, dont get on
                 continue
-#            print pstation,station
-#            print self.line.name,pline
+            
             #check what direction the passenger needs to go
             pline_index= pline.index(self.line.name)
-#            print pline_index
             if pdirection[pline_index] != self.direction:
                 #if the direction dont match, dont get on.
                 continue
 
             #Everything checks out. Begin the boarding process.
-
             index=np.where(station.passengers==pas)
             station.passengers = np.delete(station.passengers,index)
             self.passengers = np.append(self.passengers,pas)
-
+            if pas.location != pas.origin:
+                print "Passenger succesfully transfered"
             #Please mind the closing doors.
             on_count += 1
 
