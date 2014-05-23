@@ -290,7 +290,7 @@ class Train(object):
                 break
             #Get passengers details
             if not len(pas.transfers):
-                break
+                continue
             
             try:
                 pstation,pline,pdirection = pas.transfers[0]
