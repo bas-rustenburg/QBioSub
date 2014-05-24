@@ -164,12 +164,16 @@ class Passenger(object):
     """Wants to go from A to B"""
     total=0
     lifetimes=list()
+    routes = list()
+    destiny = list()
     def __init__(self, origin, destination,instructions, verbose=0):
         self.origin = origin
         self.location = origin
         self.destination = destination
         self.transfers = np.array(instructions[self.origin,self.destination])
+        self.otransfers = self.transfers
         self.verbose = verbose
+        self.path = list()
         self.lifetime = 0
         Passenger.total +=1
         return
@@ -177,12 +181,28 @@ class Passenger(object):
     def update(self,location=None):
         if location:
             self.location = location
+            self.path.append(self.location)
         self.lifetime +=1
+    def __repr__(self):
+        s= str()
+        s += "%s\n"%self.origin.name
+        s += "%s\n"%self.destination.name
+        s += "%s\n"%self.location
+        s += "%s\n"%self.otransfers 
+        s += "%s\n"%self.transfers
+        s += "%s\n"%self.path
+        return s
         
     def __del__(self):
         try:
             Passenger.total -= 1
             Passenger.lifetimes.append(self.lifetime)
+            if self.lifetime > 200:
+                Passenger.routes.append(self.path)
+                Passenger.destiny.append([self.origin,self.destination])
+            if self.lifetime > 1000:
+                print self.__repr__()
+                
         except:
             pass            
         if self.verbose >0:
@@ -194,6 +214,7 @@ class Passenger(object):
 
 class Train(object):
     """Moves passengers from station to station."""
+    geton = int()
     def __init__(self, name, capacity, line, start, direction, velocity, verbose=0):
         """ARGUMENTS
         name - Identifier for this train, e.g. "F-1".
@@ -285,31 +306,35 @@ class Train(object):
 
         #Now, see which passengers are getting on
         for pas in station.passengers:
+            
             #Dont take passengers if the train is full
             if len(self.passengers) >= self.capacity:
                 break
-            #Get passengers details
+            
+            #If a passenger has no transfers, skip him            
             if not len(pas.transfers):
                 continue
             
+            #Get passengers details
             try:
                 pstation,pline,pdirection = pas.transfers[0]
             except ValueError,e:
                 print pas,pas.transfers
                 raise ValueError,e
                 
-                
-                
+            ##If this is not the right station, line or direction, dont get on
             if pstation != station or self.line.name not in pline:
-                #If this is not the right station, line or direction, dont get on
+                
                 continue
+            
+            
             
             #check what direction the passenger needs to go
             pline_index= pline.index(self.line.name)
             if pdirection[pline_index] != self.direction:
                 #if the direction dont match, dont get on.
                 continue
-
+            
             #Everything checks out. Begin the boarding process.
             index=np.where(station.passengers==pas)
             station.passengers = np.delete(station.passengers,index)
@@ -318,7 +343,7 @@ class Train(object):
                 print "Passenger succesfully transfered"
             #Please mind the closing doors.
             on_count += 1
-
+            Train.geton += 1
 
 
         if self.verbose >1:

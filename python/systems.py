@@ -115,7 +115,6 @@ def labcdefghi():
     Line 2: e-f-c-g
     Line 3: f-i-b-h-g
     Line 4: a-c-e
-    TODO: Trains are not up to date
     """
     subway = nx.Graph()
 

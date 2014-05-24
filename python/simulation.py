@@ -49,7 +49,14 @@ plt.plot(pastotals)
 plt.figure()
 plt.xlabel("Passengers")
 plt.ylabel("Lifetime (timesteps)")
-plt.plot(tools.Passenger.lifetimes)
+x = tools.Passenger.lifetimes
+
+y= list()
+for z in x:
+    if z > 200:
+        y.append(z)
+        
+plt.plot(y)
 
 
 
