@@ -261,16 +261,26 @@ def nyc():
             dist = np.linalg.norm([pair[0].xy,pair[1].xy])
             subway.add_edge(*pair, distance=dist)
 
-    train1 = tools.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
-    train2 = tools.Train('1-2', 30, lines['1'], stations[1], 1, 1.0, verbose=0)
-    train3 = tools.Train('1-3', 30, lines['1'], stations[2], 1, 1.0, verbose=0)
-    train4 = tools.Train('1-4', 30, lines['1'], stations[3], 1, 1.0, verbose=1)
-    train5 = tools.Train('1-1', 30, lines['1'], stations[0], -1, 1.0, verbose=0)
-    train6 = tools.Train('1-2', 30, lines['1'], stations[1], -1, 1.0, verbose=0)
-    train7 = tools.Train('1-3', 30, lines['1'], stations[2], -1, 1.0, verbose=0)
-    train8 = tools.Train('1-4', 30, lines['1'], stations[3], -1, 1.0, verbose=0)
-
-    trains = [train1,train2,train3,train4,train5,train6,train7,train8]
-
+    trains = []
+    for key in lines_information.iterkeys():
+        iterating_group = range(0, (len(lines_information[key]) + 3) / 5)
+        serial = 1
+        for j in iterating_group:
+            trains.append(tools.Train(name=key + '-' + str(serial),
+                                      capacity=30,
+                                      line=lines[key],
+                                      start=stations[lines_information[key][5 * j]],
+                                      direction=1, velocity=100.0,
+                                      verbose=0))
+            serial += 1
+        iterating_group.reverse()
+        for j in iterating_group:
+            trains.append(tools.Train(name=key + '-' + str(serial),
+                                      capacity=30,
+                                      line=lines[key],
+                                      start=stations[lines_information[key][5 * j]],
+                                      direction=-1, velocity=100.0,
+                                      verbose=0))
+            serial += 1
 
     return subway,lines,stations,trains
