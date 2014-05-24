@@ -14,7 +14,7 @@ import tools
 #from systems import labcdefghi as simulation
 from systems import circle as simulation
 
-random.seed(42)
+random.seed(47)
 print [random.randint(0,255),random.randint(0,255),random.randint(0,255)]
 
 
@@ -32,32 +32,4 @@ for _ in itertools.repeat(None,timesteps):
         pastotals.append(tools.Passenger.total)
     except AttributeError:
         pastotals.append(0)
-
-
-import matplotlib.pyplot as plt
-
-#Get rid of passengers
-for t in trains:
-    del(t.passengers)
-
-for s in stations:
-    del(s.passengers)
-
-plt.figure()
-plt.xlabel("Timesteps")
-plt.ylabel("Passengers")
-plt.plot(pastotals)
-plt.figure()
-plt.xlabel("Passengers")
-plt.ylabel("Lifetime (timesteps)")
-x = tools.Passenger.lifetimes
-
-y= list()
-for z in x:
-    if z > 200:
-        y.append(z)
-        
-plt.plot(y)
-
-
 

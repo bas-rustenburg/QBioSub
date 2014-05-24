@@ -159,7 +159,7 @@ def circle():
     This system has 4 lines.
     Line 1: a-b-c-d
     Line 2: e-f-c-g
-    Line 3: c-f-i-b-h-g
+    CircleLine 3: c-f-i-b-h-g
     Line 4: a-c-e
     """
     subway = nx.Graph()
@@ -185,21 +185,21 @@ def circle():
             subway.add_edge(*pair, distance=dist)
 
 
-    train11 = tools.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
-    train12 = tools.Train('1-2', 30, lines['1'], stations[3], -1, 1.0, verbose=0)
-    train21 = tools.Train('2-1', 30, lines['2'], stations[4], 1, 1.0, verbose=0)
-    train22 = tools.Train('2-2', 30, lines['2'], stations[2], -1, 1.0, verbose=0)
-    train31 = tools.Train('3-1', 30, lines['3'], stations[2], 1, 1.0, verbose=0)
-    train32 = tools.Train('3-2', 30, lines['3'], stations[6], -1, 1.0, verbose=1)
-    train41 = tools.Train('4-1', 30, lines['4'], stations[0], 1, 1.0, verbose=0)
-    train42 = tools.Train('4-2', 30, lines['4'], stations[4], -1, 1.0, verbose=0)
+    train11 = tools.Train('1-1', 300, lines['1'], stations[0], 1, 1.0, verbose=0)
+    train12 = tools.Train('1-2', 300, lines['1'], stations[3], -1, 1.0, verbose=0)
+    train21 = tools.Train('2-1', 300, lines['2'], stations[4], 1, 1.0, verbose=0)
+    train22 = tools.Train('2-2', 300, lines['2'], stations[2], -1, 1.0, verbose=0)
+    train31 = tools.Train('3-1', 500, lines['3'], stations[2], 1, 1.0, verbose=0)
+    train32 = tools.Train('3-2', 500, lines['3'], stations[6], -1, 1.0, verbose=0)
+    train41 = tools.Train('4-1', 300, lines['4'], stations[0], 1, 1.0, verbose=0)
+    train42 = tools.Train('4-2', 300, lines['4'], stations[4], -1, 1.0, verbose=0)
 
     trains = [train11,train12,train21,train22,train31, train32,train41,train42]
 
 
 
     return subway,lines,stations,trains
-
+    
 
 
 def nyc():
