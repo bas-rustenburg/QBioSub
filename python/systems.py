@@ -201,14 +201,26 @@ def circle():
     return subway,lines,stations,trains
 
 
-
+# new york city subway network
+# data file at the parent directory
+# listOfStationsConverted.txt: unique station key, location, and connectivity
+# listOfLines.txt: sequence of stations in lines
 def nyc():
     subway = nx.Graph()
+    
+# filling up stations    
     STATIONS = []
     with open('../listOfStationsConverted.txt') as f:
-        #skip header
+        #skip header at the first row
         f.readline()
         rows = (line.strip().split("\t") for line in f)
+        # row[0]: name key
+        # row[5]: x position
+        # row[4]: y position
+        # row[3]: xy grid, determines +/- sign of x and y
+        # min passenger: 0
+        # max passenger: 1
+        # row[0].split(";")[-1]: line
         for row in rows:
             STATIONS.append(tuple([
             row[0],
@@ -227,6 +239,7 @@ def nyc():
     for s in stations.itervalues():
         subway.add_node(s)
 
+# filling up lines
     lines = dict()
     lines_information = {'1': [], '2': [], '3': [], '4': [], '5': [], '6': [],
                          '7': [], 'A': [], 'B': [], 'C': [], 'D': [], 'E': [],
@@ -235,33 +248,39 @@ def nyc():
 
     with open('../listOfLines.txt') as f:
         rows = (line.strip().split("\t") for line in f)
+        # row[0]: line
+        # row[1:]: sequence of stations from north to south
         for row in rows:
             lines_information[row[0]] = row[1:]
 
-# new line
+# construct a new line
     #lines_information['8'] = [';4567S', ';7BDFM', ';1237ACENQRS', '34th St;ACE',
     #                          '34th St;123', ';BDFMNQR', '33rd St;6', '28th St;6',
     #                          '23rd St;6', ';456LNQR', ';123FLM', ';ACEL',
     #                          '23rd St;CE', '34th St;ACE', '34th St;123', ';BDFMNQR',
     #                          '33rd St;6']
-# block line
+# block a line
     #del lines_information['R']
 
     for key, value in lines_information.iteritems():
         stations_list = []
         for j in value:
             stations_list.append(stations[j])
+        # line '8' is a circle line
         if key == '8':
             lines[key] = tools.CircleLine(key, stations_list)
         else:
             lines[key] = tools.Line(key, stations_list)
 
+    # add edges
     for l in lines.values():
         for pair in pairwise(l.route):
             dist = np.linalg.norm([pair[0].xy,pair[1].xy])
             subway.add_edge(*pair, distance=dist)
 
+# filling up trains
     trains = []
+    # forward direction
     for key in lines_information.iterkeys():
         iterating_group = range(0, (len(lines_information[key]) + 3) / 5)
         serial = 1
@@ -273,6 +292,7 @@ def nyc():
                                       direction=1, velocity=100.0,
                                       verbose=0))
             serial += 1
+        # reverse direction
         iterating_group.reverse()
         for j in iterating_group:
             trains.append(tools.Train(name=key + '-' + str(serial),
