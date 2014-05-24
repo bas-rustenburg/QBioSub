@@ -159,7 +159,7 @@ def circle():
     This system has 4 lines.
     Line 1: a-b-c-d
     Line 2: e-f-c-g
-    Line 3: f-i-b-h-g
+    Line 3: c-f-i-b-h-g
     Line 4: a-c-e
     """
     subway = nx.Graph()
