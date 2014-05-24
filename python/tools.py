@@ -389,9 +389,27 @@ class Line(object):
                 direction *= -1
             return ([self.route[indir], direction])
 
+class CircleLine(Line):
+    """
+    Subclass of Line. Handles circle lines
+    """
+    def resolve(self, station, direction):
+        """Based on the direction that you are traveling, return next or previous."""
+        if not direction in [1,-1]:
+            raise Exception, "Direction is forward (1), or reverse (-1)."
 
-
-
+        #Find index of current station, to lookup where the next station is.
+        index = np.where(self.route==station)[0][0]
+        indir = index + direction
+        #Catching IndexError to flip direction if at end.
+        try:
+            self.route[indir]
+        except IndexError:
+            indir = 0
+            
+        return ([self.route[indir], direction])
+            
+            
 #FUNCTIONS####################################################################
 
 
