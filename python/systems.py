@@ -154,6 +154,54 @@ def labcdefghi():
 
     return subway,lines,stations,trains
 
+def circle():
+    """
+    This system has 4 lines.
+    Line 1: a-b-c-d
+    Line 2: e-f-c-g
+    Line 3: f-i-b-h-g
+    Line 4: a-c-e
+    """
+    subway = nx.Graph()
+
+    STATIONS = [tuple(['a', 0, 10, 0, 1, ['1','4']]), tuple(['b', 10, 10, 0, 1, ['1','3']]), tuple(['c', 20, 10, 0, 1, ['1','2','3','4']]), tuple(['d', 30, 10, 0, 1, ['1']]),tuple(['e', 20, 30, 0, 1, ['2','4']]), tuple(['f', 20, 20, 0, 1, ['2','3']]), tuple(['g', 20, 0, 0, 1, ['2','3']]),tuple(['h', 10, 0, 0, 1, ['3']]),tuple(['i', 10, 20, 0, 1, ['3']])]
+    stations = list()
+
+    for S in STATIONS:
+        stations.append(tools.LineStation(*S))
+    
+    for s in stations:
+        subway.add_node(s)
+
+    lines = { '1': tools.Line('1',stations[0:4]),
+              '2': tools.Line('2', [stations[4],stations[5],stations[2],stations[6]]),
+              '3': tools.CircleLine('3', [stations[2], stations[5],stations[8], stations[1],stations[7],stations[6]]),
+              '4': tools.Line('4', [stations[0], stations[2], stations[4]])
+              }
+
+    for l in lines.values():
+        for pair in pairwise(l.route):
+            dist = np.linalg.norm([pair[0].xy,pair[1].xy])
+            subway.add_edge(*pair, distance=dist)
+
+
+    train11 = tools.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
+    train12 = tools.Train('1-2', 30, lines['1'], stations[3], -1, 1.0, verbose=0)
+    train21 = tools.Train('2-1', 30, lines['2'], stations[4], 1, 1.0, verbose=0)
+    train22 = tools.Train('2-2', 30, lines['2'], stations[2], -1, 1.0, verbose=0)
+    train31 = tools.Train('3-1', 30, lines['3'], stations[2], 1, 1.0, verbose=0)
+    train32 = tools.Train('3-2', 30, lines['3'], stations[6], -1, 1.0, verbose=1)
+    train41 = tools.Train('4-1', 30, lines['4'], stations[0], 1, 1.0, verbose=0)
+    train42 = tools.Train('4-2', 30, lines['4'], stations[4], -1, 1.0, verbose=0)
+
+    trains = [train11,train12,train21,train22,train31, train32,train41,train42]
+
+
+
+    return subway,lines,stations,trains
+
+
+
 def nyc():
     subway = nx.Graph()
     STATIONS = []

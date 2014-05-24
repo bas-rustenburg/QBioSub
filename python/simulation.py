@@ -11,7 +11,8 @@ import random
 import itertools
 import tools
 
-from systems import labcdefghi as simulation
+#from systems import labcdefghi as simulation
+from systems import circle as simulation
 
 random.seed(42)
 print [random.randint(0,255),random.randint(0,255),random.randint(0,255)]
