@@ -401,7 +401,7 @@ class CircleLine(Line):
         #Find index of current station, to lookup where the next station is.
         index = np.where(self.route==station)[0][0]
         indir = index + direction
-        #Catching IndexError to flip direction if at end.
+        #Catching IndexError to go back to first station on line
         try:
             self.route[indir]
         except IndexError:
