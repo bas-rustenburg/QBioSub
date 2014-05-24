@@ -264,27 +264,21 @@ def nyc():
     trains = []
     for key in lines_information.iterkeys():
         serial = 1
-        for j in range(0, len(lines_information[key]), 5):
+        for j in range(0, (len(lines_information[key]) + 8) / 5):
             trains.append(tools.Train(name=key + '-' + str(serial),
                                       capacity=30,
                                       line=lines[key],
-                                      start=stations[lines_information[key][j]],
+                                      start=stations[lines_information[key][5 * j]],
                                       direction=1, velocity=100.0,
                                       verbose=0))
             serial += 1
-        if (len(lines_information[key]) - 1 % 5 == 0):
-            trains.pop()
-            serial -= 1
-        for j in range(len(lines_information[key]) - 1, 0, -5):
+        for j in range((len(lines_information[key]) + 8) / 5, 0, -1):
             trains.append(tools.Train(name=key + '-' + str(serial),
                                       capacity=30,
                                       line=lines[key],
-                                      start=stations[lines_information[key][j]],
-                                      direction=1, velocity=100.0,
+                                      start=stations[lines_information[key][-5 * j]],
+                                      direction=-1, velocity=100.0,
                                       verbose=0))
             serial += 1
-        if (len(lines_information[key]) - 1 % 5 == 0):
-            trains.pop()
-            serial -= 1
 
     return subway,lines,stations,trains
