@@ -262,8 +262,23 @@ def nyc():
             subway.add_edge(*pair, distance=dist)
 
     trains = []
-    trains.append(tools.Train(name='1-1', capacity=30, line=lines['1'],
-                              start=stations[lines_information['1'][0]],
-                              direction=1, velocity=100.0, verbose=0))
+    for key in lines_information.iterkeys():
+        serial = 1
+        for j in range(0, len(lines_information[key]), 5):
+            trains.append(tools.Train(name=key + '-' + serial,
+                                      capacity=30,
+                                      line=lines[key],
+                                      start=stations[lines_information[key][j]],
+                                      direction=1, velocity=100.0,
+                                      verbose=0))
+            serial += 1
+        for j in range(len(lines_information[key]), 0, -5):
+            trains.append(tools.Train(name=key + '-' + serial,
+                                      capacity=30,
+                                      line=lines[key],
+                                      start=stations[lines_information[key][j]],
+                                      direction=1, velocity=100.0,
+                                      verbose=0))
+            serial += 1
 
     return subway,lines,stations,trains
