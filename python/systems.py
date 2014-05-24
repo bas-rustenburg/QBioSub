@@ -123,7 +123,7 @@ def labcdefghi():
 
     for S in STATIONS:
         stations.append(tools.LineStation(*S))
-    
+
     for s in stations:
         subway.add_node(s)
 
@@ -171,35 +171,47 @@ def nyc():
             list(row[0].split(";")[-1])
             ]))
 
-    stations = lines = dict()
+    stations = dict()
+    
+    for S in STATIONS:
+        stations[S[0]] = tools.LineStation(*S)
 
+    for s in stations.itervalues():
+        subway.add_node(s)
+
+    lines = dict()
     lines_information = {'1': [], '2': [], '3': [], '4': [], '5': [], '6': [],
                          '7': [], 'A': [], 'B': [], 'C': [], 'D': [], 'E': [],
                          'F': [], 'G': [], 'H': [], 'J': [], 'L': [], 'M': [],
                          'N': [], 'Q': [], 'R': [], 'S': [], 's': [], 'Z': []}
-
-    for S in STATIONS:
-        stations[S[0]] = tools.LineStation(*S)
-    #
-    for s in stations.itervalues():
-        subway.add_node(s)
 
     with open('../listOfLines.txt') as f:
         rows = (line.strip().split("\t") for line in f)
         for row in rows:
             lines_information[row[0]] = row[1:]
 
+# new line
+    #lines_information['8'] = [';4567S', ';7BDFM', ';1237ACENQRS', '34th St;ACE',
+    #                          '34th St;123', ';BDFMNQR', '33rd St;6', '28th St;6',
+    #                          '23rd St;6', ';456LNQR', ';123FLM', ';ACEL',
+    #                          '23rd St;CE', '34th St;ACE', '34th St;123', ';BDFMNQR',
+    #                          '33rd St;6']
+# block line
+    #del lines_information['R']
+
     for key, value in lines_information.iteritems():
         stations_list = []
         for j in value:
             stations_list.append(stations[j])
-        lines[key] = tools.Line(key, stations_list)
+        if key == '8':
+            lines[key] = tools.CircleLine(key, stations_list)
+        else:
+            lines[key] = tools.Line(key, stations_list)
 
     for l in lines.values():
         for pair in pairwise(l.route):
             dist = np.linalg.norm([pair[0].xy,pair[1].xy])
             subway.add_edge(*pair, distance=dist)
-
 
     train1 = tools.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
     train2 = tools.Train('1-2', 30, lines['1'], stations[1], 1, 1.0, verbose=0)
@@ -214,27 +226,3 @@ def nyc():
 
 
     return subway,lines,stations,trains
-
-def nycdict():
-    """
-    MOCK example of how to specify stations as a dict
-    Something is still wrong in station definition
-    """
-    #TODO not a full simulation system
-    subway = nx.Graph()
-
-    STATIONS = []
-    with open('../listOfStationsConverted.txt') as f:
-        f.readline()
-        rows = (line.strip().split("\t") for line in f)
-        for row in rows:
-            STATIONS.append(tuple([row[0], (int(row[5]) if (row[3][-2] == 'X') else int(row[5]) - 100000), (int(row[4]) if (row[3][-1] == 'L') else int(row[4]) - 100000), 0, 1]))
-
-    stations = dict()
-
-    for S in STATIONS:
-        #S[0] should be the name
-        stations[S[0]]=tools.LineStation(*S)
-    #
-    for s in stations.itervalues():
-        subway.add_node(s)
