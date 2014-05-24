@@ -272,7 +272,7 @@ def nyc():
                                       direction=1, velocity=100.0,
                                       verbose=0))
             serial += 1
-        for j in range(len(lines_information[key]), 0, -5):
+        for j in range(len(lines_information[key]) - 1, 0, -5):
             trains.append(tools.Train(name=key + '-' + str(serial),
                                       capacity=30,
                                       line=lines[key],
