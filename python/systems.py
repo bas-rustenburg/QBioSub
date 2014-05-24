@@ -265,7 +265,7 @@ def nyc():
     for key in lines_information.iterkeys():
         serial = 1
         for j in range(0, len(lines_information[key]), 5):
-            trains.append(tools.Train(name=key + '-' + serial,
+            trains.append(tools.Train(name=key + '-' + str(serial),
                                       capacity=30,
                                       line=lines[key],
                                       start=stations[lines_information[key][j]],
@@ -273,7 +273,7 @@ def nyc():
                                       verbose=0))
             serial += 1
         for j in range(len(lines_information[key]), 0, -5):
-            trains.append(tools.Train(name=key + '-' + serial,
+            trains.append(tools.Train(name=key + '-' + str(serial),
                                       capacity=30,
                                       line=lines[key],
                                       start=stations[lines_information[key][j]],
