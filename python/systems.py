@@ -261,16 +261,9 @@ def nyc():
             dist = np.linalg.norm([pair[0].xy,pair[1].xy])
             subway.add_edge(*pair, distance=dist)
 
-    train1 = tools.Train('1-1', 30, lines['1'], stations[0], 1, 1.0, verbose=0)
-    train2 = tools.Train('1-2', 30, lines['1'], stations[1], 1, 1.0, verbose=0)
-    train3 = tools.Train('1-3', 30, lines['1'], stations[2], 1, 1.0, verbose=0)
-    train4 = tools.Train('1-4', 30, lines['1'], stations[3], 1, 1.0, verbose=1)
-    train5 = tools.Train('1-1', 30, lines['1'], stations[0], -1, 1.0, verbose=0)
-    train6 = tools.Train('1-2', 30, lines['1'], stations[1], -1, 1.0, verbose=0)
-    train7 = tools.Train('1-3', 30, lines['1'], stations[2], -1, 1.0, verbose=0)
-    train8 = tools.Train('1-4', 30, lines['1'], stations[3], -1, 1.0, verbose=0)
-
-    trains = [train1,train2,train3,train4,train5,train6,train7,train8]
-
+    trains = []
+    trains.append(tools.Train(name='1-1', capacity=30, line=lines['1'],
+                              start=stations[lines_information['1'][0]],
+                              direction=1, velocity=100.0, verbose=0))
 
     return subway,lines,stations,trains
