@@ -171,17 +171,12 @@ def nyc():
             list(row[0].split(";")[-1])
             ]))
 
+    stations = lines = dict()
+
     lines_information = {'1': [], '2': [], '3': [], '4': [], '5': [], '6': [],
                          '7': [], 'A': [], 'B': [], 'C': [], 'D': [], 'E': [],
                          'F': [], 'G': [], 'H': [], 'J': [], 'L': [], 'M': [],
                          'N': [], 'Q': [], 'R': [], 'S': [], 's': [], 'Z': []}
-
-#    with open('../listOfLines.txt') as f:
-#        rows = (line.strip().split("\t") for line in f)
-#        for row in rows:
-#            lines_information
-
-    stations = dict()
 
     for S in STATIONS:
         stations[S[0]] = tools.LineStation(*S)
@@ -189,8 +184,16 @@ def nyc():
     for s in stations.itervalues():
         subway.add_node(s)
 
-#    lines = { '1': tools.Line('1', [stations['Van Cortlandt Park-242nd St-1'], stations[], stations[]]), 
-#              '2': tools.Line('2', [stations[4],stations[5],stations[2],stations[6]] )}
+    with open('../listOfLines.txt') as f:
+        rows = (line.strip().split("\t") for line in f)
+        for row in rows:
+            lines_information[row[0]] = row[1:]
+
+    for key, value in lines_information.iteritems():
+        stations_list = []
+        for j in value:
+            stations_list.append(stations[j])
+        lines[key] = tools.Line(key, stations_list)
 
     for l in lines.values():
         for pair in pairwise(l.route):
