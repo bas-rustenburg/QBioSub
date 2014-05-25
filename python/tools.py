@@ -190,7 +190,6 @@ class Passenger(object):
         if location:
             self.location = location
 
-        self.lifetime +=1
     def __repr__(self):
         s = "Passenger\n"
         s += "From:%s\n"%self.origin.name

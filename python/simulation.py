@@ -2,7 +2,7 @@
 """
 Created on Wed May 14 16:23:56 2014
 
-@author: Bas Rustenburg, Hyunwoo Choo
+@author: Bas Rustenburg, Hyunwoo Cho
 """
 
 #import networkx as nx
@@ -28,8 +28,5 @@ timesteps = 1400
 for _ in itertools.repeat(None,timesteps):
     [station.update(destinations=stations,instructions=instructions) for station in stations]
     [train.update() for train in trains]
-    try:
-        pastotals.append(tools.Passenger.total)
-    except AttributeError:
-        pastotals.append(0)
+ 
 
