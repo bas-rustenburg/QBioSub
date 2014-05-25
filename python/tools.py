@@ -418,7 +418,7 @@ def pairwise(sequence):
 
 
 
-def travel_instructions(subway=nx.Graph(),lines=dict(),order=["transfers","stops","distance"],cutoff):
+def travel_instructions(subway=nx.Graph(),lines=dict(),order=["transfers","stops","distance"],cutoff=70):
     """
     Provide a dictionary of travel instructions based on the paths, distances, transfers and amount of stops.
 
@@ -431,7 +431,7 @@ def travel_instructions(subway=nx.Graph(),lines=dict(),order=["transfers","stops
     order - list() [default: ["transfers","stops","distance"]]
         List of length 3, prioritize transfers, stops or distance on optimal route.
     """
-    pathmatrix = generate_allpaths(subway,cutoff=70)
+    pathmatrix = generate_allpaths(subway,cutoff)
     distmatrix = generate_dist_line(pathmatrix)
     transmatrix = generate_transfers(distmatrix,lines)
     bestmatrix = decide_on_path(transmatrix,order)
