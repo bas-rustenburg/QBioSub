@@ -78,12 +78,12 @@ class Station(object):
     def update(self,destinations=set(),instructions=dict()):
         for p in self.passengers:
             p.update()
-            
+
         #Spawn new passengers.
         self.passengers = np.union1d(self.passengers, np.array(self.spawn(set(destinations) ^ set([self]), instructions)))
         #TODO: This is optional, will only happen on KillerStation.
         self.passengers = np.setdiff1d(self.passengers,self.kill(), assume_unique=True)
-        
+
 
 class BasicStation(Station):
     """
@@ -123,7 +123,7 @@ class BasicStation(Station):
 
     def spawn(self,destinations,instructions):
         """Spawn passengers
-           TODO remove current station from the list?"""
+        """
         num = random.randint(self.minpas,self.maxpas)
         newpassengers = np.array([])
         for _ in itertools.repeat(None,num):
@@ -159,55 +159,49 @@ class LineStation(BasicStation):
         #These strings NEED! to match the identifier for the Line objects.
         self.lines = set(lines)
         return
+
 #    def update(self,destinations=set(),instructions=dict()):
 #        super(LineStation,self).update(destinations,instructions)
 #        for p in self.passengers:
 #            for t in p.transfers:
 #                for l in t[1]:
 #                    if l not in self.lines:
-#                        print repr(self), p.transfers 
-#            
+#                        print repr(self), p.transfers
+
+    def __repr__(self):
+        """
+        Representation of Station as a string
+        """
+        return "St'%s:%s'"%(self.name,self.lines)
+
 
 
 class Passenger(object):
     """Wants to go from A to B"""
-    total=0
-    lifetimes=list()
     def __init__(self, origin, destination,instructions, verbose=0):
         self.origin = origin
         self.location = origin
         self.destination = destination
         self.transfers = np.array(instructions[self.origin,self.destination])
         self.verbose = verbose
-        self.lifetime = 0
-        Passenger.total +=1
         return
-    
+
     def update(self,location=None):
         if location:
             self.location = location
-            
-        self.lifetime +=1
+
     def __repr__(self):
-        s = "Passenger\n" 
-        s += "%s\n"%self.origin.name
-        s += "%s\n"%self.destination.name
-        s += "%s\n"%self.location
-        s += "%s\n"%self.transfers
+        s = "Passenger\n"
+        s += "From:%s\n"%self.origin.name
+        s += "To:%s\n"%self.destination.name
+        s += "At:%s\n"%self.location
+        s += "By%s\n"%self.transfers
         return s
-        
+
     def __del__(self):
-        try:
-            Passenger.total -= 1
-            Passenger.lifetimes.append(self.lifetime)
-            if self.lifetime > 9000:
-                print self.__repr__()
-                
-        except:
-            pass            
+
         if self.verbose >0:
-            print "Please don't kill me, I have a family!"
-            print "I'm being killed at %s."%self.location.name
+            print "Deleted at %s."%self.location.name
 
         return
 
@@ -277,7 +271,7 @@ class Train(object):
         #Passengers that are getting off.
         offload = np.array([])
         transfer = np.array([])
-        
+
         #Counters for diagnostics
         off_count = int()
         on_count = int()
@@ -293,43 +287,41 @@ class Train(object):
                     off_count +=1
                 #If a passenger needs a transfer here, add them to the transfer list.
                 elif pas.location == pas.transfers[0][0]:
-                    transfer = np.append(transfer,pas)                
+                    transfer = np.append(transfer,pas)
                     transfer_count +=1
             except IndexError:
                 pass
+
         #Passengers are removed from the train.
         self.passengers = np.setdiff1d(self.passengers,  np.union1d(offload, transfer))
         self.current_station.passengers = np.union1d(self.current_station.passengers, transfer)
 
         #Now, see which passengers are getting on
         for pas in self.current_station.passengers:
-            
+
             #Dont take passengers if the train is full
             if len(self.passengers) >= self.capacity:
                 break
-            
-            #If a passenger has no transfers, skip him            
+
+            #If a passenger has no transfers, skip him
             if not len(pas.transfers):
                 continue
-            
+
             #Get passengers details
-            try:
-                pstation,pline,pdirection = pas.transfers[0]
-            except ValueError,e:
-                print pas,pas.transfers
-                raise ValueError,e
-                
+            pstation,pline,pdirection = pas.transfers[0]
+
             ##If this is not the right station, line or direction, dont get on
             if pstation != self.current_station or self.line.name not in pline:
+                
                 continue
-            
+
             #check what direction the passenger needs to go
             pline_index= pline.index(self.line.name)
             if pdirection[pline_index] != self.direction:
                 #if the direction dont match, dont get on.
                 continue
 
-            
+
             #Everything checks out. Begin the boarding process.
             index=np.where(self.current_station.passengers==pas)
             self.current_station.passengers = np.delete(self.current_station.passengers,index)
@@ -377,17 +369,20 @@ class Line(object):
         #Find index of current station, to lookup where the next station is.
         index = np.where(self.route==station)[0][0]
         indir = index + direction
-        #Catching IndexError to flip direction if at end.
+        
+        #If we are approaching last stop on reverse, indir == -1
+        if indir < 0:
+            #Flip the train forward, and set next station to station 1
+            direction *=-1
+            indir = 1            
+        #Catching IndexError to flip direction if at end on forward.
         try:
             self.route[indir]
         except IndexError:
             direction *= -1
             indir = index + direction
-        finally:
-            #If we're at the beginning, flip
-            if indir == 0:
-                direction *= -1
-            return ([self.route[indir], direction])
+            
+        return ([self.route[indir], direction])
 
 class CircleLine(Line):
     """
@@ -406,10 +401,10 @@ class CircleLine(Line):
             self.route[indir]
         except IndexError:
             indir = 0
-            
+
         return ([self.route[indir], direction])
-            
-            
+
+
 #FUNCTIONS####################################################################
 
 
