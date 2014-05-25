@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?><gexf version="1.1" xmlns="http://www.gexf.net/1.1draft" xmlns:viz="http://www.gexf.net/1.1draft/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance">
+  <graph defaultedgetype="undirected" mode="static">
+    <nodes>
+      <node id="1" label="1" />
+      <node id="3" label="3" />
+      <node id="2" label="2" />
+      <node id="5" label="5" />
+      <node id="4" label="4" />
+      <node id="7" label="7" />
+      <node id="6" label="6" />
+      <node id="A" label="A" />
+      <node id="C" label="C" />
+      <node id="B" label="B" />
+      <node id="E" label="E" />
+      <node id="D" label="D" />
+      <node id="G" label="G" />
+      <node id="F" label="F" />
+      <node id="H" label="H" />
+      <node id="J" label="J" />
+      <node id="M" label="M" />
+      <node id="L" label="L" />
+      <node id="N" label="N" />
+      <node id="Q" label="Q" />
+      <node id="S" label="S" />
+      <node id="R" label="R" />
+      <node id="Z" label="Z" />
+      <node id="s" label="s" />
+    </nodes>
+    <edges>
+      <edge id="0" source="1" target="A" />
+      <edge id="1" source="1" target="Q" />
+      <edge id="2" source="1" target="C" />
+      <edge id="3" source="1" target="B" />
+      <edge id="4" source="1" target="E" />
+      <edge id="5" source="1" target="D" />
+      <edge id="6" source="1" target="F" />
+      <edge id="7" source="1" target="S" />
+      <edge id="8" source="1" target="M" />
+      <edge id="9" source="1" target="L" />
+      <edge id="10" source="1" target="N" />
+      <edge id="11" source="1" target="1" />
+      <edge id="12" source="1" target="3" />
+      <edge id="13" source="1" target="2" />
+      <edge id="14" source="1" target="7" />
+      <edge id="15" source="1" target="R" />
+      <edge id="16" source="3" target="A" />
+      <edge id="17" source="3" target="Q" />
+      <edge id="18" source="3" target="C" />
+      <edge id="19" source="3" target="B" />
+      <edge id="20" source="3" target="E" />
+      <edge id="21" source="3" target="D" />
+      <edge id="22" source="3" target="F" />
+      <edge id="23" source="3" target="S" />
+      <edge id="24" source="3" target="s" />
+      <edge id="25" source="3" target="J" />
+      <edge id="26" source="3" target="M" />
+      <edge id="27" source="3" target="L" />
+      <edge id="28" source="3" target="N" />
+      <edge id="29" source="3" target="3" />
+      <edge id="30" source="3" target="2" />
+      <edge id="31" source="3" target="5" />
+      <edge id="32" source="3" target="4" />
+      <edge id="33" source="3" target="7" />
+      <edge id="34" source="3" target="R" />
+      <edge id="35" source="3" target="Z" />
+      <edge id="36" source="2" target="A" />
+      <edge id="37" source="2" target="Q" />
+      <edge id="38" source="2" target="C" />
+      <edge id="39" source="2" target="B" />
+      <edge id="40" source="2" target="E" />
+      <edge id="41" source="2" target="D" />
+      <edge id="42" source="2" target="F" />
+      <edge id="43" source="2" target="S" />
+      <edge id="44" source="2" target="s" />
+      <edge id="45" source="2" target="J" />
+      <edge id="46" source="2" target="M" />
+      <edge id="47" source="2" target="L" />
+      <edge id="48" source="2" target="N" />
+      <edge id="49" source="2" target="2" />
+      <edge id="50" source="2" target="5" />
+      <edge id="51" source="2" target="4" />
+      <edge id="52" source="2" target="7" />
+      <edge id="53" source="2" target="R" />
+      <edge id="54" source="2" target="Z" />
+      <edge id="55" source="5" target="A" />
+      <edge id="56" source="5" target="C" />
+      <edge id="57" source="5" target="B" />
+      <edge id="58" source="5" target="D" />
+      <edge id="59" source="5" target="S" />
+      <edge id="60" source="5" target="s" />
+      <edge id="61" source="5" target="J" />
+      <edge id="62" source="5" target="L" />
+      <edge id="63" source="5" target="N" />
+      <edge id="64" source="5" target="Q" />
+      <edge id="65" source="5" target="5" />
+      <edge id="66" source="5" target="4" />
+      <edge id="67" source="5" target="7" />
+      <edge id="68" source="5" target="6" />
+      <edge id="69" source="5" target="R" />
+      <edge id="70" source="5" target="Z" />
+      <edge id="71" source="4" target="A" />
+      <edge id="72" source="4" target="C" />
+      <edge id="73" source="4" target="B" />
+      <edge id="74" source="4" target="D" />
+      <edge id="75" source="4" target="S" />
+      <edge id="76" source="4" target="s" />
+      <edge id="77" source="4" target="J" />
+      <edge id="78" source="4" target="L" />
+      <edge id="79" source="4" target="N" />
+      <edge id="80" source="4" target="Q" />
+      <edge id="81" source="4" target="4" />
+      <edge id="82" source="4" target="7" />
+      <edge id="83" source="4" target="6" />
+      <edge id="84" source="4" target="R" />
+      <edge id="85" source="4" target="Z" />
+      <edge id="86" source="7" target="A" />
+      <edge id="87" source="7" target="Q" />
+      <edge id="88" source="7" target="C" />
+      <edge id="89" source="7" target="B" />
+      <edge id="90" source="7" target="E" />
+      <edge id="91" source="7" target="D" />
+      <edge id="92" source="7" target="G" />
+      <edge id="93" source="7" target="F" />
+      <edge id="94" source="7" target="M" />
+      <edge id="95" source="7" target="S" />
+      <edge id="96" source="7" target="N" />
+      <edge id="97" source="7" target="7" />
+      <edge id="98" source="7" target="6" />
+      <edge id="99" source="7" target="R" />
+      <edge id="100" source="6" target="B" />
+      <edge id="101" source="6" target="E" />
+      <edge id="102" source="6" target="D" />
+      <edge id="103" source="6" target="F" />
+      <edge id="104" source="6" target="J" />
+      <edge id="105" source="6" target="M" />
+      <edge id="106" source="6" target="L" />
+      <edge id="107" source="6" target="N" />
+      <edge id="108" source="6" target="Q" />
+      <edge id="109" source="6" target="S" />
+      <edge id="110" source="6" target="R" />
+      <edge id="111" source="6" target="6" />
+      <edge id="112" source="6" target="Z" />
+      <edge id="113" source="A" target="A" />
+      <edge id="114" source="A" target="C" />
+      <edge id="115" source="A" target="B" />
+      <edge id="116" source="A" target="E" />
+      <edge id="117" source="A" target="D" />
+      <edge id="118" source="A" target="G" />
+      <edge id="119" source="A" target="F" />
+      <edge id="120" source="A" target="H" />
+      <edge id="121" source="A" target="J" />
+      <edge id="122" source="A" target="M" />
+      <edge id="123" source="A" target="L" />
+      <edge id="124" source="A" target="N" />
+      <edge id="125" source="A" target="Q" />
+      <edge id="126" source="A" target="S" />
+      <edge id="127" source="A" target="R" />
+      <edge id="128" source="A" target="Z" />
+      <edge id="129" source="C" target="C" />
+      <edge id="130" source="C" target="B" />
+      <edge id="131" source="C" target="E" />
+      <edge id="132" source="C" target="D" />
+      <edge id="133" source="C" target="G" />
+      <edge id="134" source="C" target="F" />
+      <edge id="135" source="C" target="J" />
+      <edge id="136" source="C" target="M" />
+      <edge id="137" source="C" target="L" />
+      <edge id="138" source="C" target="N" />
+      <edge id="139" source="C" target="Q" />
+      <edge id="140" source="C" target="S" />
+      <edge id="141" source="C" target="R" />
+      <edge id="142" source="C" target="Z" />
+      <edge id="143" source="C" target="s" />
+      <edge id="144" source="B" target="Q" />
+      <edge id="145" source="B" target="B" />
+      <edge id="146" source="B" target="E" />
+      <edge id="147" source="B" target="D" />
+      <edge id="148" source="B" target="F" />
+      <edge id="149" source="B" target="M" />
+      <edge id="150" source="B" target="s" />
+      <edge id="151" source="B" target="N" />
+      <edge id="152" source="B" target="R" />
+      <edge id="153" source="E" target="Q" />
+      <edge id="154" source="E" target="E" />
+      <edge id="155" source="E" target="D" />
+      <edge id="156" source="E" target="G" />
+      <edge id="157" source="E" target="F" />
+      <edge id="158" source="E" target="S" />
+      <edge id="159" source="E" target="J" />
+      <edge id="160" source="E" target="M" />
+      <edge id="161" source="E" target="L" />
+      <edge id="162" source="E" target="N" />
+      <edge id="163" source="E" target="R" />
+      <edge id="164" source="E" target="Z" />
+      <edge id="165" source="D" target="Q" />
+      <edge id="166" source="D" target="D" />
+      <edge id="167" source="D" target="F" />
+      <edge id="168" source="D" target="M" />
+      <edge id="169" source="D" target="N" />
+      <edge id="170" source="D" target="R" />
+      <edge id="171" source="G" target="G" />
+      <edge id="172" source="G" target="F" />
+      <edge id="173" source="G" target="M" />
+      <edge id="174" source="G" target="L" />
+      <edge id="175" source="G" target="R" />
+      <edge id="176" source="F" target="Q" />
+      <edge id="177" source="F" target="F" />
+      <edge id="178" source="F" target="J" />
+      <edge id="179" source="F" target="M" />
+      <edge id="180" source="F" target="L" />
+      <edge id="181" source="F" target="N" />
+      <edge id="182" source="F" target="R" />
+      <edge id="183" source="F" target="Z" />
+      <edge id="184" source="H" target="H" />
+      <edge id="185" source="J" target="J" />
+      <edge id="186" source="J" target="M" />
+      <edge id="187" source="J" target="L" />
+      <edge id="188" source="J" target="N" />
+      <edge id="189" source="J" target="Q" />
+      <edge id="190" source="J" target="R" />
+      <edge id="191" source="J" target="Z" />
+      <edge id="192" source="M" target="Q" />
+      <edge id="193" source="M" target="M" />
+      <edge id="194" source="M" target="L" />
+      <edge id="195" source="M" target="N" />
+      <edge id="196" source="M" target="R" />
+      <edge id="197" source="M" target="Z" />
+      <edge id="198" source="L" target="Q" />
+      <edge id="199" source="L" target="L" />
+      <edge id="200" source="L" target="N" />
+      <edge id="201" source="L" target="R" />
+      <edge id="202" source="L" target="Z" />
+      <edge id="203" source="N" target="Q" />
+      <edge id="204" source="N" target="S" />
+      <edge id="205" source="N" target="N" />
+      <edge id="206" source="N" target="R" />
+      <edge id="207" source="N" target="Z" />
+      <edge id="208" source="Q" target="Q" />
+      <edge id="209" source="Q" target="S" />
+      <edge id="210" source="Q" target="R" />
+      <edge id="211" source="Q" target="Z" />
+      <edge id="212" source="Q" target="s" />
+      <edge id="213" source="S" target="S" />
+      <edge id="214" source="S" target="R" />
+      <edge id="215" source="R" target="R" />
+      <edge id="216" source="R" target="Z" />
+      <edge id="217" source="Z" target="Z" />
+      <edge id="218" source="s" target="s" />
+    </edges>
+  </graph>
+</gexf>
