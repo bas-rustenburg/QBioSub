@@ -2,7 +2,7 @@
 """
 Created on Sun May 25 15:04:06 2014
 
-@author: rustenburg
+@author: Bas Rustenburg, Hyunwoo Cho
 """
 import networkx as nx
 
@@ -76,15 +76,18 @@ for key,val in lineconnections.iteritems():
     for connection in val:
         linegraph.add_edge(key,connection)
 
-from matplotlib import pyplot as plt
-
-plt.figure(dpi=300)
-#plt.axes(frameon=False)
-plt.axis('off')
+if __name__ == "__main__":
 
 
-nx.draw_spring(linegraph,nodelist=line,node_color=node_colors)
+    from matplotlib import pyplot as plt
+    
+    plt.figure(dpi=300)
+    #plt.axes(frameon=False)
+    plt.axis('off')
 
-nx.write_gexf(linegraph, "./Lines_Connectivity.gexf")
+
+    nx.draw_spring(linegraph,nodelist=line,node_color=node_colors)
+
+    nx.write_gexf(linegraph, "./Lines_Connectivity.gexf")
              
 #linegraph.add_edges

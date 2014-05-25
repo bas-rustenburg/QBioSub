@@ -12,6 +12,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 
+
 #Global variable for debugging pathway solutions.
 #Will capture any inconsistent paths for manual inspection when running consistent_resolver
 weirdpaths=list()
@@ -417,6 +418,60 @@ def pairwise(sequence):
     return pairs
 
 
+def shortest_transfer(a,b, linegraph,offset=1):
+    """
+    Calculate shortest transfer path(s) for each pair of lines between stations.
+    
+    Arguments
+    ---------
+    a - LineStation,
+        LineStation object origin
+    b - Linestation,
+        Linestation object destination
+    linegraph - networkx.Graph()
+        networkx graph object with connectivity of the lines
+    offset - int [default = 1]
+        will return solutions  <= shortest+offset
+    """
+    alines = a.lines
+    blines = b.lines
+    
+    somesolutions = list()
+    least_transfers= list()
+    for a in alines:
+        for b in blines:
+            solutions = nx.all_shortest_paths(linegraph,a,b)
+            for solution in solutions:
+                somesolutions.append(solution)
+    short = 25
+    for solution in somesolutions:
+        if len(solution) < short:
+            short = len(solution)
+    for solution in somesolutions:
+        if len(solution) <= short +offset:
+            least_transfers.append(solution)
+    return least_transfers
+
+def reduce_to_uniques(least_transfers):
+    uniquelines = list()
+    for b in least_transfers:
+        for l in b:
+            if l not in uniquelines:
+                uniquelines.append(l)
+    return uniquelines
+
+    
+
+###### OLD SLOW ALGORITMS, BEWARE ######
+
+
+
+
+
+
+
+
+
 
 def travel_instructions(subway=nx.Graph(),lines=dict(),order=["transfers","stops","distance"],cutoff=70):
     """
@@ -738,4 +793,17 @@ def subway_map(graph,file_name=None):
         plt.savefig(file_name, dpi=300)
     else: plt.show()
 
-
+def nyc_map(graph,file_name=None):
+    """Visually represent the subway network and save to file"""
+    # Turn interactive plotting off
+    plt.ioff()
+    positions = dict()
+    labels = dict()
+    for node in graph.nodes_iter():
+        positions[node] = node.xy
+        labels[node] = ""
+    plt.figure()
+    nx.draw_networkx(graph,positions,labels=labels,node_size=50,node_color='chartreuse')
+    if file_name:
+        plt.savefig(file_name, dpi=300)
+    else: plt.show()

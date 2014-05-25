@@ -23,3 +23,7 @@ http://www.mediafire.com/?h9m8myxwopxfu7l
 
 
 Passengers will take either local or express train depending on which arrives sooner, as long as it both takes them where they need to go. 
+
+
+New York City is big. Calculating all paths takes so long, it is prohibitive. 
+That is why we need to reduce our problem.
