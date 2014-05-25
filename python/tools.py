@@ -418,7 +418,7 @@ def pairwise(sequence):
 
 
 
-def travel_instructions(subway=nx.Graph(),lines=dict(),order=["transfers","stops","distance"]):
+def travel_instructions(subway=nx.Graph(),lines=dict(),order=["transfers","stops","distance"],cutoff):
     """
     Provide a dictionary of travel instructions based on the paths, distances, transfers and amount of stops.
 
@@ -431,7 +431,7 @@ def travel_instructions(subway=nx.Graph(),lines=dict(),order=["transfers","stops
     order - list() [default: ["transfers","stops","distance"]]
         List of length 3, prioritize transfers, stops or distance on optimal route.
     """
-    pathmatrix = generate_allpaths(subway)
+    pathmatrix = generate_allpaths(subway,cutoff=70)
     distmatrix = generate_dist_line(pathmatrix)
     transmatrix = generate_transfers(distmatrix,lines)
     bestmatrix = decide_on_path(transmatrix,order)
@@ -442,14 +442,14 @@ def travel_instructions(subway=nx.Graph(),lines=dict(),order=["transfers","stops
 
 
 
-def generate_allpaths(graph):
+def generate_allpaths(graph,cutoff):
     """
     Generate all routes for a passenger to take through the subway that only pass a station once
     """
     pathmatrix = dict()
     for outer in graph.nodes_iter():
         for inner in graph.nodes_iter():
-                pathmatrix[tuple([outer,inner])] = list(nx.all_simple_paths(graph,outer,inner))
+                pathmatrix[tuple([outer,inner])] = list(nx.all_simple_paths(graph,outer,inner,cutoff=cutoff))
     return pathmatrix
 
 def generate_dist_line(pathmatrix):
