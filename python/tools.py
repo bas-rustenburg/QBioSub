@@ -173,7 +173,7 @@ class LineStation(BasicStation):
         """
         Representation of Station as a string
         """
-        return "St'%s:%s'"%(self.name,self.lines)
+        return "St'%s'"%(self.name)
 
 
 
@@ -417,6 +417,72 @@ def pairwise(sequence):
 
     return pairs
 
+def line_first_travel_instructions(stations,lines,linegraph,offset=1):
+    """
+    Calculate set of travel instructions using line connectivity maps
+    """
+    simple_matrix = dict()
+    
+    for outer in stations:
+        for inner in stations:
+            if outer == inner:
+                simple_matrix[(outer,inner)] = list()
+            else:
+                try:
+                    simple_matrix[(outer,inner)] = simple_matrix[(inner,outer)]
+                except KeyError:
+                    simple_matrix[(outer,inner)] = lines_first_search(stations[outer],stations[inner],lines,linegraph,offset)
+    return simple_matrix
+    
+def lines_first_search(source,target,lines,linegraph,offset=1):
+    """
+    Uses connectivity of the lines to reduce search space
+    """
+    least_transfers = shortest_transfer(source, target,linegraph,offset)
+    
+    paths = list()
+    
+    for transfer in least_transfers:
+        paths.append(shortest_path(source,target,transfer,lines))
+           
+    
+    paths = sorted(paths, key=lambda x: x[0])
+    
+    chosen_path = paths[0]
+    
+    
+    option_lines= list()
+    for stationa,stationb in pairwise(chosen_path[1]):
+        option_lines.append(stationa.lines & stationb.lines)
+    
+    
+    lines_along_path = consistent_resolver(option_lines)
+    
+    #figure out the best path one could take
+    setpath = sets_to_lists(lines_along_path)
+    directions = list()
+    #every station pairs, figure out direction you're traveling
+    for connections,pair in enumerate(pairwise(chosen_path[1])):
+    
+        direction = list()
+        #check it for every line in the list of options
+        for con in setpath[connections]:
+            ordera = np.where(lines[con].route==pair[1])
+            orderb = np.where(lines[con].route==pair[0])
+            if ordera > orderb:
+                direction.append(1)
+            elif ordera < orderb:
+                direction.append(-1)
+            else:
+                raise Exception, "Something weird with the directions."
+        directions.append(direction)    
+    
+    scenicroute = zip(chosen_path[1],setpath,directions)
+    shortroute = simplify_path_v2(scenicroute)
+    
+    return shortroute
+
+
 
 def shortest_transfer(a,b, linegraph,offset=1):
     """
@@ -452,24 +518,38 @@ def shortest_transfer(a,b, linegraph,offset=1):
             least_transfers.append(solution)
     return least_transfers
 
+def shortest_path(source,target,transfer,lines,option="dijkstra"):
+    """Find shortest path, using given lines"""
+    reduced_lines = dict()
+    reduced_subway = nx.Graph()
+    for line in transfer:
+        reduced_lines[line] = lines[line]
+
+    for l in reduced_lines.values():
+        for pair in pairwise(l.route):
+            dist = np.linalg.norm([pair[0].xy,pair[1].xy])
+            reduced_subway.add_edge(*pair, distance=dist)
+    
+    
+    if option == "dijkstra":
+        #least distance
+        return nx.bidirectional_dijkstra(reduced_subway,source,target,weight='distance')
+    else:
+        #least stops
+        return nx.bidirectional_shortest_path(reduced_subway,source,target)
+    
+    
+
+
 def reduce_to_uniques(least_transfers):
+    """List of unique lines in bunch of transfers
+    """
     uniquelines = list()
     for b in least_transfers:
         for l in b:
             if l not in uniquelines:
                 uniquelines.append(l)
     return uniquelines
-
-    
-
-###### OLD SLOW ALGORITMS, BEWARE ######
-
-
-
-
-
-
-
 
 
 
@@ -636,6 +716,22 @@ def simplify_path(path):
             #This station is a transfer
             reduced.append(station)
     return reduced
+
+def simplify_path_v2(route):
+    """
+    Reduce route to transfers
+    """
+    reduced = list()
+
+    reduced.append(route[0])
+    for station in route:
+        #if the last station in the path is not on the same line and direction
+        if not reduced[-1][1] == station[1] or not reduced[-1][2] == station[2]:
+            #This station is a transfer
+            reduced.append(station)
+    return reduced
+
+
 
 def sort_paired_triplet_by(unsortedlist,order,where):
     """
