@@ -1,0 +1,508 @@
+St';456NQR' St'5th Av;NQR' {'distance': 26148.871677378356}
+St';456NQR' St';4567S' {'distance': 25661.554843773592}
+St';456NQR' St'Queens Plaza;EMR' {'distance': 23851.411551520385}
+St';456NQR' St'Queensboro Plaza;7NQ' {'distance': 24045.606854475518}
+St';456NQR' St';6EM' {'distance': 25619.188179956054}
+St';456NQR' St'68th St-Hunter College;6' {'distance': 25947.219562026294}
+St';456NQR' St'86th St;456' {'distance': 26315.079384261793}
+St'18th Av;D' St'20th Av;D' {'distance': 22675.318520364825}
+St'18th Av;D' St'79th St;D' {'distance': 22640.968773442535}
+St'18th Av;F' St'Ditmas Av;F' {'distance': 19265.989307585533}
+St'18th Av;F' St'Av I;F' {'distance': 19242.596238553673}
+St';6JNQRZ' St'City Hall;R' {'distance': 24972.14171832284}
+St';6JNQRZ' St';456JZ' {'distance': 24803.829805092599}
+St';6JNQRZ' St';456LNQR' {'distance': 24957.441094791749}
+St';6JNQRZ' St'Bowery;JZ' {'distance': 24532.554412453668}
+St';6JNQRZ' St'DeKalb Av;BQR' {'distance': 22981.651681286967}
+St';6JNQRZ' St'Spring St;6' {'distance': 24776.167944216071}
+St';6JNQRZ' St';2345BDNQR' {'distance': 22643.278870340313}
+St';6JNQRZ' St'Prince St;NR' {'distance': 24883.953584589406}
+St'18th St;1' St';123FLM' {'distance': 26206.250284998805}
+St'18th St;1' St'23rd St;1' {'distance': 26373.507294252693}
+St'190th St;A' St'Dyckman St-200th St;A' {'distance': 36734.704912384965}
+St'190th St;A' St'181st St;A' {'distance': 35976.597351611781}
+St'191st St;1' St'Dyckman St;1' {'distance': 35949.830583745454}
+St'191st St;1' St'181st St;1' {'distance': 35329.804669711943}
+St';ABCDEFM' St'Spring St;CE' {'distance': 25769.694681932109}
+St';ABCDEFM' St'Canal St;ACE' {'distance': 25643.704607564017}
+St';ABCDEFM' St';ACEL' {'distance': 26279.574939484846}
+St';ABCDEFM' St';6BDFM' {'distance': 25317.770162476791}
+St';ABCDEFM' St';123FLM' {'distance': 25960.146975701042}
+St';ABCDEFM' St';BDFMNQR' {'distance': 26026.359829987749}
+St';ACEL' St';123FLM' {'distance': 26387.717559501049}
+St';ACEL' St'34th St;ACE' {'distance': 26837.44445732492}
+St';ACEL' St'23rd St;CE' {'distance': 26753.041752294263}
+St'20th Av;D' St'Bay Parkway;D' {'distance': 22349.42750944641}
+St'20th Av;N' St'18th Av;N' {'distance': 20785.641750978004}
+St'20th Av;N' St'Bay Parkway-22nd Av;N' {'distance': 20435.573640101225}
+St'Gun Hill Rd;5' St'Pelham Parkway;5' {'distance': 34700.715309630148}
+St'Gun Hill Rd;5' St'Baychester Av;5' {'distance': 36134.517362211991}
+St'Halsey St;J' St'Chauncey St;JZ' {'distance': 13100.202746522666}
+St'Halsey St;J' St'Gates Av;JZ' {'distance': 13971.955804396177}
+St'Halsey St;L' St'Myrtle Av;LM' {'distance': 13654.579341744658}
+St'Halsey St;L' St'Wilson Av;L' {'distance': 12776.003209141738}
+St'Harlem-148th St;3' St'145th St;3' {'distance': 31265.508407828587}
+St'Hewes St;JM' St'Marcy Av;JMZ' {'distance': 19250.969066517144}
+St'Hewes St;JM' St'Lorimer St;JM' {'distance': 18542.477558298404}
+St';BDFM' St'7th Av;BDE' {'distance': 26765.770622195803}
+St';BDFM' St'5th Av-53rd St;EM' {'distance': 26342.451328606454}
+St';BDFM' St';7BDFM' {'distance': 26407.035691269855}
+St';BDFM' St'57th St;F' {'distance': 26645.211746203106}
+St'High St;AC' St';ACFR' {'distance': 22005.926542638463}
+St'High St;AC' St';2345ACJZ' {'distance': 23732.455288064906}
+St'Houston St;1' St'Christopher St;1' {'distance': 26100.449996120755}
+St'Houston St;1' St'Canal St;1' {'distance': 25856.51736023241}
+St'Howard Beach;A' St'Aqueduct-North Conduit Av;A' {'distance': 3607.1847748625241}
+St'Howard Beach;A' St'Broad Channel;AH' {'distance': 4538.2083469140107}
+St'Hoyt & Schermerhorn;ACG' St'Bergen St;FG' {'distance': 21466.67417184134}
+St'Hoyt & Schermerhorn;ACG' St';ACFR' {'distance': 21393.769022778572}
+St'Hoyt & Schermerhorn;ACG' St'Fulton St;G' {'distance': 20618.812308181088}
+St'Hoyt & Schermerhorn;ACG' St'Nostrand Av;AC' {'distance': 19152.301819885775}
+St'Hoyt & Schermerhorn;ACG' St'Lafayette Av;C' {'distance': 20515.414741116008}
+St'Hoyt St;23' St';2345' {'distance': 20987.735966511489}
+St'Hoyt St;23' St';2345R' {'distance': 21679.931411330617}
+St'Hunters Point;7' St'Vernon Blvd-Jackson Av;7' {'distance': 22162.917813320521}
+St'Hunters Point;7' St';7EGM' {'distance': 22057.653388336665}
+St'219th St;2' St'225th St;2' {'distance': 38229.638580556842}
+St'219th St;2' St'Gun Hill Rd;2' {'distance': 37492.816605317879}
+St'Hunts Point Av;6' St'Whitlock Av;6' {'distance': 29353.182910887193}
+St'Hunts Point Av;6' St'Longwood Av;6' {'distance': 28758.12949411001}
+St'Intervale Av;25' St'Prospect Av;25' {'distance': 29328.561846773191}
+St'Intervale Av;25' St'Simpson St;25' {'distance': 29492.902315641979}
+St'Inwood - 207th St;A' St'Dyckman St-200th St;A' {'distance': 37092.755829137313}
+St'Jackson Av;25' St'Prospect Av;25' {'distance': 29138.831256589547}
+St'Jackson Av;25' St'149th St-3rd Av;25' {'distance': 29246.638627370496}
+St'Jamaica-179th St;F' St'169th St;F' {'distance': 11040.646448464873}
+St'Jamaica-Van Wyck;E' St'Sutphin Blvd-Archer Av - JFK;EJZ' {'distance': 8942.4190798687123}
+St'Jamaica-Van Wyck;E' St'Briarwood-Van Wyck Blvd;EF' {'distance': 9606.0534560244869}
+St'21st St;F' St';7EFMR' {'distance': 20665.175876338435}
+St'21st St;F' St'Roosevelt Island;F' {'distance': 23518.467530857532}
+St'Jefferson St;L' St'DeKalb Av;L' {'distance': 15580.878184492683}
+St'Jefferson St;L' St'Morgan Av;L' {'distance': 16402.525720144444}
+St'Junction Blvd;7' St'90th St Elmhurst;7' {'distance': 17637.737241494444}
+St'Junction Blvd;7' St'103rd St;7' {'distance': 17447.99773613007}
+St'Junius St;3' St'Rockaway Av;3' {'distance': 10958.252962949888}
+St'Junius St;3' St'Pennsylvania Av;3' {'distance': 10200.181812105116}
+St'Kew Gardens-Union Turnpike;EF' St'Briarwood-Van Wyck Blvd;EF' {'distance': 10595.336804462613}
+St'Kew Gardens-Union Turnpike;EF' St'75th Av;EF' {'distance': 11428.227946624096}
+St'Kings Highway;BQ' St'Av U;Q' {'distance': 17894.795193016322}
+St'Kings Highway;BQ' St'Av M;Q' {'distance': 17628.418817352849}
+St'Kings Highway;BQ' St'Newkirk Av;BQ' {'distance': 17599.963238597971}
+St'Kings Highway;BQ' St'Sheepshead Bay;BQ' {'distance': 18236.789492671127}
+St'Kings Highway;F' St'Av U;F' {'distance': 19923.27257254691}
+St'Kings Highway;F' St'Av P;F' {'distance': 19563.212466259218}
+St'21st St;G' St'Greenpoint Av;G' {'distance': 21755.767327308866}
+St'21st St;G' St';7EGM' {'distance': 22193.721972666055}
+St'Kings Highway;N' St'Bay Parkway-22nd Av;N' {'distance': 20444.150336954579}
+St'Kings Highway;N' St'Av U;N' {'distance': 20636.387765304276}
+St'Kingsbridge Rd;4' St'Bedford Park Blvd-Lehman College;4' {'distance': 36605.728431490061}
+St'Kingsbridge Rd;4' St'Fordham Rd;4' {'distance': 35970.092980141155}
+St'Kingsbridge Rd;BD' St'Bedford Park Blvd;BD' {'distance': 36437.786966279935}
+St'Kingsbridge Rd;BD' St'Fordham Rd;BD' {'distance': 35686.880320364231}
+St'Kingston Av;3' St'Utica Av;34' {'distance': 14888.304772538746}
+St'Kingston Av;3' St'Nostrand Av;3' {'distance': 15918.357798466524}
+St'Kingston-Throop;C' St'Nostrand Av;AC' {'distance': 16329.10392520055}
+St'Kingston-Throop;C' St'Utica Av;AC' {'distance': 15198.851601354623}
+St'Knickerbocker Av;M' St'Central Av;M' {'distance': 15230.989429449421}
+St'Knickerbocker Av;M' St'Myrtle Av;LM' {'distance': 14543.221720100399}
+St';EFMR' St';7EFMR' {'distance': 15658.215223964704}
+St';EFMR' St'75th Av;EF' {'distance': 12150.552950380488}
+St';EFMR' St'67th Av;MR' {'distance': 13016.122003115981}
+St'Kosciusko St;J' St'Myrtle Av;JMZ' {'distance': 15869.061692488312}
+St'Kosciusko St;J' St'Gates Av;JZ' {'distance': 14879.695124564885}
+St'Lafayette Av;C' St'Clinton & Washington Avs;C' {'distance': 19295.164757005834}
+St'Lexington Av;F' St'Roosevelt Island;F' {'distance': 25062.395795294589}
+St'Lexington Av;F' St'57th St;F' {'distance': 26327.522994007621}
+St'Liberty Av;C' St'Van Siclen Av;C' {'distance': 10176.012136392133}
+St'Liberty Av;C' St';ACJLZ' {'distance': 11181.719098600179}
+St'Lincoln Av-52nd St;7' St'Bliss St-46th St;7' {'distance': 19458.182803129381}
+St'Lincoln Av-52nd St;7' St'Woodside Av-61st St;7' {'distance': 19082.77451001295}
+St'Livonia Av;L' St'Sutter Av;L' {'distance': 10621.965543156313}
+St'Livonia Av;L' St'New Lots Av;L' {'distance': 10223.952269059162}
+St';FGR' St'Prospect Av;R' {'distance': 21085.983543577}
+St';FGR' St'Smith-9th St;FG' {'distance': 21386.262109120424}
+St';FGR' St'Union St;R' {'distance': 20701.495332463306}
+St';FGR' St'7th Av;FG' {'distance': 20362.895913892011}
+St'Longwood Av;6' St'East 149th St;6' {'distance': 28374.325137349082}
+St'Lorimer St;JM' St'Flushing Av;JM' {'distance': 17647.034963415241}
+St'Lowery St-40th St;7' St'Bliss St-46th St;7' {'distance': 19855.53388856618}
+St'Lowery St-40th St;7' St'Rawson St-33rd St;7' {'distance': 20422.554247693897}
+St'Marble Hill-225th St;1' St'215th St;1' {'distance': 37443.392554628379}
+St'Marble Hill-225th St;1' St'231st St;1' {'distance': 37965.973831840529}
+St'Marcy Av;JMZ' St';FJMZ' {'distance': 21576.70016476106}
+St'Marcy Av;JMZ' St'Myrtle Av;JMZ' {'distance': 18018.086191380036}
+St'Metropolitan Av;M' St'Fresh Pond Rd;M' {'distance': 13511.189695952018}
+St';FJMZ' St'Bowery;JZ' {'distance': 23829.803062551735}
+St';FJMZ' St'2nd Av;F' {'distance': 23745.471526166835}
+St';FJMZ' St';6BDFM' {'distance': 24118.582566145964}
+St';FJMZ' St'East Broadway;F' {'distance': 23384.321221707505}
+St'Mets - Willets Point;7' St'Flushing-Main St;7' {'distance': 17831.345069848208}
+St'Mets - Willets Point;7' St'111th St;7' {'distance': 17481.875957688295}
+St'Middletown Rd;6' St'Buhre Av;6' {'distance': 31552.640602650041}
+St'Middletown Rd;6' St'Westchester Square-East Tremont Av;6' {'distance': 31060.663048299532}
+St'Montrose Av;L' St'Grand St;L' {'distance': 17899.238335750491}
+St'Montrose Av;L' St'Morgan Av;L' {'distance': 17273.715118641965}
+St'Morris Park;5' St'Pelham Parkway;5' {'distance': 33619.74687590613}
+St'Morris Park;5' St'East 180th St;25' {'distance': 32493.647533017895}
+St'Morrison Av-Soundview Av;6' St'St Lawrence Av;6' {'distance': 29859.553730757598}
+St'Morrison Av-Soundview Av;6' St'Elder Av;6' {'distance': 29790.561172962149}
+St'238th St-Nereid Av;2' St'233rd St;2' {'distance': 39676.554701737899}
+St'238th St-Nereid Av;2' St'Wakefield-241st St;2' {'distance': 40406.987390796654}
+St'Mosholu Parkway;4' St'Woodlawn;4' {'distance': 38168.662800784623}
+St'Mosholu Parkway;4' St'Bedford Park Blvd-Lehman College;4' {'distance': 37343.535759218088}
+St'Mt Eden Av;4' St'170th St;4' {'distance': 33177.442803808735}
+St'Mt Eden Av;4' St'176th St;4' {'distance': 33670.632218596671}
+St'Myrtle Av;JMZ' St'Gates Av;JZ' {'distance': 15409.082321799699}
+St'Myrtle Av;JMZ' St'Flushing Av;JM' {'distance': 16775.111296203075}
+St'Myrtle Av;JMZ' St'Central Av;M' {'distance': 15975.821293442163}
+St'Myrtle Av;LM' St'Seneca Av;M' {'distance': 14165.347648398891}
+St'Myrtle Av;LM' St'DeKalb Av;L' {'distance': 14724.243410104304}
+St'Myrtle-Willoughby Avs;G' St'Flushing Av;G' {'distance': 17856.942543447913}
+St'Myrtle-Willoughby Avs;G' St'Bedford-Nostrand Avs;G' {'distance': 17661.543222493328}
+St'Nassau Av;G' St'Greenpoint Av;G' {'distance': 20818.211306449935}
+St'Nassau Av;G' St';GL' {'distance': 19803.900676381912}
+St'238th St;1' St'Van Cortlandt Park-242nd St;1' {'distance': 39273.326024160473}
+St'238th St;1' St'231st St;1' {'distance': 38582.9275327832}
+St'Neck Rd;Q' St'Av U;Q' {'distance': 18147.107483012271}
+St'Neck Rd;Q' St'Sheepshead Bay;BQ' {'distance': 18484.434154174156}
+St'Neptune Av-Van Siclen;F' St'West 8th St;FQ' {'distance': 21574.685374299206}
+St'Neptune Av-Van Siclen;F' St'Av X;F' {'distance': 21000.6053246091}
+St'New Lots Av;3' St'Van Siclen Av;3' {'distance': 8941.4720823810658}
+St'New Lots Av;L' St'East 105th St;L' {'distance': 9955.4459468172499}
+St'Newkirk Av;25' St'Beverly Rd;25' {'distance': 15722.011766946367}
+St'Newkirk Av;25' St'Flatbush Av-Brooklyn College;25' {'distance': 15700.737052762841}
+St'Newkirk Av;BQ' St'Church Av;BQ' {'distance': 17456.446717473747}
+St'Newkirk Av;BQ' St'Av H;Q' {'distance': 17451.875687157528}
+St'Newkirk Av;BQ' St'Cortelyou Rd;Q' {'distance': 17504.957155046111}
+St'23rd St;1' St'28th St;1' {'distance': 26442.514082439287}
+St'Northern Blvd;MR' St'65th St;MR' {'distance': 19563.155905937059}
+St'Northern Blvd;MR' St'46th St;MR' {'distance': 20475.397578557542}
+St'Norwood Av;JZ' St'Crescent St;JZ' {'distance': 9253.0885114106622}
+St'Norwood Av;JZ' St'Cleveland St;J' {'distance': 9606.71379817261}
+St'Norwood Av;JZ' St'Van Siclen Av;JZ' {'distance': 9889.9084930043718}
+St'Norwood-205th St;D' St'Bedford Park Blvd;BD' {'distance': 36837.660607047241}
+St'Nostrand Av;3' St';2345s' {'distance': 16879.482663873321}
+St'Woodside Av-61st St;7' St'Fisk Av-69th St;7' {'distance': 18693.530324687203}
+St'Yankee Stadium-161st St;4BD' St'149th St-Grand Concourse;245' {'distance': 30902.114458399123}
+St'Yankee Stadium-161st St;4BD' St'155th St;BD' {'distance': 32013.498262451732}
+St'Yankee Stadium-161st St;4BD' St'167th St;4' {'distance': 31983.209063507056}
+St'Yankee Stadium-161st St;4BD' St'167th St;BD' {'distance': 31785.403599765727}
+St'York St;F' St';ACFR' {'distance': 21815.053816115145}
+St'York St;F' St'East Broadway;F' {'distance': 22686.727705863621}
+St'Zerega Av;6' St'Westchester Square-East Tremont Av;6' {'distance': 30544.293575068976}
+St'Zerega Av;6' St'Castle Hill Av;6' {'distance': 30162.016610299783}
+St'23rd St;6' St'28th St;6' {'distance': 25181.624351895967}
+St'23rd St;6' St';456LNQR' {'distance': 25101.805393238152}
+St'23rd St;CE' St'34th St;ACE' {'distance': 26888.198191771793}
+St'23rd St;FM' St';123FLM' {'distance': 26044.699364745986}
+St'23rd St;FM' St';BDFMNQR' {'distance': 26110.697807603687}
+St'23rd St;NR' St';456LNQR' {'distance': 25302.055074637712}
+St'23rd St;NR' St'28th St;NR' {'distance': 25706.961158409991}
+St'25th Av;D' St'Bay 50th St;D' {'distance': 21677.865070158547}
+St'25th Av;D' St'Bay Parkway;D' {'distance': 21873.778160162456}
+St'25th St;R' St'36th St;DNR' {'distance': 22046.037807279565}
+St'25th St;R' St'Prospect Av;R' {'distance': 21500.649362286713}
+St'28th St;1' St'34th St;123' {'distance': 26523.933305601564}
+St'28th St;6' St'33rd St;6' {'distance': 25265.311258719928}
+St'28th St;NR' St';BDFMNQR' {'distance': 26037.707848426289}
+St'2nd Av;F' St';6BDFM' {'distance': 24410.790913036799}
+St'30 Av-Grand Av;NQ' St'Astoria Blvd-Hoyt Av;NQ' {'distance': 22955.726344422212}
+St'30 Av-Grand Av;NQ' St'Broadway;NQ' {'distance': 22653.494631071826}
+St'33rd St;6' St';4567S' {'distance': 25423.415132511211}
+St'34th St;123' St';123FLM' {'distance': 26319.795401940344}
+St'34th St;123' St';1237ACENQRS' {'distance': 26717.19642851772}
+St'34th St;ACE' St';1237ACENQRS' {'distance': 26919.11127804928}
+St'36 Av-Washington Av;NQ' St'Broadway;NQ' {'distance': 22291.98535348523}
+St'36 Av-Washington Av;NQ' St'39 Av-Beebe Av;NQ' {'distance': 21993.71135120219}
+St'36th St;DNR' St';2345BDNQR' {'distance': 21289.594970313548}
+St'36th St;DNR' St'59th St;NR' {'distance': 23177.663169525957}
+St'36th St;DNR' St'45th St;R' {'distance': 22695.933930993015}
+St'36th St;DNR' St'9th Av;D' {'distance': 21758.91068045457}
+St'36th St;MR' St'Steinway St;MR' {'distance': 21486.658977142073}
+St'36th St;MR' St'Queens Plaza;EMR' {'distance': 21608.288988256336}
+St'39 Av-Beebe Av;NQ' St'Queensboro Plaza;7NQ' {'distance': 22020.305379353849}
+St'3rd Av;L' St';456LNQR' {'distance': 24761.509606645552}
+St'3rd Av;L' St'1st Av;L' {'distance': 24153.673136812959}
+St'45th St;R' St'53rd St;R' {'distance': 23291.860488161954}
+St'46th St;MR' St'Steinway St;MR' {'distance': 21220.269696683878}
+St'49th St;NQR' St'57th St;NQR' {'distance': 27009.10102169267}
+St'49th St;NQR' St';1237ACENQRS' {'distance': 26885.951443086407}
+St'50th St;1' St';1ABCD' {'distance': 27341.284004230671}
+St'50th St;1' St';1237ACENQRS' {'distance': 26970.065962099536}
+St'50th St;CE' St'7th Av;BDE' {'distance': 27171.057855740546}
+St'50th St;CE' St';1ABCD' {'distance': 27472.89633438746}
+St'50th St;CE' St';1237ACENQRS' {'distance': 27103.480957249754}
+St'50th St;D' St'Fort Hamilton Parkway;D' {'distance': 21223.609542205584}
+St'50th St;D' St'55th St;D' {'distance': 21341.576230447459}
+St'53rd St;R' St'59th St;NR' {'distance': 23761.511273485954}
+St'55th St;D' St';DN' {'distance': 21537.803834188853}
+St'57th St;NQR' St'5th Av;NQR' {'distance': 26811.491006656084}
+St'59th St;NR' St'Bay Ridge Av;R' {'distance': 24346.938657662897}
+St'59th St;NR' St'8th Av;N' {'distance': 23650.585658710443}
+St'5th Av-53rd St;EM' St'7th Av;BDE' {'distance': 26582.558097369034}
+St'5th Av-53rd St;EM' St';6EM' {'distance': 25806.669293033534}
+St'63rd Drive-Rego Park;MR' St'67th Av;MR' {'distance': 13943.961488759211}
+St'63rd Drive-Rego Park;MR' St'Woodhaven Blvd;MR' {'distance': 14782.045426800718}
+St'65th St;MR' St';7EFMR' {'distance': 18697.461325003456}
+St'66th St-Lincoln Center;1' St'72nd St;123' {'distance': 28490.605205927095}
+St'66th St-Lincoln Center;1' St';1ABCD' {'distance': 27912.252470913198}
+St'68th St-Hunter College;6' St'77th St;6' {'distance': 26275.701398820926}
+St'71st St;D' St';DN' {'distance': 21869.739207407114}
+St'71st St;D' St'79th St;D' {'distance': 22274.706530053321}
+St'72nd St;123' St';1237ACENQRS' {'distance': 27830.932790691728}
+St'72nd St;123' St'79th St;1' {'distance': 28999.143849431141}
+St'72nd St;123' St'96th St;123' {'distance': 29311.792985076841}
+St'72nd St;BC' St'81st St - Museum of Natural History;BC' {'distance': 28154.716727397561}
+St'72nd St;BC' St';1ABCD' {'distance': 27794.951735881823}
+St'77th St;6' St'86th St;456' {'distance': 26639.025582779861}
+St'77th St;R' St'Bay Ridge Av;R' {'distance': 24855.287525997359}
+St'77th St;R' St'86th St;R' {'distance': 25251.555853055866}
+St'79th St;1' St'86th St;1' {'distance': 29368.361564786006}
+St'7th Av;BDE' St';1ABCD' {'distance': 27305.819489625283}
+St'7th Av;BQ' St';2345BDNQR' {'distance': 19712.634070565}
+St'7th Av;BQ' St'Prospect Park;BQs' {'distance': 18394.747782995015}
+St'7th Av;FG' St'Prospect Park-15 St;FG' {'distance': 19664.66836740452}
+St'80th St-Hudson St;A' St'Grant Av;A' {'distance': 7501.4124669957992}
+St'80th St-Hudson St;A' St'88th St-Boyd Av;A' {'distance': 7115.7050248025316}
+St'81st St - Museum of Natural History;BC' St'86th St;BC' {'distance': 28468.780532365625}
+St'82nd St-Jackson Heights;7' St'90th St Elmhurst;7' {'distance': 17868.400320118195}
+St'82nd St-Jackson Heights;7' St';7EFMR' {'distance': 18135.551494233641}
+St'86th St;1' St'96th St;123' {'distance': 29677.121238422031}
+St'86th St;456' St'96th St;6' {'distance': 27061.365264893786}
+St'86th St;456' St'125th St;456' {'distance': 27859.768394586485}
+St'86th St;BC' St'96th St;BC' {'distance': 28810.81055784443}
+St'86th St;N' St';DFNQ' {'distance': 21612.58936360935}
+St'86th St;N' St'Av U;N' {'distance': 20827.907696165737}
+St'86th St;R' St'95th St;R' {'distance': 25707.788430746041}
+St'88th St-Boyd Av;A' St'Rockaway Blvd;A' {'distance': 6645.3163957783081}
+St'8th Av;N' St'Fort Hamilton Parkway;N' {'distance': 22948.61732218305}
+St'8th St;NR' St';456LNQR' {'distance': 24974.699717914529}
+St'8th St;NR' St'Prince St;NR' {'distance': 24901.263140652121}
+St'96th St;123' St'103rd St;1' {'distance': 30051.461861280561}
+St'96th St;123' St'110th St-Central Park North;23' {'distance': 29460.776466345895}
+St'96th St;6' St'103rd St;6' {'distance': 27480.401489061253}
+St'Chambers St;123' St';23ACE' {'distance': 25408.600551781674}
+St'Chambers St;123' St'Rector St;1' {'distance': 25476.554417738676}
+St'Chambers St;123' St'Franklin St;1' {'distance': 25494.02145601984}
+St'Chambers St;123' St';123FLM' {'distance': 25779.853180342205}
+St'Chauncey St;JZ' St';ACJLZ' {'distance': 12212.361483349565}
+St'Chauncey St;JZ' St'Gates Av;JZ' {'distance': 13543.182380814342}
+St'Christopher St;1' St';123FLM' {'distance': 26127.179143566187}
+St'Church Av;25' St'Winthrop St;25' {'distance': 15923.817726914611}
+St'Church Av;25' St'Beverly Rd;25' {'distance': 15796.126202332014}
+St'Church Av;BQ' St'Beverly Rd;Q' {'distance': 17524.204689514445}
+St'Church Av;BQ' St'Parkside Av;Q' {'distance': 17382.957515911956}
+St'Church Av;BQ' St'Prospect Park;BQs' {'distance': 17488.209771157253}
+St'Church Av;FG' St'Fort Hamilton Parkway;FG' {'distance': 19198.228303674274}
+St'Church Av;FG' St'Ditmas Av;F' {'distance': 19354.067014454609}
+St'City Hall;R' St'Cortlandt St;R' {'distance': 25226.098291253842}
+St'Clark St;23' St'Wall St;23' {'distance': 23773.610642895623}
+St'Clark St;23' St';2345R' {'distance': 22318.144456921145}
+St'Classon Av;G' St'Bedford-Nostrand Avs;G' {'distance': 18082.422542347584}
+St'Classon Av;G' St'Clinton-Washington Avs;G' {'distance': 18774.869853077544}
+St'Cleveland St;J' St'Van Siclen Av;JZ' {'distance': 10039.933764721758}
+St'Clinton & Washington Avs;C' St'Franklin Av;Cs' {'distance': 18171.633415848999}
+St'Clinton-Washington Avs;G' St'Fulton St;G' {'distance': 19584.301315083976}
+St'Cortelyou Rd;Q' St'Beverly Rd;Q' {'distance': 17572.528076517618}
+St'Cortlandt St;R' St'Rector St;R' {'distance': 25379.83731232334}
+St'Crescent St;JZ' St'Cypress Hills;J' {'distance': 9375.0978128230745}
+St'Crescent St;JZ' St'Elderts Lane-75th St;JZ' {'distance': 9241.1581525261208}
+St'Cypress Av;6' St'East 143rd St-St Mary's St;6' {'distance': 27818.975951677301}
+St'Cypress Av;6' St'Brook Av;6' {'distance': 28020.334366313331}
+St'Cypress Hills;J' St'Elderts Lane-75th St;JZ' {'distance': 9557.7789784028791}
+St'DeKalb Av;BQR' St';2345BDNQR' {'distance': 20572.657533726651}
+St'DeKalb Av;BQR' St';ACFR' {'distance': 21272.947844621816}
+St'DeKalb Av;BQR' St'Grand St;BD' {'distance': 22544.653335103649}
+St'Ditmars Blvd;NQ' St'Astoria Blvd-Hoyt Av;NQ' {'distance': 23221.006158218039}
+St'Dyckman St;1' St'207th St;1' {'distance': 36414.615884284707}
+St'East 105th St;L' St'Canarsie - Rockaway Parkway;L' {'distance': 9994.0050530305416}
+St'East 143rd St-St Mary's St;6' St'East 149th St;6' {'distance': 28073.966997914635}
+St'East 180th St;25' St'East Tremont Av-West Farms Sq;25' {'distance': 31628.660942252995}
+St'East 180th St;25' St'Bronx Park East;2' {'distance': 32139.354147213351}
+St'East Tremont Av-West Farms Sq;25' St'174th St;25' {'distance': 31482.581565049586}
+St'Eastchester-Dyre Av;5' St'Baychester Av;5' {'distance': 37541.285033946297}
+St'Eastern Parkway-Brooklyn Museum;23' St';2345s' {'distance': 17724.768602156702}
+St'Eastern Parkway-Brooklyn Museum;23' St'Grand Army Plaza;23' {'distance': 18550.308083694999}
+St'Elder Av;6' St'Whitlock Av;6' {'distance': 29740.664199038998}
+St'Elderts Lane-75th St;JZ' St'Forest Parkway-85th St;J' {'distance': 9242.7724195719547}
+St'Elderts Lane-75th St;JZ' St'Woodhaven Blvd;JZ' {'distance': 9083.3376574913254}
+St'Elmhurst Av;MR' St'Grand Av-Newtown;MR' {'distance': 16669.433943598684}
+St'Elmhurst Av;MR' St';7EFMR' {'distance': 17732.91335342278}
+St'Euclid Av;AC' St'Shepherd Av;C' {'distance': 8507.1997155350709}
+St'Euclid Av;AC' St';ACJLZ' {'distance': 10110.666150160434}
+St'Euclid Av;AC' St'Grant Av;A' {'distance': 7880.6284647862949}
+St'Far Rockaway-Mott Av;A' St'Beach 25th St;A' {'distance': 9746.3723507774939}
+St'Fisk Av-69th St;7' St';7EFMR' {'distance': 18405.334607118664}
+St'Flushing Av;G' St'Broadway;G' {'distance': 18357.880514917837}
+St'Fordham Rd;4' St'183rd St;4' {'distance': 35376.55294117843}
+St'Fordham Rd;BD' St'182nd-183rd Sts;BD' {'distance': 34980.68652842594}
+St'Forest Av;M' St'Seneca Av;M' {'distance': 14007.79161752487}
+St'Forest Av;M' St'Fresh Pond Rd;M' {'distance': 13672.048164046235}
+St'Forest Parkway-85th St;J' St'Woodhaven Blvd;JZ' {'distance': 8892.5913546052489}
+St'Fort Hamilton Parkway;D' St'9th Av;D' {'distance': 21174.151907455467}
+St'Fort Hamilton Parkway;FG' St'Prospect Park-15 St;FG' {'distance': 19263.744210303459}
+St'Fort Hamilton Parkway;N' St';DN' {'distance': 22130.440664388047}
+St'Franklin Av;Cs' St'Nostrand Av;AC' {'distance': 17222.520866586285}
+St'Franklin Av;Cs' St'Park Place;s' {'distance': 17496.233709001488}
+St'Franklin St;1' St'Canal St;1' {'distance': 25598.823996426087}
+St'Freeman St;25' St'174th St;25' {'distance': 30892.790081182371}
+St'Freeman St;25' St'Simpson St;25' {'distance': 29989.453196082119}
+St'Graham Av;L' St'Grand St;L' {'distance': 18412.631343727055}
+St'Graham Av;L' St';GL' {'distance': 18979.304175864825}
+St'Grand Army Plaza;23' St'Bergen St;23' {'distance': 19348.233743678}
+St'Grand Av-Newtown;MR' St'Woodhaven Blvd;MR' {'distance': 15677.912137781612}
+St'Grand St;BD' St';6BDFM' {'distance': 24408.970011043071}
+St'Grand St;BD' St';2345BDNQR' {'distance': 22199.620672434925}
+St'Gun Hill Rd;2' St'Burke Av;2' {'distance': 36562.44041362666}
+St'Nostrand Av;AC' St'Utica Av;AC' {'distance': 15779.867711739538}
+St'Ocean Parkway;Q' St'Brighton Beach;BQ' {'distance': 20632.121994598616}
+St'Ocean Parkway;Q' St'West 8th St;FQ' {'distance': 21441.525155641331}
+St'Park Place;s' St';2345s' {'distance': 17385.44422785912}
+St'Parkchester-East 177th St;6' St'Castle Hill Av;6' {'distance': 30027.897195774465}
+St'Parkchester-East 177th St;6' St'St Lawrence Av;6' {'distance': 29979.679934915916}
+St'Parkside Av;Q' St'Prospect Park;BQs' {'distance': 17426.512588581802}
+St'Parsons Blvd-Archer Av - Jamaica Center;EJZ' St'Sutphin Blvd-Archer Av - JFK;EJZ' {'distance': 9013.1497824012658}
+St'Parsons Blvd;F' St'169th St;F' {'distance': 10348.98946757605}
+St'Parsons Blvd;F' St'Sutphin Blvd;F' {'distance': 9777.5212605240595}
+St'Pelham Bay Park;6' St'Buhre Av;6' {'distance': 32201.538441509281}
+St'Pelham Parkway;2' St'Allerton Av;2' {'distance': 34525.063997044235}
+St'Pelham Parkway;2' St'Bronx Park East;2' {'distance': 33252.084551197688}
+St'Pennsylvania Av;3' St'Van Siclen Av;3' {'distance': 9502.6809901206307}
+St'President St;25' St';2345s' {'distance': 16857.531224945127}
+St'President St;25' St'Sterling St;25' {'distance': 16285.330883958115}
+St'Prospect Park;BQs' St';2345s' {'distance': 17438.696109514611}
+St'Queens Plaza;EMR' St';7EFMR' {'distance': 20087.064793045298}
+St'Queens Plaza;EMR' St';7EGM' {'distance': 21962.736737483334}
+St'Queensboro Plaza;7NQ' St'Rawson St-33rd St;7' {'distance': 21466.028347134921}
+St'Queensboro Plaza;7NQ' St';7EGM' {'distance': 22173.479226318996}
+St'Ralph Av;C' St'Utica Av;AC' {'distance': 14053.360630112642}
+St'Ralph Av;C' St'Rockaway Av;C' {'distance': 12988.289610260466}
+St'Rector St;1' St';1R' {'distance': 25296.960706772661}
+St'Rector St;R' St';1R' {'distance': 25263.367016294564}
+St'Rockaway Av;3' St'Saratoga Av;3' {'distance': 11724.009211869461}
+St'Rockaway Av;C' St';ACJLZ' {'distance': 12129.161512652059}
+St'Rockaway Blvd;A' St'Aqueduct Racetrack;A' {'distance': 5687.1639680951703}
+St'Rockaway Park-Beach 116th;H' St'Beach 105th St;H' {'distance': 10011.629987169921}
+St'Saratoga Av;3' St'Sutter Av;3' {'distance': 12557.637357401272}
+St'Sheepshead Bay;BQ' St'Brighton Beach;BQ' {'distance': 19483.454185539071}
+St'Shepherd Av;C' St'Van Siclen Av;C' {'distance': 9334.519377022043}
+St'Smith-9th St;FG' St'Carroll St;FG' {'distance': 21902.069285800371}
+St'Spring St;6' St';6BDFM' {'distance': 24736.836519652225}
+St'Spring St;CE' St'Canal St;ACE' {'distance': 25562.533090443128}
+St'Sterling St;25' St'Winthrop St;25' {'distance': 16108.162465036166}
+St'Sutphin Blvd-Archer Av - JFK;EJZ' St'121st St;JZ' {'distance': 8827.1509559993374}
+St'Sutphin Blvd;F' St'Briarwood-Van Wyck Blvd;EF' {'distance': 9838.9801300744584}
+St'Sutter Av;3' St'Utica Av;34' {'distance': 13672.12353659811}
+St'Sutter Av;L' St'Atlantic Av;L' {'distance': 11081.580076866296}
+St'Tremont Av;BD' St'182nd-183rd Sts;BD' {'distance': 34293.040882954665}
+St'Tremont Av;BD' St'174-175th Sts;BD' {'distance': 33704.981783113311}
+St'Union St;R' St';2345BDNQR' {'distance': 20332.983081682825}
+St'Utica Av;34' St';2345s' {'distance': 15911.770454603724}
+St'Utica Av;AC' St';ACJLZ' {'distance': 13263.402165357122}
+St'Van Siclen Av;JZ' St';ACJLZ' {'distance': 11063.173233751699}
+St'Van Siclen Av;JZ' St'Alabama Av;J' {'distance': 10641.467802892606}
+St'Vernon Blvd-Jackson Av;7' St';4567S' {'distance': 24013.375897611731}
+St'Wall St;23' St';2345ACJZ' {'distance': 24947.416399298745}
+St'Wall St;45' St'Bowling Green;45' {'distance': 25297.48726652511}
+St'Wall St;45' St';2345ACJZ' {'distance': 25122.694381773625}
+St'West 8th St;FQ' St';DFNQ' {'distance': 22058.783352669296}
+St'Wilson Av;L' St'Bushwick Av;L' {'distance': 12275.902695932386}
+St'Woodhaven Blvd;JZ' St'104th St-102nd St;JZ' {'distance': 8635.9079430017082}
+St'103rd St;7' St'111th St;7' {'distance': 17378.153354139788}
+St'103rd St;BC' St'Cathedral Parkway-110th St;BC' {'distance': 29513.832960156156}
+St'103rd St;BC' St'96th St;BC' {'distance': 29174.011191469712}
+St'104th St-102nd St;JZ' St'121st St;JZ' {'distance': 8693.758105675588}
+St'104th St-102nd St;JZ' St'111th St;J' {'distance': 8556.3327424779363}
+St'110th St-Central Park North;23' St'116th St;23' {'distance': 29194.002243611616}
+St'110th St;6' St'116th St;6' {'distance': 28195.505971696977}
+St'110th St;6' St'103rd St;6' {'distance': 27856.491074792604}
+St'111th St;J' St'121st St;JZ' {'distance': 8705.7917503234585}
+St'116th St-Columbia University;1' St'Cathedral Parkway-110th St;1' {'distance': 30865.107484018259}
+St'116th St-Columbia University;1' St'125th St;1' {'distance': 31341.875103445869}
+St'116th St;23' St'125th St;23' {'distance': 29569.542015391446}
+St'116th St;6' St'125th St;456' {'distance': 28601.121184317231}
+St'116th St;BC' St'125th St;ABCD' {'distance': 30374.20331465502}
+St'116th St;BC' St'Cathedral Parkway-110th St;BC' {'distance': 29872.46628586264}
+St'125th St;1' St'137th St-City College;1' {'distance': 31954.457372955028}
+St'125th St;23' St'135th St;23' {'distance': 30116.421019105175}
+St'125th St;456' St'138th St-3rd Ave;6' {'distance': 28963.89058810988}
+St'125th St;456' St'138th St;45' {'distance': 29258.772120511141}
+St'125th St;ABCD' St'145th St;ABCD' {'distance': 31385.218256370306}
+St'125th St;ABCD' St';1ABCD' {'distance': 29188.917246105586}
+St'125th St;ABCD' St'135th St;BC' {'distance': 31005.921321579852}
+St'135th St;23' St'145th St;3' {'distance': 30716.633230222353}
+St'135th St;23' St'149th St-Grand Concourse;245' {'distance': 30334.46472249016}
+St'135th St;BC' St'145th St;ABCD' {'distance': 31694.080330560155}
+St'137th St-City College;1' St'145th St;1' {'distance': 32450.755522791762}
+St'138th St-3rd Ave;6' St'Brook Av;6' {'distance': 28695.374644705375}
+St'138th St;45' St'149th St-Grand Concourse;245' {'distance': 29960.558839914851}
+St'145th St;1' St'157th St;1' {'distance': 33027.352225087619}
+St'145th St;ABCD' St';1AC' {'distance': 33072.663228110308}
+St'145th St;ABCD' St'155th St;C' {'distance': 32391.473816422742}
+St'145th St;ABCD' St'155th St;BD' {'distance': 32275.218450074044}
+St'149th St-3rd Av;25' St'149th St-Grand Concourse;245' {'distance': 29855.429573194891}
+St'155th St;C' St'163rd St - Amsterdam Av;C' {'distance': 33058.423450007409}
+St';1237ACENQRS' St';BDFMNQR' {'distance': 26535.710655642899}
+St';1237ACENQRS' St';4567S' {'distance': 26210.127889806259}
+St';1237ACENQRS' St';7BDFM' {'distance': 26577.650046608709}
+St';1237ACENQRS' St';1ABCD' {'distance': 27238.576926851372}
+St';123FLM' St';456LNQR' {'distance': 25570.807456941988}
+St'167th St;4' St'170th St;4' {'distance': 32674.489789436651}
+St'167th St;BD' St'170th St;BD' {'distance': 32328.600866724806}
+St';2345ACJZ' St'Broad St;JZ' {'distance': 25044.86055061996}
+St';2345ACJZ' St';456JZ' {'distance': 24871.280626457497}
+St';2345ACJZ' St';23ACE' {'distance': 25159.079096819103}
+St';2345BDNQR' St';2345' {'distance': 20432.364669807554}
+St';2345BDNQR' St'Bergen St;23' {'distance': 19946.787335307909}
+St';2345BDNQR' St';2345s' {'distance': 18823.637214948656}
+St';2345R' St';1R' {'distance': 23638.690974755773}
+St';2345R' St'Bowling Green;45' {'distance': 23750.824890937998}
+St';2345R' St';2345' {'distance': 21370.573576766721}
+St';2345R' St';ACFR' {'distance': 21824.755737464737}
+St'176th St;4' St'Burnside Av;4' {'distance': 34201.348028988563}
+St';4567S' St';456LNQR' {'distance': 25300.89391701408}
+St';4567S' St';6EM' {'distance': 25494.907216932563}
+St';4567S' St';7BDFM' {'distance': 25914.54352289463}
+St';456JZ' St';456LNQR' {'distance': 24909.108474612254}
+St'183rd St;4' St'Burnside Av;4' {'distance': 34793.449211022467}
+St';6BDFM' St'Astor Place;6' {'distance': 24740.458039413901}
+St';6EM' St';7EGM' {'distance': 23870.79334668205}
+St'18th Av;N' St';DN' {'distance': 21357.952195844995}
+St';7BDFM' St';BDFMNQR' {'distance': 26243.793590104309}
+St'157th St;1' St';1AC' {'distance': 33721.360396638804}
+St'1st Av;L' St'Bedford Av;L' {'distance': 22096.474085247177}
+St'207th St;1' St'215th St;1' {'distance': 36868.901177008243}
+St';ACFR' St'Bergen St;FG' {'distance': 21668.615391851876}
+St';ACJLZ' St'Bushwick Av;L' {'distance': 11930.370614528285}
+St';ACJLZ' St'Alabama Av;J' {'distance': 11371.588675290714}
+St';ACJLZ' St'Atlantic Av;L' {'distance': 11547.41624780193}
+St'163rd St - Amsterdam Av;C' St';1AC' {'distance': 33726.144724827354}
+St';BDFMNQR' St';456LNQR' {'distance': 25638.025840536164}
+St';DFNQ' St'Bay 50th St;D' {'distance': 22028.109178955874}
+St'225th St;2' St'233rd St;2' {'distance': 38912.399322066995}
+St';GL' St'Bedford Av;L' {'distance': 19732.901763298778}
+St';GL' St'Broadway;G' {'distance': 18924.774952426778}
+St'103rd St;1' St'Cathedral Parkway-110th St;1' {'distance': 30485.165277557542}
+St';1AC' St'181st St;1' {'distance': 34533.939957670627}
+St';1AC' St'175th St;A' {'distance': 34530.763646348743}
+St'Allerton Av;2' St'Burke Av;2' {'distance': 35613.026254447963}
+St'Aqueduct Racetrack;A' St'Aqueduct-North Conduit Av;A' {'distance': 4520.2248837862035}
+St'Astor Place;6' St';456LNQR' {'distance': 24885.164114387513}
+St'Av H;Q' St'Av J;Q' {'distance': 17438.841188565253}
+St'Av I;F' St'Bay Parkway-22nd Av;F' {'distance': 19254.941132083473}
+St'Av J;Q' St'Av M;Q' {'distance': 17483.74596589644}
+St'Av N;F' St'Bay Parkway-22nd Av;F' {'distance': 19302.068205246815}
+St'Av N;F' St'Av P;F' {'distance': 19398.31492681774}
+St'Av U;F' St'Av X;F' {'distance': 20430.289498683076}
+St'170th St;BD' St'174-175th Sts;BD' {'distance': 33044.758404321859}
+St'Beach 105th St;H' St'Beach 98th St;H' {'distance': 9550.5582559345712}
+St'Beach 25th St;A' St'Beach 36th St;A' {'distance': 9716.2250900233885}
+St'Beach 36th St;A' St'Beach 44th St;A' {'distance': 9627.5620486185398}
+St'Beach 44th St;A' St'Beach 60th St;A' {'distance': 9227.6356668433764}
+St'Beach 60th St;A' St'Beach 67th St;A' {'distance': 8862.5505922392349}
+St'Beach 67th St;A' St'Broad Channel;AH' {'distance': 7422.8596915205126}
+St'Beach 90th St;H' St'Broad Channel;AH' {'distance': 7495.2398894231528}
+St'Beach 90th St;H' St'Beach 98th St;H' {'distance': 9138.9645474747304}
+St'175th St;A' St'181st St;A' {'distance': 35270.335836223618}
+St'Bergen St;FG' St'Carroll St;FG' {'distance': 21855.776376052167}
+St';23ACE' St'Canal St;ACE' {'distance': 25382.894180924286}

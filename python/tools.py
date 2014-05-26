@@ -899,7 +899,23 @@ def nyc_map(graph,file_name=None):
     for node in graph.nodes_iter():
         positions[node] = node.xy
         labels[node] = ""
-    plt.figure()
+    plt.figure(frameon=False)
+    plt.tick_params(\
+    axis='x',          # changes apply to the x-axis
+    which='both',      # both major and minor ticks are affected
+    bottom='off',      # ticks along the bottom edge are off
+    top='off',         # ticks along the top edge are off
+    labelbottom='off') # labels along the bottom edge are off
+    plt.tick_params(\
+    axis='y',          # changes apply to the x-axis
+    which='both',      # both major and minor ticks are affected
+    left='off',      # ticks along the bottom edge are off
+    right='off',         # ticks along the top edge are off
+    labelleft='off') 
+    plt.xlim( -25000,40000)
+    plt.ylim( -25000,40000)
+
+ 
     nx.draw_networkx(graph,positions,labels=labels,node_size=50,node_color='chartreuse')
     if file_name:
         plt.savefig(file_name, dpi=300)
