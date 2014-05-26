@@ -205,7 +205,7 @@ def circle():
 # data file at the parent directory
 # listOfStationsConverted.txt: unique station key, location, and connectivity
 # listOfLines.txt: sequence of stations in lines
-def nyc():
+def nyc(add=False, block=False):
     subway = nx.Graph()
     
 # filling up stations    
@@ -254,13 +254,16 @@ def nyc():
             lines_information[row[0]] = row[1:]
 
 # construct a new line
-    #lines_information['8'] = [';4567S', ';7BDFM', ';1237ACENQRS', '34th St;ACE',
-    #                          '34th St;123', ';BDFMNQR', '33rd St;6', '28th St;6',
-    #                          '23rd St;6', ';456LNQR', ';123FLM', ';ACEL',
-    #                          '23rd St;CE', '34th St;ACE', '34th St;123', ';BDFMNQR',
-    #                          '33rd St;6']
+    if add:
+        lines_information['8'] = [';4567S', ';7BDFM', ';1237ACENQRS', '34th St;ACE',
+                                  '34th St;123', ';BDFMNQR', '33rd St;6', '28th St;6',
+                                  '23rd St;6', ';456LNQR', ';123FLM', ';ACEL',
+                                  '23rd St;CE', '34th St;ACE', '34th St;123', ';BDFMNQR',
+                                  '33rd St;6']
+
 # block a line
-    #del lines_information['R']
+    if block:
+        del lines_information['R']
 
     for key, value in lines_information.iteritems():
         stations_list = []
