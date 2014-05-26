@@ -890,6 +890,14 @@ def subway_map(graph,file_name=None):
         plt.savefig(file_name, dpi=300)
     else: plt.show()
 
+def clear_frame(ax=None): 
+    if ax is None: 
+        ax = plt.gca() 
+    ax.xaxis.set_visible(False) 
+    ax.yaxis.set_visible(False) 
+    for spine in ax.spines.itervalues(): 
+        spine.set_visible(False) 
+
 def nyc_map(graph,file_name=None):
     """Visually represent the subway network and save to file"""
     # Turn interactive plotting off
@@ -911,12 +919,13 @@ def nyc_map(graph,file_name=None):
     which='both',      # both major and minor ticks are affected
     left='off',      # ticks along the bottom edge are off
     right='off',         # ticks along the top edge are off
-    labelleft='off') 
+    labelleft='off')
+    clear_frame() 
     plt.xlim( -25000,40000)
     plt.ylim( -25000,40000)
 
  
-    nx.draw_networkx(graph,positions,labels=labels,node_size=50,node_color='chartreuse')
+    nx.draw_networkx(graph,positions,labels=labels,node_size=25,node_color='chartreuse')
     if file_name:
         plt.savefig(file_name, dpi=300)
     else: plt.show()
