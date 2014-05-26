@@ -5,36 +5,16 @@ Created on Wed May 14 16:23:56 2014
 @author: Bas Rustenburg, Hyunwoo Cho
 """
 
-#import networkx as nx
-#import matplotlib
 import random
 import itertools
 import pickle
 
-
-#from systems import labcdefghi as simulation
-from systems import nyc as simulation
-
 random.seed(47)
-print [random.randint(0,255),random.randint(0,255),random.randint(0,255)]
+#print [random.randint(0,255),random.randint(0,255),random.randint(0,255)]
 
-
-subway,lines,stations,trains = simulation()
-
-pickled_instructions = open("offset_1.p", "rb") # Open pickled file object
-
-
-
-instructions= pickle.load(pickled_instructions)
-
-pickled_instructions.close()
-
-
-
-
-#visualization.subway_map(subway)
-
-pastotals = list()
+pickled_system = open("offset_1.p", "rb") # Open pickled file object
+instructions,subway,lines,stations,trains= pickle.load(pickled_system)
+pickled_system.close()
 
 timesteps = 0
 for _ in itertools.repeat(None,timesteps):
