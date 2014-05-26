@@ -417,7 +417,7 @@ def pairwise(sequence):
 
     return pairs
 
-def line_first_travel_instructions(stations,lines,linegraph,offset=1):
+def line_first_travel_instructions(stations,lines,linegraph,offset=1,verbose=0):
     """
     Calculate set of travel instructions using line connectivity maps
     """
@@ -425,6 +425,7 @@ def line_first_travel_instructions(stations,lines,linegraph,offset=1):
     
     for outer in stations:
         for inner in stations:
+            if verbose > 0: print "%s:%s"%(outer,inner)
             if outer == inner:
                 simple_matrix[(outer,inner)] = list()
             else:
