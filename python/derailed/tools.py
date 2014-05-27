@@ -183,7 +183,7 @@ class Passenger(object):
         self.origin = origin
         self.location = origin
         self.destination = destination
-        self.transfers = np.array(instructions[self.origin,self.destination])
+        self.transfers = np.array(instructions[self.origin.name,self.destination.name])
         self.verbose = verbose
         return
 

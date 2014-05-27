@@ -11,12 +11,13 @@ import pickle
 
 subway,lines,stations,trains = systems.nyc()
 
-instructions = tools.line_first_travel_instructions(stations,lines,line_connectivity.linegraph,offset=1)
+off1 = open("offset_1.p", "wb")
+p = pickle.Pickler(off1)
 
+
+instructions = tools.line_first_travel_instructions(stations,lines,line_connectivity.linegraph,offset=1)
 dataset = tuple([instructions,subway,lines,stations,trains])
 
-off1 = open("offset_1.p", "w+")
-
-pickle.dump(dataset,off1 )
+p.dump(dataset)
 
 off1.close()

@@ -13,12 +13,14 @@ random.seed(47)
 #print [random.randint(0,255),random.randint(0,255),random.randint(0,255)]
 
 pickled_system = open("offset_1.p", "rb") # Open pickled file object
-instructions,subway,lines,stations,trains= pickle.load(pickled_system)
+up = pickle.Unpickler(pickled_system)
+instructions,subway,lines,stations,trains= up.load()
 pickled_system.close()
 
-timesteps = 0
+timesteps = 2
 for _ in itertools.repeat(None,timesteps):
-    [station.update(destinations=stations,instructions=instructions) for station in stations]
+    [station.update(destinations=stations.values(),instructions=instructions) for station in stations.itervalues()]
     [train.update() for train in trains]
  
 
+print "dun"
