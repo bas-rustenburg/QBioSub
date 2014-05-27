@@ -12,24 +12,25 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 
+# Global variable for debugging pathway solutions.
+# Will capture any inconsistent paths for manual inspection when running
+# consistent_resolver
+weirdpaths = list()
 
-#Global variable for debugging pathway solutions.
-#Will capture any inconsistent paths for manual inspection when running consistent_resolver
-weirdpaths=list()
-
-#Some lists to throw at the consistent_resolver for debugging
-xlist = [{1,2}, {1,2}, {2}, {2}, {3}]
+# Some lists to throw at the consistent_resolver for debugging
+xlist = [{1, 2}, {1, 2}, {2}, {2}, {3}]
 vlist = xlist[::-1]
-ylist = [{1,4,3},{2,4,3},{1,2,3},{2},{3},{3,2}]
+ylist = [{1, 4, 3}, {2, 4, 3}, {1, 2, 3}, {2}, {3}, {3, 2}]
 zlist = ylist[::-1]
-alist = [{1,2,5}, {1,2}, {1,2,4} ]
+alist = [{1, 2, 5}, {1, 2}, {1, 2, 4}]
 blist = alist[::-1]
 
 
-#CLASSES#####################################################################
+# CLASSES
 
 
 class Station(object):
+
     """
     Create a station.
 
@@ -53,7 +54,8 @@ class Station(object):
 
 
     """
-    def __init__(self,name,x,y):
+
+    def __init__(self, name, x, y):
         """
         Parameters
         ----------
@@ -66,7 +68,7 @@ class Station(object):
         """
         self.name = str(name)
         self.passengers = np.array([])
-        self.xy = np.array([np.float64(x),np.float64(y)])
+        self.xy = np.array([np.float64(x), np.float64(y)])
 
     def spawn(self):
         """Generic stations don't spawn anything"""
@@ -76,17 +78,27 @@ class Station(object):
         """Not killing anything"""
         return np.array([])
 
-    def update(self,destinations=set(),instructions=dict()):
+    def update(self, destinations=set(), instructions=dict()):
         for p in self.passengers:
             p.update()
 
-        #Spawn new passengers.
-        self.passengers = np.union1d(self.passengers, np.array(self.spawn(set(destinations) ^ set([self]), instructions)))
-        #TODO: This is optional, will only happen on KillerStation.
-        self.passengers = np.setdiff1d(self.passengers,self.kill(), assume_unique=True)
+        # Spawn new passengers.
+        self.passengers = np.union1d(
+            self.passengers,
+            np.array(
+                self.spawn(
+                    set(destinations) ^ set(
+                        [self]),
+                    instructions)))
+        # TODO: This is optional, will only happen on KillerStation.
+        self.passengers = np.setdiff1d(
+            self.passengers,
+            self.kill(),
+            assume_unique=True)
 
 
 class BasicStation(Station):
+
     """
     Create a simple station.
 
@@ -115,29 +127,39 @@ class BasicStation(Station):
 
 
     """
-    def __init__(self, name,x,y, minpas,maxpas):
+
+    def __init__(self, name, x, y, minpas, maxpas):
         "Use parent __init__ function"
-        super(BasicStation,self).__init__(name, x, y)
+        super(BasicStation, self).__init__(name, x, y)
         self.minpas = minpas
         self.maxpas = maxpas
         return
 
-    def spawn(self,destinations,instructions):
+    def spawn(self, destinations, instructions):
         """Spawn passengers
         """
-        num = random.randint(self.minpas,self.maxpas)
+        num = random.randint(self.minpas, self.maxpas)
         newpassengers = np.array([])
-        for _ in itertools.repeat(None,num):
-            newpassengers = np.append(newpassengers, Passenger(self,random.sample(destinations, 1)[0], instructions))
+        for _ in itertools.repeat(None, num):
+            newpassengers = np.append(
+                newpassengers,
+                Passenger(
+                    self,
+                    random.sample(
+                        destinations,
+                        1)[0],
+                    instructions))
         return newpassengers
 
     def __repr__(self):
         """
         Representation of Station as a string
         """
-        return "St'%s'"%self.name
+        return "St'%s'" % self.name
+
 
 class KillerStation(BasicStation):
+
     """Kills random people
        For testing purposes until passengers are able to move
        Code runs much faster if there are less passengers
@@ -145,19 +167,22 @@ class KillerStation(BasicStation):
 
     def kill(self):
         """kill random passengers"""
-        killcount=random.randint(0,len(self.passengers))
-        kills= set(random.sample(self.passengers,killcount))
+        killcount = random.randint(0, len(self.passengers))
+        kills = set(random.sample(self.passengers, killcount))
         return kills
 
+
 class LineStation(BasicStation):
+
     """
     Create station that knows which lines go through it
     """
-    def __init__(self, name,x,y, minpas,maxpas,lines):
+
+    def __init__(self, name, x, y, minpas, maxpas, lines):
         "Use parent __init__ function"
-        super(LineStation,self).__init__(name, x, y,minpas,maxpas)
-        #Lines is a set of strings.
-        #These strings NEED! to match the identifier for the Line objects.
+        super(LineStation, self).__init__(name, x, y, minpas, maxpas)
+        # Lines is a set of strings.
+        # These strings NEED! to match the identifier for the Line objects.
         self.lines = set(lines)
         return
 
@@ -173,43 +198,55 @@ class LineStation(BasicStation):
         """
         Representation of Station as a string
         """
-        return "St'%s'"%(self.name)
-
+        return "St'%s'" % (self.name)
 
 
 class Passenger(object):
+
     """Wants to go from A to B"""
-    def __init__(self, origin, destination,instructions, verbose=0):
+    total = int()
+
+    def __init__(self, origin, destination, instructions, verbose=0):
         self.origin = origin
         self.location = origin
         self.destination = destination
-        self.transfers = np.array(instructions[self.origin.name,self.destination.name])
+        self.transfers = np.array(
+            instructions[
+                self.origin.name,
+                self.destination.name])
         self.verbose = verbose
+        Passenger.total += 1
         return
 
-    def update(self,location=None):
+    def update(self, location=None):
         if location:
             self.location = location
 
     def __repr__(self):
         s = "Passenger\n"
-        s += "From:%s\n"%self.origin.name
-        s += "To:%s\n"%self.destination.name
-        s += "At:%s\n"%self.location
-        s += "By%s\n"%self.transfers
+        s += "From:%s\n" % self.origin.name
+        s += "To:%s\n" % self.destination.name
+        s += "At:%s\n" % self.location
+        s += "By%s\n" % self.transfers
         return s
 
     def __del__(self):
-
-        if self.verbose >0:
-            print "Deleted at %s."%self.location.name
+        try:
+            Passenger.total -= 1
+        except:
+            pass
+        if self.verbose > 0:
+            print "Deleted at %s." % self.location.name
 
         return
 
 
 class Train(object):
+
     """Moves passengers from station to station."""
-    def __init__(self, name, capacity, line, start, direction, velocity, verbose=0):
+
+    def __init__(
+            self, name, capacity, line, start, direction, velocity, verbose=0):
         """ARGUMENTS
         name - Identifier for this train, e.g. "F-1".
         capacity - Max number of people on one train.
@@ -223,126 +260,145 @@ class Train(object):
         self.capacity = int(capacity)
         self.line = line
         self.current_station = start
-        self.direction=direction
+        self.direction = direction
         if not direction in [1, -1]:
-            raise Exception, "Direction is either forward (1) or reverse (-1)."
+            raise Exception("Direction is either forward (1) or reverse (-1).")
         self.v = np.float64(velocity)
         self.verbose = verbose
         self.passengers = np.array([])
-        #Determine the next station.
-        self.next_station, self.direction =line.resolve(self.current_station, self.direction)
-        #Calculate distance between current and next station.
-        self.d2s = self.distance_to_stop(self.current_station,self.next_station)
-        #Distance traveled since last station.
+        # Determine the next station.
+        self.next_station, self.direction = line.resolve(
+            self.current_station, self.direction)
+        # Calculate distance between current and next station.
+        self.d2s = self.distance_to_stop(
+            self.current_station,
+            self.next_station)
+        # Distance traveled since last station.
         self.traveled = np.float64()
-        if self.verbose >1: print "Train %s: New train at location '%s'."%(self.name, self.current_station.name)
+        if self.verbose > 1:
+            print "Train %s: New train at location '%s'." % (self.name, self.current_station.name)
         return
 
-    def distance_to_stop(self,origin,destination):
+    def distance_to_stop(self, origin, destination):
         """Get the distance to the next stop"""
-        #TODO see if table lookup is faster than calculation
+        # TODO see if table lookup is faster than calculation
         dist = np.linalg.norm(destination.xy - origin.xy)
         return dist
 
     def update(self):
         """Iterate 1 timestep"""
         at_station = False
-        self.traveled += self.v #TODO make velocity independent of timestep?
+        self.traveled += self.v  # TODO make velocity independent of timestep?
         if self.verbose > 2:
-            print "Train %s: Traveled %.3f meters."%(self.name, self.v)
-            print "Train %s: Is carrying %d passenger(s)"%(self.name, len(self.passengers))
+            print "Train %s: Traveled %.3f meters." % (self.name, self.v)
+            print "Train %s: Is carrying %d passenger(s)" % (self.name, len(self.passengers))
         if self.traveled >= self.d2s:
             at_station = True
 
         if at_station:
             self.current_station = self.next_station
-            self.next_station, self.direction = self.line.resolve(self.current_station, self.direction)
+            self.next_station, self.direction = self.line.resolve(
+                self.current_station, self.direction)
             self.load_unload()
-            self.d2s = self.distance_to_stop(self.current_station,self.next_station)
+            self.d2s = self.distance_to_stop(
+                self.current_station,
+                self.next_station)
             self.traveled = np.float64()
 
-            if self.verbose > 1: print "Train %s: Reached destination '%s'"%(self.name, self.current_station.name)
-            if self.verbose > 1: print "Train %s: Next destination is '%s'"%(self.name, self.next_station.name)
-            if self.verbose > 1: print "Train %s: Direction is '%d'"%(self.name, self.direction)
+            if self.verbose > 1:
+                print "Train %s: Reached destination '%s'" % (self.name, self.current_station.name)
+            if self.verbose > 1:
+                print "Train %s: Next destination is '%s'" % (self.name, self.next_station.name)
+            if self.verbose > 1:
+                print "Train %s: Direction is '%d'" % (self.name, self.direction)
         return
 
     def load_unload(self):
         """Exchange passengers with station"""
 
-        #Passengers that are getting off.
+        # Passengers that are getting off.
         offload = np.array([])
         transfer = np.array([])
 
-        #Counters for diagnostics
+        # Counters for diagnostics
         off_count = int()
         on_count = int()
         transfer_count = int()
 
-        #First, passengers need to get off to free up space on the train.
+        # First, passengers need to get off to free up space on the train.
         for pas in self.passengers:
             pas.update(location=self.current_station)
-            #Offload and disappear if this is their final destination.
+            # Offload and disappear if this is their final destination.
             try:
                 if pas.destination == pas.location:
-                    offload = np.append(offload,pas)
-                    off_count +=1
-                #If a passenger needs a transfer here, add them to the transfer list.
+                    offload = np.append(offload, pas)
+                    off_count += 1
+                # If a passenger needs a transfer here, add them to the
+                # transfer list.
                 elif pas.location == pas.transfers[0][0]:
-                    transfer = np.append(transfer,pas)
-                    transfer_count +=1
+                    transfer = np.append(transfer, pas)
+                    transfer_count += 1
             except IndexError:
                 pass
 
-        #Passengers are removed from the train.
-        self.passengers = np.setdiff1d(self.passengers,  np.union1d(offload, transfer))
-        self.current_station.passengers = np.union1d(self.current_station.passengers, transfer)
+        # Passengers are removed from the train.
+        self.passengers = np.setdiff1d(
+            self.passengers,
+            np.union1d(
+                offload,
+                transfer))
+        self.current_station.passengers = np.union1d(
+            self.current_station.passengers,
+            transfer)
 
-        #Now, see which passengers are getting on
+        # Now, see which passengers are getting on
         for pas in self.current_station.passengers:
 
-            #Dont take passengers if the train is full
+            # Dont take passengers if the train is full
             if len(self.passengers) >= self.capacity:
                 break
 
-            #If a passenger has no transfers, skip him
+            # If a passenger has no transfers, skip him
             if not len(pas.transfers):
                 continue
 
-            #Get passengers details
-            pstation,pline,pdirection = pas.transfers[0]
+            # Get passengers details
+            pstation, pline, pdirection = pas.transfers[0]
 
-            ##If this is not the right station, line or direction, dont get on
+            # If this is not the right station, line or direction, dont get on
             if pstation != self.current_station or self.line.name not in pline:
-                
+
                 continue
 
-            #check what direction the passenger needs to go
-            pline_index= pline.index(self.line.name)
+            # check what direction the passenger needs to go
+            pline_index = pline.index(self.line.name)
             if pdirection[pline_index] != self.direction:
-                #if the direction dont match, dont get on.
+                # if the direction dont match, dont get on.
                 continue
 
-
-            #Everything checks out. Begin the boarding process.
-            index=np.where(self.current_station.passengers==pas)
-            self.current_station.passengers = np.delete(self.current_station.passengers,index)
-            self.passengers = np.append(self.passengers,pas)
-            #Take this transfer out of passenger list of transfers
+            # Everything checks out. Begin the boarding process.
+            index = np.where(self.current_station.passengers == pas)
+            self.current_station.passengers = np.delete(
+                self.current_station.passengers,
+                index)
+            self.passengers = np.append(self.passengers, pas)
+            # Take this transfer out of passenger list of transfers
             pas.transfers = pas.transfers[1:]
-            #Please mind the closing doors.
+            # Please mind the closing doors.
             on_count += 1
 
-        if self.verbose >1:
-            print "Train %s: Passengers getting off at station '%s': %d"%(self.name, self.current_station.name, off_count)
-            print "Train %s: Passengers making transfer at station '%s': %d"%(self.name, self.current_station.name, transfer_count)
-            print "Train %s: Passengers getting on at station '%s': %d"%(self.name, self.current_station.name, on_count)
-        elif self.verbose >0:
-            print "Train %s: At station '%s' On/Off/Transfer: %d/%d/%d"%(self.name, self.current_station.name, on_count, off_count, transfer_count)
+        if self.verbose > 1:
+            print "Train %s: Passengers getting off at station '%s': %d" % (self.name, self.current_station.name, off_count)
+            print "Train %s: Passengers making transfer at station '%s': %d" % (self.name, self.current_station.name, transfer_count)
+            print "Train %s: Passengers getting on at station '%s': %d" % (self.name, self.current_station.name, on_count)
+        elif self.verbose > 0:
+            print "Train %s: At station '%s' On/Off/Transfer: %d/%d/%d" % (self.name, self.current_station.name, on_count, off_count, transfer_count)
 
         return
 
 
 class Line(object):
+
     """
     Set of instructions that provide a train with it's route
 
@@ -359,45 +415,49 @@ class Line(object):
         self.route = np.array(route)
         for x in self.route:
             if not issubclass(type(x), Station):
-                raise Exception, "Invalid line, one of your entries is not a Station."
+                raise Exception(
+                    "Invalid line, one of your entries is not a Station.")
         return
 
     def resolve(self, station, direction):
         """Based on the direction that you are traveling, return next or previous."""
-        if not direction in [1,-1]:
-            raise Exception, "Direction is forward (1), or reverse (-1)."
+        if not direction in [1, -1]:
+            raise Exception("Direction is forward (1), or reverse (-1).")
 
-        #Find index of current station, to lookup where the next station is.
-        index = np.where(self.route==station)[0][0]
+        # Find index of current station, to lookup where the next station is.
+        index = np.where(self.route == station)[0][0]
         indir = index + direction
-        
-        #If we are approaching last stop on reverse, indir == -1
+
+        # If we are approaching last stop on reverse, indir == -1
         if indir < 0:
-            #Flip the train forward, and set next station to station 1
-            direction *=-1
-            indir = 1            
-        #Catching IndexError to flip direction if at end on forward.
+            # Flip the train forward, and set next station to station 1
+            direction *= -1
+            indir = 1
+        # Catching IndexError to flip direction if at end on forward.
         try:
             self.route[indir]
         except IndexError:
             direction *= -1
             indir = index + direction
-            
+
         return ([self.route[indir], direction])
 
+
 class CircleLine(Line):
+
     """
     Subclass of Line. Handles circle lines
     """
+
     def resolve(self, station, direction):
         """Based on the direction that you are traveling, return next or previous."""
-        if not direction in [1,-1]:
-            raise Exception, "Direction is forward (1), or reverse (-1)."
+        if not direction in [1, -1]:
+            raise Exception("Direction is forward (1), or reverse (-1).")
 
-        #Find index of current station, to lookup where the next station is.
-        index = np.where(self.route==station)[0][0]
+        # Find index of current station, to lookup where the next station is.
+        index = np.where(self.route == station)[0][0]
         indir = index + direction
-        #Catching IndexError to go back to first station on line
+        # Catching IndexError to go back to first station on line
         try:
             self.route[indir]
         except IndexError:
@@ -411,84 +471,86 @@ class CircleLine(Line):
 
 def pairwise(sequence):
     "s -> (s0,s1), (s1,s2), (s2, s3), ..."
-    pairs=list()
-    for i in range(len(sequence)-1):
-        pairs.append([sequence[i],sequence[i+1]])
+    pairs = list()
+    for i in range(len(sequence) - 1):
+        pairs.append([sequence[i], sequence[i + 1]])
 
     return pairs
 
-def line_first_travel_instructions(stations,lines,linegraph,offset=1,verbose=0):
+
+def line_first_travel_instructions(
+        stations, lines, linegraph, offset=1, verbose=0):
     """
     Calculate set of travel instructions using line connectivity maps
     """
     simple_matrix = dict()
-    
+
     for outer in stations:
         for inner in stations:
-            if verbose > 0: print "%s:%s"%(outer,inner)
+            if verbose > 0:
+                print "%s:%s" % (outer, inner)
             if outer == inner:
-                simple_matrix[(outer,inner)] = list()
+                simple_matrix[(outer, inner)] = list()
             else:
                 try:
-                    simple_matrix[(outer,inner)] = simple_matrix[(inner,outer)]
+                    simple_matrix[(outer, inner)] = simple_matrix[
+                        (inner, outer)]
                 except KeyError:
-                    simple_matrix[(outer,inner)] = lines_first_search(stations[outer],stations[inner],lines,linegraph,offset)
+                    simple_matrix[(outer, inner)] = lines_first_search(
+                        stations[outer], stations[inner], lines, linegraph, offset)
     return simple_matrix
-    
-def lines_first_search(source,target,lines,linegraph,offset=1):
+
+
+def lines_first_search(source, target, lines, linegraph, offset=1):
     """
     Uses connectivity of the lines to reduce search space
     """
-    least_transfers = shortest_transfer(source, target,linegraph,offset)
-    
+    least_transfers = shortest_transfer(source, target, linegraph, offset)
+
     paths = list()
-    
+
     for transfer in least_transfers:
-        paths.append(shortest_path(source,target,transfer,lines))
-           
-    
+        paths.append(shortest_path(source, target, transfer, lines))
+
     paths = sorted(paths, key=lambda x: x[0])
-    
+
     chosen_path = paths[0]
-    
-    
-    option_lines= list()
-    for stationa,stationb in pairwise(chosen_path[1]):
+
+    option_lines = list()
+    for stationa, stationb in pairwise(chosen_path[1]):
         option_lines.append(stationa.lines & stationb.lines)
-    
-    
+
     lines_along_path = consistent_resolver(option_lines)
-    
-    #figure out the best path one could take
+
+    # figure out the best path one could take
     setpath = sets_to_lists(lines_along_path)
     directions = list()
-    #every station pairs, figure out direction you're traveling
-    for connections,pair in enumerate(pairwise(chosen_path[1])):
-    
+    # every station pairs, figure out direction you're traveling
+    for connections, pair in enumerate(pairwise(chosen_path[1])):
+
         direction = list()
-        #check it for every line in the list of options
+        # check it for every line in the list of options
         for con in setpath[connections]:
-            ordera = np.where(lines[con].route==pair[1])
-            orderb = np.where(lines[con].route==pair[0])
+            ordera = np.where(lines[con].route == pair[1])
+            orderb = np.where(lines[con].route == pair[0])
             if ordera > orderb:
                 direction.append(1)
             elif ordera < orderb:
                 direction.append(-1)
             else:
-                raise Exception, "Something weird with the directions."
-        directions.append(direction)    
-    
-    scenicroute = zip(chosen_path[1],setpath,directions)
+                raise Exception("Something weird with the directions.")
+        directions.append(direction)
+
+    scenicroute = zip(chosen_path[1], setpath, directions)
     shortroute = simplify_path_v2(scenicroute)
-    
+
     return shortroute
 
 
-
-def shortest_transfer(a,b, linegraph,offset=1):
+def shortest_transfer(a, b, linegraph, offset=1):
     """
     Calculate shortest transfer path(s) for each pair of lines between stations.
-    
+
     Arguments
     ---------
     a - LineStation,
@@ -502,12 +564,12 @@ def shortest_transfer(a,b, linegraph,offset=1):
     """
     alines = a.lines
     blines = b.lines
-    
+
     somesolutions = list()
-    least_transfers= list()
+    least_transfers = list()
     for a in alines:
         for b in blines:
-            solutions = nx.all_shortest_paths(linegraph,a,b)
+            solutions = nx.all_shortest_paths(linegraph, a, b)
             for solution in solutions:
                 somesolutions.append(solution)
     short = 25
@@ -515,11 +577,12 @@ def shortest_transfer(a,b, linegraph,offset=1):
         if len(solution) < short:
             short = len(solution)
     for solution in somesolutions:
-        if len(solution) <= short +offset:
+        if len(solution) <= short + offset:
             least_transfers.append(solution)
     return least_transfers
 
-def shortest_path(source,target,transfer,lines,option="dijkstra"):
+
+def shortest_path(source, target, transfer, lines, option="dijkstra"):
     """Find shortest path, using given lines"""
     reduced_lines = dict()
     reduced_subway = nx.Graph()
@@ -528,18 +591,16 @@ def shortest_path(source,target,transfer,lines,option="dijkstra"):
 
     for l in reduced_lines.values():
         for pair in pairwise(l.route):
-            dist = np.linalg.norm([pair[0].xy,pair[1].xy])
+            dist = np.linalg.norm([pair[0].xy, pair[1].xy])
             reduced_subway.add_edge(*pair, distance=dist)
-    
-    
+
     if option == "dijkstra":
-        #least distance
-        return nx.bidirectional_dijkstra(reduced_subway,source,target,weight='distance')
+        # least distance
+        return nx.bidirectional_dijkstra(
+            reduced_subway, source, target, weight='distance')
     else:
-        #least stops
-        return nx.bidirectional_shortest_path(reduced_subway,source,target)
-    
-    
+        # least stops
+        return nx.bidirectional_shortest_path(reduced_subway, source, target)
 
 
 def reduce_to_uniques(least_transfers):
@@ -553,8 +614,8 @@ def reduce_to_uniques(least_transfers):
     return uniquelines
 
 
-
-def travel_instructions(subway=nx.Graph(),lines=dict(),order=["transfers","stops","distance"],cutoff=70):
+def travel_instructions(subway=nx.Graph(), lines=dict(), order=[
+                        "transfers", "stops", "distance"], cutoff=70):
     """
     Provide a dictionary of travel instructions based on the paths, distances, transfers and amount of stops.
 
@@ -567,26 +628,25 @@ def travel_instructions(subway=nx.Graph(),lines=dict(),order=["transfers","stops
     order - list() [default: ["transfers","stops","distance"]]
         List of length 3, prioritize transfers, stops or distance on optimal route.
     """
-    pathmatrix = generate_allpaths(subway,cutoff)
+    pathmatrix = generate_allpaths(subway, cutoff)
     distmatrix = generate_dist_line(pathmatrix)
-    transmatrix = generate_transfers(distmatrix,lines)
-    bestmatrix = decide_on_path(transmatrix,order)
+    transmatrix = generate_transfers(distmatrix, lines)
+    bestmatrix = decide_on_path(transmatrix, order)
     simplematrix = simplify_matrix(bestmatrix)
     return simplematrix
 
 
-
-
-
-def generate_allpaths(graph,cutoff):
+def generate_allpaths(graph, cutoff):
     """
     Generate all routes for a passenger to take through the subway that only pass a station once
     """
     pathmatrix = dict()
     for outer in graph.nodes_iter():
         for inner in graph.nodes_iter():
-                pathmatrix[tuple([outer,inner])] = list(nx.all_simple_paths(graph,outer,inner,cutoff=cutoff))
+            pathmatrix[tuple([outer, inner])] = list(
+                nx.all_simple_paths(graph, outer, inner, cutoff=cutoff))
     return pathmatrix
+
 
 def generate_dist_line(pathmatrix):
     """
@@ -600,62 +660,62 @@ def generate_dist_line(pathmatrix):
     distmatrix[a,d]  :  ([[a,b,c,d],...], ['1','1','1'], 82.09)
     """
     distmatrix = dict()
-    for key,paths in pathmatrix.iteritems():
-        dists=list()
-        lines=list()
+    for key, paths in pathmatrix.iteritems():
+        dists = list()
+        lines = list()
         for path in paths:
             dist = np.float64()
             line = list()
-            for stationa,stationb in pairwise(path):
-                dist += np.linalg.norm([stationa.xy,stationb.xy])
+            for stationa, stationb in pairwise(path):
+                dist += np.linalg.norm([stationa.xy, stationb.xy])
                 line.append(stationa.lines & stationb.lines)
             dists.append(dist)
             lines.append(line)
-        distmatrix[key]=zip(paths,lines,dists)
+        distmatrix[key] = zip(paths, lines, dists)
     #
     return distmatrix
 
 x = list()
 
 
-def generate_transfers(distmatrix,lines):
+def generate_transfers(distmatrix, lines):
     """
     Generate optimal choice of line to take per path
     Calculate amount of transfers for that line
     """
     transmatrix = dict()
-    #Per station pairs i,j.
-    for key,paths in distmatrix.iteritems():
-        #A given path between station i,j
-        bestpaths=list()
+    # Per station pairs i,j.
+    for key, paths in distmatrix.iteritems():
+        # A given path between station i,j
+        bestpaths = list()
         for path in paths:
-            stations=path[0]
-            #figure out the best path one could take
+            stations = path[0]
+            # figure out the best path one could take
             bestpath = sets_to_lists(consistent_resolver(path[1]))
             directions = list()
-            #every station pairs, figure out direction you're traveling
-            for connections,pair in enumerate(pairwise(stations)):
+            # every station pairs, figure out direction you're traveling
+            for connections, pair in enumerate(pairwise(stations)):
 
                 direction = list()
-                #check it for every line in the list of options
+                # check it for every line in the list of options
                 for con in bestpath[connections]:
-                    ordera = np.where(lines[con].route==pair[1])
-                    orderb = np.where(lines[con].route==pair[0])
+                    ordera = np.where(lines[con].route == pair[1])
+                    orderb = np.where(lines[con].route == pair[0])
                     if ordera > orderb:
                         direction.append(1)
                     elif ordera < orderb:
                         direction.append(-1)
                     else:
-                        raise Exception, "Something weird with the directions."
+                        raise Exception("Something weird with the directions.")
                 directions.append(direction)
 
-            ntransf = count_transfers(bestpath,directions)
+            ntransf = count_transfers(bestpath, directions)
             dist = path[2]
-            #station is combined with lines that one could take there
-            #the last station is removed from the list since no train is taken
-            #between every station we will have
+            # station is combined with lines that one could take there
+            # the last station is removed from the list since no train is taken
+            # between every station we will have
             #  list of paths
-            #      #every path
+            # every path
             #        list
             #          list of stations in path
             #          list of lines optimal for that path
@@ -664,20 +724,22 @@ def generate_transfers(distmatrix,lines):
             #          total transfers
             #          total stops
             #          total distance
-            bestpaths.append((tuple(zip(stations,bestpath,directions)), tuple([ntransf,len(bestpath),dist])))
+            bestpaths.append(
+                (tuple(zip(stations, bestpath, directions)), tuple([ntransf, len(bestpath), dist])))
         transmatrix[key] = bestpaths
     return transmatrix
 
-def decide_on_path(transmatrix,order=["transfers","stops","distance"]):
+
+def decide_on_path(transmatrix, order=["transfers", "stops", "distance"]):
     """
     Choose the best path depending on criterium.
     """
     bestmatrix = dict()
 
-    if not len(order) ==3:
-        raise Exception, "Invalid length order %d. Must be 3,"%len(order)
-    norder = [None,None,None]
-    for i,x in enumerate(order):
+    if not len(order) == 3:
+        raise Exception("Invalid length order %d. Must be 3," % len(order))
+    norder = [None, None, None]
+    for i, x in enumerate(order):
         if x == "transfers":
             norder[i] = 0
         elif x == "stops":
@@ -685,21 +747,23 @@ def decide_on_path(transmatrix,order=["transfers","stops","distance"]):
         elif x == "distance":
             norder[i] = 2
         else:
-            raise Exception,"Invalid element in order: %s.\nMust be transfers,stops,or distance."%x
+            raise Exception(
+                "Invalid element in order: %s.\nMust be transfers,stops,or distance." %
+                x)
 
-
-    #Per station pairs i,j.
-    for key,paths in transmatrix.iteritems():
-        #A given path between station i,j
-        bestmatrix[key]=sort_paired_triplet_by(paths,norder,1)[0]
+    # Per station pairs i,j.
+    for key, paths in transmatrix.iteritems():
+        # A given path between station i,j
+        bestmatrix[key] = sort_paired_triplet_by(paths, norder, 1)[0]
     return bestmatrix
+
 
 def simplify_matrix(bestmatrix):
     """
     Generate a list of tranfer stations for passengers to use.
     """
     simplematrix = dict()
-    for key,path in bestmatrix.iteritems():
+    for key, path in bestmatrix.iteritems():
         simplematrix[key] = simplify_path(path)
     return simplematrix
 
@@ -712,11 +776,12 @@ def simplify_path(path):
 
     reduced.append(path[0][0])
     for station in path[0]:
-        #if the last station in the path is not on the same line and direction
+        # if the last station in the path is not on the same line and direction
         if not reduced[-1][1] == station[1] or not reduced[-1][2] == station[2]:
-            #This station is a transfer
+            # This station is a transfer
             reduced.append(station)
     return reduced
+
 
 def simplify_path_v2(route):
     """
@@ -726,15 +791,14 @@ def simplify_path_v2(route):
 
     reduced.append(route[0])
     for station in route:
-        #if the last station in the path is not on the same line and direction
+        # if the last station in the path is not on the same line and direction
         if not reduced[-1][1] == station[1] or not reduced[-1][2] == station[2]:
-            #This station is a transfer
+            # This station is a transfer
             reduced.append(station)
     return reduced
 
 
-
-def sort_paired_triplet_by(unsortedlist,order,where):
+def sort_paired_triplet_by(unsortedlist, order, where):
     """
     Sort a list of triplets that is paired with something else
 
@@ -754,17 +818,24 @@ def sort_paired_triplet_by(unsortedlist,order,where):
 
     [[['xxa'], [5, 5, 1]], [['abc'], [1, 2, 3]], [['bac'], [2, 1, 4]], [['bcd'], [1, 3, 4]]]
     """
-    x1,x2,x3=order
-    sortedlist= sorted(unsortedlist,key=lambda x: [x[where][x1],x[where][x2],x[where][x3]] )
+    x1, x2, x3 = order
+    sortedlist = sorted(
+        unsortedlist,
+        key=lambda x: [
+            x[where][x1],
+            x[where][x2],
+            x[where][x3]])
     return sortedlist
 
-def sort_triplet_by(unsortedlist,order):
+
+def sort_triplet_by(unsortedlist, order):
     """
     Sort a list of triplets
     """
-    x1,x2,x3=order
-    sortedlist= sorted(unsortedlist,key=lambda x: [x[x1],x[x2],x[x3]] )
+    x1, x2, x3 = order
+    sortedlist = sorted(unsortedlist, key=lambda x: [x[x1], x[x2], x[x3]])
     return sortedlist
+
 
 def sets_to_lists(los):
     """
@@ -775,7 +846,8 @@ def sets_to_lists(los):
         lol.append(list(s))
     return lol
 
-def consistent_resolver(opt_per_stat,capture=True):
+
+def consistent_resolver(opt_per_stat, capture=True):
     """
     Arguments
     ---------
@@ -804,7 +876,8 @@ def consistent_resolver(opt_per_stat,capture=True):
             return rev_ans_rev
         else:
             # "Cant make consistent, assume equally good solutions exist"
-            if capture: weirdpaths.append(rev_ans_rev)
+            if capture:
+                weirdpaths.append(rev_ans_rev)
             return rev_ans_rev
 
     else:
@@ -816,9 +889,11 @@ def consistent_resolver(opt_per_stat,capture=True):
             # "consistent after reversing twice"
             return rev_ans_rev
         else:
-           # "Cant make consistent, assume equally good solutions exist"
-            if capture: weirdpaths.append(rev_ans_rev)
+            # "Cant make consistent, assume equally good solutions exist"
+            if capture:
+                weirdpaths.append(rev_ans_rev)
             return rev_ans_rev
+
 
 def transfer_resolver(opt_per_stat):
     """
@@ -826,16 +901,16 @@ def transfer_resolver(opt_per_stat):
     """
     opt_per_stat = list(opt_per_stat)
     opt_copy = list(opt_per_stat)
-    #for every element in the list of lines
+    # for every element in the list of lines
     for i in range(len(opt_per_stat)):
         try:
-            insect = opt_copy[i] & opt_copy[i+1]
+            insect = opt_copy[i] & opt_copy[i + 1]
             if insect:
-                opt_copy[i]= insect
+                opt_copy[i] = insect
             else:
                 pass
         except IndexError:
-            othersect = opt_copy[i] & opt_copy[i-1]
+            othersect = opt_copy[i] & opt_copy[i - 1]
             if othersect:
                 opt_copy[i] = othersect
             break
@@ -845,7 +920,8 @@ def transfer_resolver(opt_per_stat):
     else:
         return transfer_resolver(opt_copy)
 
-def count_transfers(linlist,directions):
+
+def count_transfers(linlist, directions):
     """
     Arguments
     ---------
@@ -860,14 +936,14 @@ def count_transfers(linlist,directions):
     """
     transfers = int()
     try:
-        for i,ld in enumerate(zip(linlist,directions)):
-            #if a passenger changes lines, that is a transfer
-            if linlist[i]  != linlist[i+1]:
+        for i, ld in enumerate(zip(linlist, directions)):
+            # if a passenger changes lines, that is a transfer
+            if linlist[i] != linlist[i + 1]:
                 transfers += 1
-            #if a passenger changes direction on the same line
-            #he also needs to transfer. Odd situation though.
-            elif directions[i] != directions[i+1]:
-                transfers +=1
+            # if a passenger changes direction on the same line
+            # he also needs to transfer. Odd situation though.
+            elif directions[i] != directions[i + 1]:
+                transfers += 1
             else:
                 continue
 
@@ -875,7 +951,8 @@ def count_transfers(linlist,directions):
         pass
     return transfers
 
-def subway_map(graph,file_name=None):
+
+def subway_map(graph, file_name=None):
     """Visually represent the subway network and save to file"""
     # Turn interactive plotting off
     plt.ioff()
@@ -885,20 +962,28 @@ def subway_map(graph,file_name=None):
         positions[node] = node.xy
         labels[node] = node.name
     plt.figure()
-    nx.draw_networkx(graph,positions,labels=labels,node_size=200,node_color='chartreuse')
+    nx.draw_networkx(
+        graph,
+        positions,
+        labels=labels,
+        node_size=200,
+        node_color='chartreuse')
     if file_name:
         plt.savefig(file_name, dpi=300)
-    else: plt.show()
+    else:
+        plt.show()
 
-def clear_frame(ax=None): 
-    if ax is None: 
-        ax = plt.gca() 
-    ax.xaxis.set_visible(False) 
-    ax.yaxis.set_visible(False) 
-    for spine in ax.spines.itervalues(): 
-        spine.set_visible(False) 
 
-def nyc_map(graph,file_name=None):
+def clear_frame(ax=None):
+    if ax is None:
+        ax = plt.gca()
+    ax.xaxis.set_visible(False)
+    ax.yaxis.set_visible(False)
+    for spine in ax.spines.itervalues():
+        spine.set_visible(False)
+
+
+def nyc_map(graph, file_name=None):
     """Visually represent the subway network and save to file"""
     # Turn interactive plotting off
     plt.ioff()
@@ -908,24 +993,29 @@ def nyc_map(graph,file_name=None):
         positions[node] = node.xy
         labels[node] = ""
     plt.figure(frameon=False)
-    plt.tick_params(\
-    axis='x',          # changes apply to the x-axis
-    which='both',      # both major and minor ticks are affected
-    bottom='off',      # ticks along the bottom edge are off
-    top='off',         # ticks along the top edge are off
-    labelbottom='off') # labels along the bottom edge are off
-    plt.tick_params(\
-    axis='y',          # changes apply to the x-axis
-    which='both',      # both major and minor ticks are affected
-    left='off',      # ticks along the bottom edge are off
-    right='off',         # ticks along the top edge are off
-    labelleft='off')
-    clear_frame() 
-    plt.xlim( -25000,40000)
-    plt.ylim( -25000,40000)
+    plt.tick_params(
+        axis='x',          # changes apply to the x-axis
+        which='both',      # both major and minor ticks are affected
+        bottom='off',      # ticks along the bottom edge are off
+        top='off',         # ticks along the top edge are off
+        labelbottom='off')  # labels along the bottom edge are off
+    plt.tick_params(
+        axis='y',          # changes apply to the x-axis
+        which='both',      # both major and minor ticks are affected
+        left='off',      # ticks along the bottom edge are off
+        right='off',         # ticks along the top edge are off
+        labelleft='off')
+    clear_frame()
+    plt.xlim(-25000, 40000)
+    plt.ylim(-25000, 40000)
 
- 
-    nx.draw_networkx(graph,positions,labels=labels,node_size=25,node_color='chartreuse')
+    nx.draw_networkx(
+        graph,
+        positions,
+        labels=labels,
+        node_size=25,
+        node_color='chartreuse')
     if file_name:
         plt.savefig(file_name, dpi=300)
-    else: plt.show()
+    else:
+        plt.show()

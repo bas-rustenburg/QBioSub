@@ -289,7 +289,7 @@ def nyc(add=False, block=False):
         serial = 1
         for j in iterating_group:
             trains.append(tools.Train(name=key + '-' + str(serial),
-                                      capacity=30,
+                                      capacity=1000,
                                       line=lines[key],
                                       start=stations[lines_information[key][5 * j]],
                                       direction=1, velocity=100.0,
@@ -299,7 +299,7 @@ def nyc(add=False, block=False):
         iterating_group.reverse()
         for j in iterating_group:
             trains.append(tools.Train(name=key + '-' + str(serial),
-                                      capacity=30,
+                                      capacity=1000,
                                       line=lines[key],
                                       start=stations[lines_information[key][5 * j]],
                                       direction=-1, velocity=100.0,
