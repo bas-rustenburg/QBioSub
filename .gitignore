@@ -3,6 +3,10 @@
 ### Linux ###
 *~
 
+# Hidden files
+.*
+!/.gitignore
+
 # KDE directory preferences
 .directory
 
