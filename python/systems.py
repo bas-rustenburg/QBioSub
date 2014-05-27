@@ -205,7 +205,7 @@ def circle():
 # data file at the parent directory
 # listOfStationsConverted.txt: unique station key, location, and connectivity
 # listOfLines.txt: sequence of stations in lines
-def nyc(add=False, block=False):
+def nyc(add=False, block="none"):
     subway = nx.Graph()
     
 # filling up stations    
@@ -262,8 +262,25 @@ def nyc(add=False, block=False):
                                   '33rd St;6']
 
 # block a line
-    if block:
+    if block == "all":
         del lines_information['R']
+    elif block == "nqr":
+        lines_information['N'] = [';2345BDNQR', '36th St;DNR', '59th St;NR', '8th Av;N',
+                                  'Fort Hamilton Parkway;N', ';DN', '18th Av;N', '20th Av;N',
+                                  'Bay Parkway-22nd Av;N', 'Kings Highway;N', 'Av U;N',
+                                  '86th St;N', ';DFNQ']
+        lines_information['Q'] = ['DeKalb Av;BQR', ';2345BDNQR', '7th Av;BQ',
+                                  'Prospect Park;BQs', 'Parkside Av;Q', 'Church Av;BQ',
+                                  'Beverly Rd;Q', 'Cortelyou Rd;Q', 'Newkirk Av;BQ', 'Av H;Q',
+                                  'Av J;Q', 'Av M;Q', 'Kings Highway;BQ', 'Av U;Q',
+                                  'Neck Rd;Q', 'Sheepshead Bay;BQ', 'Brighton Beach;BQ',
+                                  'Ocean Parkway;Q', 'West 8th St;FQ', ';DFNQ']
+        lines_information['R'] = [';2345R', ';ACFR', 'DeKalb Av;BQR', ';2345BDNQR',
+                                  'Union St;R', ';FGR', 'Prospect Av;R', '25th St;R',
+                                  '36th St;DNR', '45th St;R', '53rd St;R', '59th St;NR',
+                                  'Bay Ridge Av;R', '77th St;R', '86th St;R', '95th St;R']
+    else:
+        pass
 
     for key, value in lines_information.iteritems():
         stations_list = []
