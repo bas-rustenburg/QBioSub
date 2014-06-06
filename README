@@ -1,0 +1,9 @@
+In order to run a simulation, please use simulation.py
+
+Classes and functions are stored in derailed.tools
+
+System definitions are stored in derailed.systems
+
+Line connectivities were stored in derailed.line_connectivity
+
+
