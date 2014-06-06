@@ -1,14 +1,5 @@
 List of things to do:
 
-Parse the NYC subway map coordinates
-    convert to cartesian
-
-Figure out the description of lines as a network
-    Get the full connectivity described in the network. 
-    Before simulation, calculate all possible paths
-    Compare lengths, number of transfers and get rank #1 for each 
-    preferred algorithm.
-
 Train movement
     TODO:   Train knows distance, begin and end Station objects. If we ever 
             need to calculate its coordinates, we can write a function for that.
@@ -18,14 +9,7 @@ Train movement
     TODO:   What do trains do when they are waiting at a station.
 
 Lines:
-    See how to deal with circular line, forward only solution [A, B, C , A] ; different line : [A, C ,B, A]
-                                        better solution: If it gets index error at end, rather than change directions, return first element
     Number of trains per line
-
-Passenger elimination:
-    plan:   Train will carry passengers and only put them on a station if they
-            have a transfer. Otherwise, he'll let them off the train to be 
-            garbage collected.
 
 Time step size, velocity and spawn rates:
     How to integrate these in a coherent fashion.
@@ -33,10 +17,6 @@ Time step size, velocity and spawn rates:
 Day/Night cycles:
     Add day night cycle
     Different spawn rates at different times, and different stations
-
-Passenger priority:
-    Should passengers be in a list, so the one's waiting the longest get to board the train first?
-
 
 Visualization of a simulation:
     First steps taken, we can now actually visualize our coordinate system.

@@ -36,9 +36,15 @@ posnqr=nx.spring_layout(Gccnqr)
 
 plt.axes([0.1, 0.4, 0.85, 0.55])
 plt.loglog(degree_sequence,'k-',marker='')
+<<<<<<< HEAD
 plt.loglog(degree_sequence8, 'r-', marker='')
 plt.loglog(degree_sequenceR, 'g-', marker='')
 plt.loglog(degree_sequencenqr, 'b-', marker='')
+=======
+plt.loglog(degree_sequence8, 'r--', marker='')
+plt.loglog(degree_sequenceR, 'g--', marker='')
+plt.loglog(degree_sequencenqr, 'b--', marker='')
+>>>>>>> 60db4e6b93ce4380f7b8fe1d1e32c9af65d57198
 plt.title("Degree rank plot")
 plt.ylabel("degree")
 plt.xlabel("rank")
